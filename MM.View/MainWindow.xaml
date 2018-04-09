@@ -1,0 +1,148 @@
+﻿<Window x:Class="MM.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MM.View"
+        mc:Ignorable="d"
+        Title="Motel Management" Height="650" Width="800" WindowStartupLocation="CenterScreen">
+
+
+    <Border Margin="30">
+        <StackPanel Orientation="Vertical">
+            <!-- Header for input -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Header Left -->
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- First Name -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="First Name" Name="lblFirstName" Margin="0 0 0 10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtFirstName" Margin="0 0 0 10" />
+                        <Label Grid.Row="0" Grid.Column="2" Content="Required field" Name="lblFirstNameError" Margin="0 0 0 10" Foreground="Red" />
+
+                        <!-- Last Name -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Last Name" Name="lblLasttName"  Margin="0 0 0 10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtLastName"  Margin="0 0 0 10" />
+                        <Label Grid.Row="1" Grid.Column="2" Content="Required field" Name="lblLasttNameError" Margin="0 0 0 10" Foreground="Red" />
+
+                        <!-- Address -->
+                        <Label Grid.Row="2" Grid.Column="0" Content="Address" Name="lblAddress"  Margin="0 0 0 10" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="txtAddress"  Margin="0 0 0 10" />
+                        <Label Grid.Row="2" Grid.Column="2" Content="Required field" Name="lblAddressError" Margin="0 0 0 10" Foreground="Red" />
+
+                        <!-- Phone Number -->
+                        <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Name="lblPhoneNumber" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="txtPhoneNumber" />
+                        <Label Grid.Row="3" Grid.Column="2" Content="Required field" Name="lblPhoneNumberError" Margin="0 0 0 10" Foreground="Red" />
+
+                    </Grid>
+                </StackPanel>
+
+                <!-- Header Right -->
+                <StackPanel Grid.Column="1" Orientation="Vertical"  Margin="30 0 0 0">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Room Type -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Room Type" Name="lblRoomType" Margin="0 0 0 10" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="cboRoomType" Margin="0 0 0 10" />
+
+                        <!-- Room Number -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Room Number" Name="lblRoomNumber" Margin="0 0 0 10" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" Name="cboRoomNumber" Margin="0 0 0 10" />
+
+                    </Grid>
+
+
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Check in -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Check In" Name="lblCheckIn" Margin="0 0 0 10" />
+                        <DatePicker Grid.Row="0" Grid.Column="1" Name="cboCheckIn" Margin="0 0 0 10" />
+
+                        <!-- Check out -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Check Out" Name="lblCheckOut" />
+                        <DatePicker Grid.Row="1" Grid.Column="1" Name="cboCheckOut" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <!-- Function Buttons -->
+            <Grid Margin="0 30 0 30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35" />
+                </Grid.RowDefinitions>
+
+                <Button Grid.Column="1" Name="btnRegister" Content="REGISTER" Margin="0 0 10 0" />
+                <Button Grid.Column="2" Name="btnDisplay" Content="DISPLAY" Margin="10 0 10 0" />
+                <Button Grid.Column="3" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" />
+                <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 0 0" />
+            </Grid>
+
+            <!-- Grid -->
+            <Border BorderThickness="2" BorderBrush="Black">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Height="300">
+                        
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </Border>
+
+
+</Window>
