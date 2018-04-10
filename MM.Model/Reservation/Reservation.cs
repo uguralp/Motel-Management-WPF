@@ -9,11 +9,10 @@ namespace MM.Model
         private int numberOfAdult;
         private int numberOfChild;
         private string roomType;
-        private int RoomNumber;
+        private int roomNumber;
         private DateTime checkIn;
         private DateTime checkOut;       
         
-
         public Reservation()
         {
             Guest = new Guest();
@@ -33,7 +32,7 @@ namespace MM.Model
         public DateTime CheckOut { get => checkOut; set => checkOut = value; }
         public Guest Guest { get => guest; set => guest = value; }
         public string RoomType { get => roomType; set => roomType = value; }
-        public int RoomNumber1 { get => RoomNumber; set => RoomNumber = value; }
+        public int RoomNumber { get => roomNumber; set => roomNumber = value; }
     }
 
 

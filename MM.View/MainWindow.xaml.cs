@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MM.Model;
+using MM.Utilities;
 
 namespace MM.View
 {
@@ -24,6 +25,7 @@ namespace MM.View
         #region VARIABLES
 
         public RoomTypes roomTypes;
+
 
         #endregion
 
@@ -50,6 +52,8 @@ namespace MM.View
         private void Init()
         {
             InitRoomType();
+
+            ReservationList = new ReservationList();
 
             DataContext = roomTypes;
         }
@@ -145,6 +149,26 @@ namespace MM.View
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            Reservation reservation = new Reservation();
+
+            reservation.Guest = new Guest() { FirstName = txtFirstName.Text
+                                                , LastName = txtLastName.Text
+                                                , Address = txtAddress.Text
+                                                , PhoneNumber = txtPhoneNumber.Text
+                                            };
+
+
+            reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+            reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
+            reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName.ToString();
+            reservation.RoomNumber = int.Parse(((Room)cboRoomNumber.SelectedValue).RoomNumber.ToString());
+            reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
+            reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
+
+            ReservationList.Add(reservation);
+            XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
+            grdReservation.ItemsSource = ReservationList.Reservations;
+
 
         }
 

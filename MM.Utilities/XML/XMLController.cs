@@ -3,12 +3,12 @@ using System.IO;
 using System.Xml.Serialization;
 using MM.Model;
 
-namespace MM.Utilities.XML
+namespace MM.Utilities
 {
-    public class XMLController
+    public static class XMLController
     {
 
-        public void ReadXML(string xmlFileName, ref ReservationList reservationList)
+        public static void ReadXML(string xmlFileName, ref ReservationList reservationList)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace MM.Utilities.XML
             }
         }
 
-        public void WriteXML(string xmlFileName, ReservationList reservationList)
+        public static void WriteToXML(string xmlFileName, ReservationList reservationList)
         {
             XmlSerializer serializer = null;
             TextWriter writer = null;

@@ -178,7 +178,27 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Height="300">
+                    <DataGrid Name="grdReservation" 
+                              Height="300"
+                              ItemsSource="{Binding Path = ReservationList.Reservations}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              >
+                        
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First name" Width="100" Binding="{Binding Path = Guest.FirstName}" />
+                            <DataGridTextColumn Header="Last name" Width="100" Binding="{Binding Path = Guest.LastName}" />
+                            <DataGridTextColumn Header="Address" Width="200" Binding="{Binding Path = Guest.Address}" />
+                            <DataGridTextColumn Header="Phone" Width="120" Binding="{Binding Path = Guest.PhoneNumber}" />
+                            <DataGridTextColumn Header="Adult" Width="50" Binding="{Binding Path = NumberOfAdult}" />
+                            <DataGridTextColumn Header="Children" Width="55" Binding="{Binding Path = NumberOfChild}" />
+
+                            <DataGridTextColumn Header="Room type" Width="100" Binding="{Binding Path = RoomType}" />
+                            <DataGridTextColumn Header="Room number" Width="100" Binding="{Binding Path = RoomNumber}" />
+                            <DataGridTextColumn Header="Check in" Width="100" Binding="{Binding Path = CheckIn}" />
+                            <DataGridTextColumn Header="Check out" Width="100" Binding="{Binding Path = CheckOut}" />
+                        </DataGrid.Columns>
                         
                     </DataGrid>
                 </Grid>
