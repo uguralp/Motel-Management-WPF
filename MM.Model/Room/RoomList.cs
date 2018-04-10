@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MM.Model
 {
-    class RoomList
+    public class RoomList
     {
         ObservableCollection<Room> dictRoom;
 

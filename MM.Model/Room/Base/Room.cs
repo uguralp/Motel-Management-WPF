@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 
 namespace MM.Model
 {
-    public enum RoomType {
-        Guest_Room,
-        Single_Room,
-        Double_Room,
-        Twin_Room,
-        Adjoining_Room,
-        Suite_Room,
-        King_Bedroom,
-        Queen_Bedroom
-    }
+    
+    //public enum RoomNumber
+    //{
+    //    Room_101,
+    //    Room_102,
+    //    Room_103,
+    //    Room_104,
+    //    Room_201,
+    //    Room_202,
+    //    Room_203,
+    //    Room_204,
+    //    Room_301,
+    //    Room_302,
+    //    Room_303,
+    //    Room_304
+    //}
 
-    class Room
+    public abstract class Room
     {
         private string roomID;
         private int roomNumber;

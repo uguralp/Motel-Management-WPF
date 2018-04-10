@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MM.View"
         mc:Ignorable="d"
-        Title="Motel Management" Height="650" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Motel Management" Height="650" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
+    <Window.Resources>
+        
+    </Window.Resources>
 
     <Border Margin="30">
         <StackPanel Orientation="Vertical">
@@ -71,11 +74,22 @@
 
                         <!-- Room Type -->
                         <Label Grid.Row="0" Grid.Column="0" Content="Room Type" Name="lblRoomType" Margin="0 0 0 10" />
-                        <ComboBox Grid.Row="0" Grid.Column="1" Name="cboRoomType" Margin="0 0 0 10" />
+                        <ListBox Grid.Row="0" Grid.Column="1" 
+                                Name="lstRoomType" Margin="0 0 0 10" 
+                                Height="70"
+                                ItemsSource="{Binding Path = ListRoomTypes}"
+                                DisplayMemberPath = "RoomTypeName"
+                                IsSynchronizedWithCurrentItem="true"
+                                 />
 
                         <!-- Room Number -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Room Number" Name="lblRoomNumber" Margin="0 0 0 10" />
-                        <ComboBox Grid.Row="1" Grid.Column="1" Name="cboRoomNumber" Margin="0 0 0 10" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" Name="cboRoomNumber" 
+                                Margin="0 0 0 10" 
+                                ItemsSource="{Binding Path = ListRoomTypes/Rooms}"
+                                DisplayMemberPath = "RoomNumber"
+                                IsSynchronizedWithCurrentItem="true"
+                                  />
 
                     </Grid>
 
@@ -95,10 +109,12 @@
                         <!-- Check in -->
                         <Label Grid.Row="0" Grid.Column="0" Content="Check In" Name="lblCheckIn" Margin="0 0 0 10" />
                         <DatePicker Grid.Row="0" Grid.Column="1" Name="cboCheckIn" Margin="0 0 0 10" />
+                        <Label Grid.Row="0" Grid.Column="2" Content="Error check In" Name="lblCheckInError" Margin="0 0 0 10" Foreground="Red" />
 
                         <!-- Check out -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Check Out" Name="lblCheckOut" />
                         <DatePicker Grid.Row="1" Grid.Column="1" Name="cboCheckOut" />
+                        <Label Grid.Row="1" Grid.Column="2" Content="Error check out" Name="lblCheckOutError" Foreground="Red" />
                     </Grid>
                 </StackPanel>
             </Grid>

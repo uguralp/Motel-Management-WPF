@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MM.Model.Guest
+namespace MM.Model
 {
-    public class GuestList
+    public class SingleRoom : Room
     {
+
     }
 }

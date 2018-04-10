@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MM.Model.Guest
 {
-    class Guest
+    public class Guest
     {
     }
 }
