@@ -9,3 +9,8 @@ D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source\MotelManagement\MM.Repository\obj\Debug\MM.Repository.csproj.CoreCompileInputs.cache
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source\MotelManagement\MM.Repository\obj\Debug\MM.Repository.dll
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source\MotelManagement\MM.Repository\obj\Debug\MM.Repository.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Repository\bin\Debug\MM.Repository.dll
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Repository\bin\Debug\MM.Repository.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Repository\obj\Debug\MM.Repository.csproj.CoreCompileInputs.cache
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Repository\obj\Debug\MM.Repository.dll
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Repository\obj\Debug\MM.Repository.pdb

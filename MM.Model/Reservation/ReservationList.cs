@@ -1,19 +1,25 @@
 ﻿using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 namespace MM.Model
 {
+    [XmlRoot("ReservationList")]
     public class ReservationList
     {
-        ObservableCollection<Reservation> reservations = null;
+        private ObservableCollection<Reservation> reservations = null;
+
+        [XmlArray("ListOfBookedRooms")]
+        [XmlArrayItem("Reservation")]
+        public ObservableCollection<Reservation> Reservations { get => reservations; set => reservations = value; }
 
         public ReservationList()
         {
             reservations = new ObservableCollection<Reservation>();
         }
 
-        public Reservation this[int i]
+        public Reservation this[int index]
         {
-            get => reservations[i];
+            get => reservations[index];
         }
 
         public int Count
@@ -21,9 +27,9 @@ namespace MM.Model
             get => reservations.Count;
         }
 
-        public void Add(Reservation a)
+        public void Add(Reservation reservation)
         {
-            reservations.Add(a);
+            reservations.Add(reservation);
         }
 
     }

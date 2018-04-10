@@ -43,20 +43,11 @@ namespace MM.View
 
         #endregion
 
-        #region EVENTS
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            InitControls();
-        }
-
-        #endregion
-
         #region METHODS
 
         #region BINDING DATA FOR ALL CONTROLS 
 
-        private void InitControls()
+        private void Init()
         {
             InitRoomType();
 
@@ -65,7 +56,7 @@ namespace MM.View
 
         #endregion
 
-        #region INITIALIZE DATA FOR LISTBOX, COMBOBOX
+        #region INITIALIZE DATA
 
         private void InitRoomType()
         {
@@ -81,7 +72,7 @@ namespace MM.View
             roomTypeGuest.Rooms.Add(new GuestRoom() { RoomID = "13", RoomNumber = 103 });
             roomTypeGuest.Rooms.Add(new GuestRoom() { RoomID = "13", RoomNumber = 104 });
             roomTypes.Add(roomTypeGuest);
-            
+
             // Create rooms type Single
             RoomType roomTypeSingle = new RoomType();
             roomTypeSingle.RoomTypeID = 2;
@@ -142,5 +133,25 @@ namespace MM.View
         #endregion
 
         #endregion
+
+        #region EVENTS
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Init();
+
+            txtFirstName.Focus();
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+
+
+
     }
 }

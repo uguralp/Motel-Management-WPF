@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Guest\Guest.cs" />
     <Compile Include="Guest\GuestList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

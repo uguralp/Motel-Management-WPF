@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MM.View"
         mc:Ignorable="d"
-        Title="Motel Management" Height="650" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Motel Management" Height="750" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Window.Resources>
         
@@ -22,6 +22,7 @@
 
                 <!-- Header Left -->
                 <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <!-- Guest name, address, phone number -->
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -52,9 +53,35 @@
                         <Label Grid.Row="2" Grid.Column="2" Content="Required field" Name="lblAddressError" Margin="0 0 0 10" Foreground="Red" />
 
                         <!-- Phone Number -->
-                        <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Name="lblPhoneNumber" />
-                        <TextBox Grid.Row="3" Grid.Column="1" Name="txtPhoneNumber" />
+                        <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Name="lblPhoneNumber" Margin="0 0 0 10"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="txtPhoneNumber" Margin="0 0 0 10" />
                         <Label Grid.Row="3" Grid.Column="2" Content="Required field" Name="lblPhoneNumberError" Margin="0 0 0 10" Foreground="Red" />
+
+                        
+                    </Grid>
+
+                    <!-- Number of adult, children -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Number of Adult -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Number of Adult" Name="lblNumOfAdult" Margin="0 0 0 10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtNumOfAdult" Margin="0 0 0 10" />
+                        <Label Grid.Row="0" Grid.Column="2" Content="Required field" Name="lblNumOfAdultError" Margin="0 0 0 10" Foreground="Red" />
+
+                        <!-- Number of Children -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Number of Child" Name="lblNumOfChild" Margin="0 0 0 10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtNumOfChild" Margin="0 0 0 10"/>
+                        <Label Grid.Row="1" Grid.Column="2" Content="Required field" Name="lblNumOfChildError" Margin="0 0 0 10" Foreground="Red" />
 
                     </Grid>
                 </StackPanel>
@@ -76,7 +103,7 @@
                         <Label Grid.Row="0" Grid.Column="0" Content="Room Type" Name="lblRoomType" Margin="0 0 0 10" />
                         <ListBox Grid.Row="0" Grid.Column="1" 
                                 Name="lstRoomType" Margin="0 0 0 10" 
-                                Height="70"
+                                Height="100"
                                 ItemsSource="{Binding Path = ListRoomTypes}"
                                 DisplayMemberPath = "RoomTypeName"
                                 IsSynchronizedWithCurrentItem="true"
@@ -134,7 +161,7 @@
                     <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Column="1" Name="btnRegister" Content="REGISTER" Margin="0 0 10 0" />
+                <Button Grid.Column="1" Name="btnRegister" Content="REGISTER" Margin="0 0 10 0" Click="btnRegister_Click" />
                 <Button Grid.Column="2" Name="btnDisplay" Content="DISPLAY" Margin="10 0 10 0" />
                 <Button Grid.Column="3" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" />
                 <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 0 0" />
