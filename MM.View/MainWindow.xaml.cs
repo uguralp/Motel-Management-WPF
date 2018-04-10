@@ -25,8 +25,7 @@ namespace MM.View
         #region VARIABLES
 
         public RoomTypes roomTypes;
-
-
+        
         #endregion
 
         #region PROPERTIES
@@ -157,11 +156,12 @@ namespace MM.View
                                                 , PhoneNumber = txtPhoneNumber.Text
                                             };
 
-
             reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
             reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
             reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName.ToString();
-            reservation.RoomNumber = int.Parse(((Room)cboRoomNumber.SelectedValue).RoomNumber.ToString());
+            reservation.Room = ((Room)cboRoomNumber.SelectedValue);
+
+
             reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
             reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
 

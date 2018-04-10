@@ -195,7 +195,7 @@
                             <DataGridTextColumn Header="Children" Width="55" Binding="{Binding Path = NumberOfChild}" />
 
                             <DataGridTextColumn Header="Room type" Width="100" Binding="{Binding Path = RoomType}" />
-                            <DataGridTextColumn Header="Room number" Width="100" Binding="{Binding Path = RoomNumber}" />
+                            <DataGridTextColumn Header="Room number" Width="100" Binding="{Binding Path = Room.RoomNumber}" />
                             <DataGridTextColumn Header="Check in" Width="100" Binding="{Binding Path = CheckIn}" />
                             <DataGridTextColumn Header="Check out" Width="100" Binding="{Binding Path = CheckOut}" />
                         </DataGrid.Columns>

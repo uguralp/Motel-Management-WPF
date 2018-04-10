@@ -3,26 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace MM.Model
 {
-    
-    //public enum RoomNumber
-    //{
-    //    Room_101,
-    //    Room_102,
-    //    Room_103,
-    //    Room_104,
-    //    Room_201,
-    //    Room_202,
-    //    Room_203,
-    //    Room_204,
-    //    Room_301,
-    //    Room_302,
-    //    Room_303,
-    //    Room_304
-    //}
-
+    [Serializable]
+    [XmlInclude(typeof(DoubleRoom))]
+    [XmlInclude(typeof(GuestRoom))]
+    [XmlInclude(typeof(KingRoom))]
+    [XmlInclude(typeof(QueenRoom))]
+    [XmlInclude(typeof(SingleRoom))]
+    [XmlInclude(typeof(SuiteRoom))]
     public abstract class Room
     {
         private string roomID;

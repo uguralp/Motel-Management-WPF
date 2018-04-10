@@ -7,13 +7,16 @@
       <CheckIn>2018-04-10T00:00:00</CheckIn>
       <CheckOut>2018-04-11T00:00:00</CheckOut>
       <Guest>
-        <FirstName>Tri</FirstName>
-        <LastName>Pham</LastName>
-        <Address>296 Wlson ave</Address>
-        <PhoneNumber>2268990595</PhoneNumber>
+        <FirstName>aa</FirstName>
+        <LastName>bb</LastName>
+        <Address>cc</Address>
+        <PhoneNumber>dd</PhoneNumber>
       </Guest>
       <RoomType>Guest</RoomType>
-      <RoomNumber>101</RoomNumber>
+      <Room xsi:type="GuestRoom">
+        <RoomID>11</RoomID>
+        <RoomNumber>101</RoomNumber>
+      </Room>
     </Reservation>
   </ListOfBookedRooms>
 </ReservationList>
