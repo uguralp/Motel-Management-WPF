@@ -10,8 +10,8 @@ namespace MM.Model
         private int numberOfChild;
         private string roomType;
         private Room room;
-        private DateTime checkIn;
-        private DateTime checkOut;       
+        private DateTime? checkIn;
+        private DateTime? checkOut;       
         
         public Reservation()
         {
@@ -28,8 +28,8 @@ namespace MM.Model
 
         public int NumberOfAdult { get => numberOfAdult; set => numberOfAdult = value; }
         public int NumberOfChild { get => numberOfChild; set => numberOfChild = value; }
-        public DateTime CheckIn { get => checkIn; set => checkIn = value; }
-        public DateTime CheckOut { get => checkOut; set => checkOut = value; }
+        public DateTime? CheckIn { get => checkIn; set => checkIn = value; }
+        public DateTime? CheckOut { get => checkOut; set => checkOut = value; }
         public Guest Guest { get => guest; set => guest = value; }
         public string RoomType { get => roomType; set => roomType = value; }
         public Room Room { get => room; set => room = value; }

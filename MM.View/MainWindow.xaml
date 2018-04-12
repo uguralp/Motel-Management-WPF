@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MM.View"
+        xmlns:utilities="clr-namespace:MM.Utilities;assembly=MM.Utilities"
+        xmlns:model="clr-namespace:MM.Model;assembly=MM.Model"
         mc:Ignorable="d"
         Title="Motel Management" Height="750" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Window.Resources>
-        
+        <model:Reservation x:Key="CurrentReservation" />
     </Window.Resources>
 
     <Border Margin="30">
@@ -135,7 +137,29 @@
 
                         <!-- Check in -->
                         <Label Grid.Row="0" Grid.Column="0" Content="Check In" Name="lblCheckIn" Margin="0 0 0 10" />
-                        <DatePicker Grid.Row="0" Grid.Column="1" Name="cboCheckIn" Margin="0 0 0 10" />
+                        
+                        <DatePicker Grid.Row="0" 
+                                    Grid.Column="1" 
+                                    Name="cboCheckIn" 
+                                    Margin="0 0 0 10" 
+                                    DataContext="{StaticResource CurrentReservation}"
+                                    ToolTip="{Binding ElementName=cboCheckIn,
+                                            Path=(Validation.Errors)[0].ErrorContent}"
+                                    >
+
+                            <DatePicker.SelectedDate>
+                                <Binding Path="CheckIn" 
+                                         >
+                                    
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                    
+                                </Binding>
+                            </DatePicker.SelectedDate>
+                            
+                        </DatePicker>
+                        
                         <Label Grid.Row="0" Grid.Column="2" Content="Error check In" Name="lblCheckInError" Margin="0 0 0 10" Foreground="Red" />
 
                         <!-- Check out -->

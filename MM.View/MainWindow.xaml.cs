@@ -135,6 +135,14 @@ namespace MM.View
 
         #endregion
 
+        #region VALIDATION
+        private void ForceValidation()
+        {
+            cboCheckIn.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+        }
+
+        #endregion
+
         #endregion
 
         #region EVENTS
@@ -148,27 +156,36 @@ namespace MM.View
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            Reservation reservation = new Reservation();
+            ForceValidation();
 
-            reservation.Guest = new Guest() { FirstName = txtFirstName.Text
-                                                , LastName = txtLastName.Text
-                                                , Address = txtAddress.Text
-                                                , PhoneNumber = txtPhoneNumber.Text
-                                            };
+            if (!Validation.GetHasError(cboCheckIn))
+            {
+                Reservation reservation = new Reservation();
 
-            reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
-            reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
-            reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName.ToString();
-            reservation.Room = ((Room)cboRoomNumber.SelectedValue);
+                reservation.Guest = new Guest()
+                {
+                    FirstName = txtFirstName.Text
+                                                    ,
+                    LastName = txtLastName.Text
+                                                    ,
+                    Address = txtAddress.Text
+                                                    ,
+                    PhoneNumber = txtPhoneNumber.Text
+                };
+
+                reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+                reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
+                reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName.ToString();
+                reservation.Room = ((Room)cboRoomNumber.SelectedValue);
 
 
-            reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
-            reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
+                reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
+                reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
 
-            ReservationList.Add(reservation);
-            XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
-            grdReservation.ItemsSource = ReservationList.Reservations;
-
+                ReservationList.Add(reservation);
+                XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
+                grdReservation.ItemsSource = ReservationList.Reservations;
+            }
 
         }
 

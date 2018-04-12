@@ -22,5 +22,8 @@ namespace MM.Model
         public string RoomID { get => roomID; set => roomID = value; }
         public int RoomNumber { get => roomNumber; set => roomNumber = value; }
 
+        public abstract void Laundry();
+        public abstract void DryCleaning();
+        public abstract void Fitness();
     }
 }
