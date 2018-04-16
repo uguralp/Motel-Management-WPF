@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace MM.Model
 {
-    public class GuestRoom : Room
+    public class DoubleRoom : RoomType
     {
+        public DoubleRoom()
+        {
+            this.Rooms = new List<Room>();
+        }
+
         public override void DryCleaning()
         {
             throw new NotImplementedException();

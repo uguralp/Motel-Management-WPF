@@ -14,3 +14,4 @@ D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.csproj.CoreCompileInputs.cache
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.dll
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.csproj.CopyComplete

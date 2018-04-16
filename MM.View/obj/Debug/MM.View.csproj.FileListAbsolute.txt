@@ -51,3 +51,4 @@ D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.View\obj\Debug\MM.View.Properties.Resources.resources
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.View\obj\Debug\MM.View.csproj.GenerateResource.Cache
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.View\obj\Debug\MM.View.csproj.CoreCompileInputs.cache
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma\motelmanagement\MM.View\obj\Debug\MM.View.csproj.CopyComplete

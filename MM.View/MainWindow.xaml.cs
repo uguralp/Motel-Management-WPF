@@ -22,13 +22,9 @@ namespace MM.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region VARIABLES
-
-        public RoomTypes roomTypes;
-        
-        #endregion
-
         #region PROPERTIES
+        private List<RoomType> roomTypes;
+        public List<RoomType> RoomTypes { get => roomTypes; set => roomTypes = value; }
 
         private ReservationList reservationList;
         public ReservationList ReservationList { get => reservationList; set => reservationList = value; }
@@ -50,11 +46,24 @@ namespace MM.View
 
         private void Init()
         {
-            InitRoomType();
-
+            // Initialize list of reservations
             ReservationList = new ReservationList();
 
-            DataContext = roomTypes;
+            // Init data for list of room types and room numbers
+            InitRoomType();            
+
+            // Read data from XML
+            ReadDataFromXML();
+
+            // Display XML data to grid
+            DisplayXMLToGrid();
+
+            // Disable UPDATE, DELETE, SAVE buttons
+            CheckIfRegister(true);
+
+            // Set data context as room types
+            //DataContext = roomTypes;
+            DataContext = this;
         }
 
         #endregion
@@ -63,73 +72,73 @@ namespace MM.View
 
         private void InitRoomType()
         {
-            roomTypes = new RoomTypes();
+            roomTypes = new List<RoomType>();
 
             // Create rooms type Guest
-            RoomType roomTypeGuest = new RoomType();
+            RoomType roomTypeGuest = new GuestRoom();
             roomTypeGuest.RoomTypeID = 1;
-            roomTypeGuest.RoomTypeName = RoomTypeName.Guest;
+            roomTypeGuest.RoomTypeName = RoomTypeName.Guest.ToString();
 
-            roomTypeGuest.Rooms.Add(new GuestRoom() { RoomID = "11", RoomNumber = 101 });
-            roomTypeGuest.Rooms.Add(new GuestRoom() { RoomID = "12", RoomNumber = 102 });
-            roomTypeGuest.Rooms.Add(new GuestRoom() { RoomID = "13", RoomNumber = 103 });
-            roomTypeGuest.Rooms.Add(new GuestRoom() { RoomID = "13", RoomNumber = 104 });
+            roomTypeGuest.Rooms.Add(new Room() { RoomID = 11, RoomNumber = 101 });
+            roomTypeGuest.Rooms.Add(new Room() { RoomID = 12, RoomNumber = 102 });
+            roomTypeGuest.Rooms.Add(new Room() { RoomID = 13, RoomNumber = 103 });
+            roomTypeGuest.Rooms.Add(new Room() { RoomID = 14, RoomNumber = 104 });
             roomTypes.Add(roomTypeGuest);
 
             // Create rooms type Single
-            RoomType roomTypeSingle = new RoomType();
+            RoomType roomTypeSingle = new SingleRoom();
             roomTypeSingle.RoomTypeID = 2;
-            roomTypeSingle.RoomTypeName = RoomTypeName.Single;
+            roomTypeSingle.RoomTypeName = RoomTypeName.Single.ToString();
 
-            roomTypeSingle.Rooms.Add(new SingleRoom() { RoomID = "21", RoomNumber = 201 });
-            roomTypeSingle.Rooms.Add(new SingleRoom() { RoomID = "22", RoomNumber = 202 });
-            roomTypeSingle.Rooms.Add(new SingleRoom() { RoomID = "23", RoomNumber = 203 });
-            roomTypeSingle.Rooms.Add(new SingleRoom() { RoomID = "23", RoomNumber = 204 });
+            roomTypeSingle.Rooms.Add(new Room() { RoomID = 21, RoomNumber = 201 });
+            roomTypeSingle.Rooms.Add(new Room() { RoomID = 22, RoomNumber = 202 });
+            roomTypeSingle.Rooms.Add(new Room() { RoomID = 23, RoomNumber = 203 });
+            roomTypeSingle.Rooms.Add(new Room() { RoomID = 24, RoomNumber = 204 });
             roomTypes.Add(roomTypeSingle);
 
             // Create rooms type Double
-            RoomType roomTypeDouble = new RoomType();
+            RoomType roomTypeDouble = new DoubleRoom();
             roomTypeDouble.RoomTypeID = 3;
-            roomTypeDouble.RoomTypeName = RoomTypeName.Double;
+            roomTypeDouble.RoomTypeName = RoomTypeName.Double.ToString();
 
-            roomTypeDouble.Rooms.Add(new DoubleRoom() { RoomID = "31", RoomNumber = 301 });
-            roomTypeDouble.Rooms.Add(new DoubleRoom() { RoomID = "32", RoomNumber = 302 });
-            roomTypeDouble.Rooms.Add(new DoubleRoom() { RoomID = "33", RoomNumber = 303 });
-            roomTypeDouble.Rooms.Add(new DoubleRoom() { RoomID = "33", RoomNumber = 304 });
+            roomTypeDouble.Rooms.Add(new Room() { RoomID = 31, RoomNumber = 301 });
+            roomTypeDouble.Rooms.Add(new Room() { RoomID = 32, RoomNumber = 302 });
+            roomTypeDouble.Rooms.Add(new Room() { RoomID = 33, RoomNumber = 303 });
+            roomTypeDouble.Rooms.Add(new Room() { RoomID = 34, RoomNumber = 304 });
             roomTypes.Add(roomTypeDouble);
 
             // Create rooms type Suite
-            RoomType roomTypeSuite = new RoomType();
+            RoomType roomTypeSuite = new SuiteRoom();
             roomTypeSuite.RoomTypeID = 4;
-            roomTypeSuite.RoomTypeName = RoomTypeName.Suite;
+            roomTypeSuite.RoomTypeName = RoomTypeName.Suite.ToString();
 
-            roomTypeSuite.Rooms.Add(new SuiteRoom() { RoomID = "41", RoomNumber = 401 });
-            roomTypeSuite.Rooms.Add(new SuiteRoom() { RoomID = "42", RoomNumber = 402 });
-            roomTypeSuite.Rooms.Add(new SuiteRoom() { RoomID = "43", RoomNumber = 403 });
-            roomTypeSuite.Rooms.Add(new SuiteRoom() { RoomID = "43", RoomNumber = 404 });
+            roomTypeSuite.Rooms.Add(new Room() { RoomID = 41, RoomNumber = 401 });
+            roomTypeSuite.Rooms.Add(new Room() { RoomID = 42, RoomNumber = 402 });
+            roomTypeSuite.Rooms.Add(new Room() { RoomID = 43, RoomNumber = 403 });
+            roomTypeSuite.Rooms.Add(new Room() { RoomID = 44, RoomNumber = 404 });
             roomTypes.Add(roomTypeSuite);
 
-            // Create rooms type King
-            RoomType roomTypeKing = new RoomType();
-            roomTypeKing.RoomTypeID = 5;
-            roomTypeKing.RoomTypeName = RoomTypeName.King;
+            //// Create rooms type King
+            //RoomType roomTypeKing = new RoomType();
+            //roomTypeKing.RoomTypeID = 5;
+            //roomTypeKing.RoomTypeName = RoomTypeName.King;
 
-            roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "51", RoomNumber = 501 });
-            roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "52", RoomNumber = 502 });
-            roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "53", RoomNumber = 503 });
-            roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "53", RoomNumber = 504 });
-            roomTypes.Add(roomTypeKing);
+            //roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "51", RoomNumber = 501 });
+            //roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "52", RoomNumber = 502 });
+            //roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "53", RoomNumber = 503 });
+            //roomTypeKing.Rooms.Add(new KingRoom() { RoomID = "53", RoomNumber = 504 });
+            //roomTypes.Add(roomTypeKing);
 
-            // Create rooms type Queen
-            RoomType roomTypeQueen = new RoomType();
-            roomTypeQueen.RoomTypeID = 6;
-            roomTypeQueen.RoomTypeName = RoomTypeName.Queen;
+            //// Create rooms type Queen
+            //RoomType roomTypeQueen = new RoomType();
+            //roomTypeQueen.RoomTypeID = 6;
+            //roomTypeQueen.RoomTypeName = RoomTypeName.Queen;
 
-            roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "61", RoomNumber = 601 });
-            roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "62", RoomNumber = 602 });
-            roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "63", RoomNumber = 603 });
-            roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "63", RoomNumber = 604 });
-            roomTypes.Add(roomTypeQueen);
+            //roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "61", RoomNumber = 601 });
+            //roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "62", RoomNumber = 602 });
+            //roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "63", RoomNumber = 603 });
+            //roomTypeQueen.Rooms.Add(new QueenRoom() { RoomID = "63", RoomNumber = 604 });
+            //roomTypes.Add(roomTypeQueen);
 
         }
 
@@ -139,6 +148,38 @@ namespace MM.View
         private void ForceValidation()
         {
             cboCheckIn.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+        }
+
+        #endregion
+
+        #region READ/WRITE XML AND DISPLAY TO GRID
+
+        private void ReadDataFromXML()
+        {
+            Utilities.XMLController.ReadXML(Common.XML_FILE_NAME, ref this.reservationList);
+        }
+
+        private void DisplayXMLToGrid()
+        {
+            if (reservationList != null)
+            {
+                var query = from reservation in reservationList.Reservations
+                            select reservation;
+
+                grdReservation.ItemsSource = query.ToList();
+            }
+        }
+
+        #endregion
+
+        #region ENABLE/DISABLE BUTTONS
+
+        private void CheckIfRegister(bool isRegister)
+        {
+            btnRegister.IsEnabled = isRegister;
+            btnUpdate.IsEnabled = !isRegister;
+            btnDelete.IsEnabled = !isRegister;
+            btnSave.IsEnabled = !isRegister;
         }
 
         #endregion
@@ -175,10 +216,8 @@ namespace MM.View
 
                 reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
                 reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
-                reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName.ToString();
-                reservation.Room = ((Room)cboRoomNumber.SelectedValue);
-
-
+                reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
+                reservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
                 reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
                 reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
 
@@ -189,9 +228,28 @@ namespace MM.View
 
         }
 
+        private void grdReservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Reservation currentRow = grdReservation.SelectedItem as Reservation;
+
+            RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(currentRow.RoomType));
+            Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == currentRow.RoomNumber);
+
+            txtFirstName.Text = currentRow.Guest.FirstName;
+            txtLastName.Text = currentRow.Guest.LastName;
+            txtAddress.Text = currentRow.Guest.Address;
+            txtPhoneNumber.Text = currentRow.Guest.PhoneNumber;
+            txtNumOfAdult.Text = currentRow.NumberOfAdult.ToString();
+            txtNumOfChild.Text = currentRow.NumberOfChild.ToString();
+            lstRoomType.SelectedItem = reservedRoomType;
+            cboRoomNumber.SelectedItem = reservedRoom;
+            cboCheckIn.Text = currentRow.CheckIn.ToString();
+            cboCheckOut.Text = currentRow.CheckOut.ToString();
+
+        }
+
+
         #endregion
-
-
 
 
     }

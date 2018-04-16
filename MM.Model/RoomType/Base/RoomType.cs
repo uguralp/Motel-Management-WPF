@@ -7,6 +7,18 @@ using System.Xml.Serialization;
 
 namespace MM.Model
 {
+    public enum RoomTypeName
+    {
+        Guest,
+        Single,
+        Double,
+        Twin,
+        Adjoining,
+        Suite,
+        King,
+        Queen
+    }
+
     [Serializable]
     [XmlInclude(typeof(DoubleRoom))]
     [XmlInclude(typeof(GuestRoom))]
@@ -14,13 +26,15 @@ namespace MM.Model
     [XmlInclude(typeof(QueenRoom))]
     [XmlInclude(typeof(SingleRoom))]
     [XmlInclude(typeof(SuiteRoom))]
-    public abstract class Room
+    public abstract class RoomType
     {
-        private string roomID;
-        private int roomNumber;
+        private int roomTypeID;
+        private string roomTypeName;
+        private List<Room> rooms;
 
-        public string RoomID { get => roomID; set => roomID = value; }
-        public int RoomNumber { get => roomNumber; set => roomNumber = value; }
+        public int RoomTypeID { get => roomTypeID; set => roomTypeID = value; }
+        public string RoomTypeName { get => roomTypeName; set => roomTypeName = value; }
+        public List<Room> Rooms { get => rooms; set => rooms = value; }
 
         public abstract void Laundry();
         public abstract void DryCleaning();

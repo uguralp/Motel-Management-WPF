@@ -106,7 +106,7 @@
                         <ListBox Grid.Row="0" Grid.Column="1" 
                                 Name="lstRoomType" Margin="0 0 0 10" 
                                 Height="100"
-                                ItemsSource="{Binding Path = ListRoomTypes}"
+                                ItemsSource="{Binding Path = RoomTypes}"
                                 DisplayMemberPath = "RoomTypeName"
                                 IsSynchronizedWithCurrentItem="true"
                                  />
@@ -115,7 +115,7 @@
                         <Label Grid.Row="1" Grid.Column="0" Content="Room Number" Name="lblRoomNumber" Margin="0 0 0 10" />
                         <ComboBox Grid.Row="1" Grid.Column="1" Name="cboRoomNumber" 
                                 Margin="0 0 0 10" 
-                                ItemsSource="{Binding Path = ListRoomTypes/Rooms}"
+                                ItemsSource="{Binding Path = RoomTypes/Rooms}"
                                 DisplayMemberPath = "RoomNumber"
                                 IsSynchronizedWithCurrentItem="true"
                                   />
@@ -159,8 +159,14 @@
                             </DatePicker.SelectedDate>
                             
                         </DatePicker>
-                        
-                        <Label Grid.Row="0" Grid.Column="2" Content="Error check In" Name="lblCheckInError" Margin="0 0 0 10" Foreground="Red" />
+
+                        <Label Grid.Row="0" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=cboCheckIn,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblCheckInError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
 
                         <!-- Check out -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Check Out" Name="lblCheckOut" />
@@ -186,8 +192,8 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Column="1" Name="btnRegister" Content="REGISTER" Margin="0 0 10 0" Click="btnRegister_Click" />
-                <Button Grid.Column="2" Name="btnDisplay" Content="DISPLAY" Margin="10 0 10 0" />
-                <Button Grid.Column="3" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" />
+                <Button Grid.Column="2" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" />
+                <Button Grid.Column="3" Name="btnSave" Content="SAVE" Margin="10 0 10 0" />
                 <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 0 0" />
             </Grid>
 
@@ -206,7 +212,7 @@
                               Height="300"
                               ItemsSource="{Binding Path = ReservationList.Reservations}"
                               AutoGenerateColumns="False"
-                              IsReadOnly="True"
+                              IsReadOnly="True" SelectionChanged="grdReservation_SelectionChanged"
                               >
                         
                         
@@ -219,7 +225,7 @@
                             <DataGridTextColumn Header="Children" Width="55" Binding="{Binding Path = NumberOfChild}" />
 
                             <DataGridTextColumn Header="Room type" Width="100" Binding="{Binding Path = RoomType}" />
-                            <DataGridTextColumn Header="Room number" Width="100" Binding="{Binding Path = Room.RoomNumber}" />
+                            <DataGridTextColumn Header="Room number" Width="100" Binding="{Binding Path = RoomNumber}" />
                             <DataGridTextColumn Header="Check in" Width="100" Binding="{Binding Path = CheckIn}" />
                             <DataGridTextColumn Header="Check out" Width="100" Binding="{Binding Path = CheckOut}" />
                         </DataGrid.Columns>
