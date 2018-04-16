@@ -25,7 +25,7 @@
                 <!-- Header Left -->
                 <StackPanel Grid.Column="0" Orientation="Vertical">
                     <!-- Guest name, address, phone number -->
-                    <Grid>
+                    <Grid DataContext="{StaticResource CurrentReservation}" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -41,29 +41,107 @@
 
                         <!-- First Name -->
                         <Label Grid.Row="0" Grid.Column="0" Content="First Name" Name="lblFirstName" Margin="0 0 0 10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtFirstName" Margin="0 0 0 10" />
-                        <Label Grid.Row="0" Grid.Column="2" Content="Required field" Name="lblFirstNameError" Margin="0 0 0 10" Foreground="Red" />
+                        <TextBox Grid.Row="0" 
+                                 Grid.Column="1" 
+                                 Name="txtFirstName" 
+                                 
+                                 Margin="0 0 0 10">
+
+                            <TextBox.Text>
+                                <Binding Path="Guest.FirstName" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            
+                        </TextBox>
+                        <Label Grid.Row="0" 
+                               Grid.Column="2" 
+                               Name="lblFirstNameError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" 
+                               Content="{Binding ElementName=txtFirstName,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               />
 
                         <!-- Last Name -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Last Name" Name="lblLasttName"  Margin="0 0 0 10" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtLastName"  Margin="0 0 0 10" />
-                        <Label Grid.Row="1" Grid.Column="2" Content="Required field" Name="lblLasttNameError" Margin="0 0 0 10" Foreground="Red" />
+                        <TextBox Grid.Row="1" 
+                                 Grid.Column="1" 
+                                 Name="txtLastName"  
+                                 Margin="0 0 0 10" >
+                            
+                            <TextBox.Text>
+                                <Binding Path="Guest.LastName" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            
+                        </TextBox>
+                        <Label Grid.Row="1" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=txtLastName,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblLasttNameError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
 
                         <!-- Address -->
                         <Label Grid.Row="2" Grid.Column="0" Content="Address" Name="lblAddress"  Margin="0 0 0 10" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Name="txtAddress"  Margin="0 0 0 10" />
-                        <Label Grid.Row="2" Grid.Column="2" Content="Required field" Name="lblAddressError" Margin="0 0 0 10" Foreground="Red" />
+                        <TextBox Grid.Row="2" 
+                                 Grid.Column="1" 
+                                 Name="txtAddress"  
+                                 Margin="0 0 0 10" >
+                            
+                            <TextBox.Text>
+                                <Binding Path="Guest.Address" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            
+                        </TextBox>
+                        <Label Grid.Row="2" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=txtAddress,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblAddressError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
 
                         <!-- Phone Number -->
                         <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Name="lblPhoneNumber" Margin="0 0 0 10"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Name="txtPhoneNumber" Margin="0 0 0 10" />
-                        <Label Grid.Row="3" Grid.Column="2" Content="Required field" Name="lblPhoneNumberError" Margin="0 0 0 10" Foreground="Red" />
+                        <TextBox Grid.Row="3" 
+                                 Grid.Column="1" 
+                                 Name="txtPhoneNumber" 
+                                 Margin="0 0 0 10" >
+
+                            <TextBox.Text>
+                                <Binding Path="Guest.PhoneNumber" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            
+                        </TextBox>
+                        <Label Grid.Row="3" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=txtPhoneNumber,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblPhoneNumberError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
 
                         
                     </Grid>
 
                     <!-- Number of adult, children -->
-                    <Grid>
+                    <Grid DataContext="{StaticResource CurrentReservation}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -77,13 +155,45 @@
 
                         <!-- Number of Adult -->
                         <Label Grid.Row="0" Grid.Column="0" Content="Number of Adult" Name="lblNumOfAdult" Margin="0 0 0 10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtNumOfAdult" Margin="0 0 0 10" />
-                        <Label Grid.Row="0" Grid.Column="2" Content="Required field" Name="lblNumOfAdultError" Margin="0 0 0 10" Foreground="Red" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtNumOfAdult" Margin="0 0 0 10" >
+                            
+                            <TextBox.Text>
+                                <Binding Path="NumberOfAdult" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            
+                        </TextBox>
+                        <Label Grid.Row="0" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=txtNumOfAdult,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblNumOfAdultError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
 
                         <!-- Number of Children -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Number of Child" Name="lblNumOfChild" Margin="0 0 0 10" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtNumOfChild" Margin="0 0 0 10"/>
-                        <Label Grid.Row="1" Grid.Column="2" Content="Required field" Name="lblNumOfChildError" Margin="0 0 0 10" Foreground="Red" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtNumOfChild" Margin="0 0 0 10">
+                            
+                            <TextBox.Text>
+                                <Binding Path="NumberOfChild" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            
+                        </TextBox>
+                        <Label Grid.Row="1" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=txtNumOfChild,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblNumOfChildError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
 
                     </Grid>
                 </StackPanel>
@@ -123,7 +233,7 @@
                     </Grid>
 
 
-                    <Grid >
+                    <Grid DataContext="{StaticResource CurrentReservation}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -142,14 +252,13 @@
                                     Grid.Column="1" 
                                     Name="cboCheckIn" 
                                     Margin="0 0 0 10" 
-                                    DataContext="{StaticResource CurrentReservation}"
+                                    
                                     ToolTip="{Binding ElementName=cboCheckIn,
                                             Path=(Validation.Errors)[0].ErrorContent}"
                                     >
 
                             <DatePicker.SelectedDate>
-                                <Binding Path="CheckIn" 
-                                         >
+                                <Binding Path="CheckIn">
                                     
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
@@ -170,8 +279,24 @@
 
                         <!-- Check out -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Check Out" Name="lblCheckOut" />
-                        <DatePicker Grid.Row="1" Grid.Column="1" Name="cboCheckOut" />
-                        <Label Grid.Row="1" Grid.Column="2" Content="Error check out" Name="lblCheckOutError" Foreground="Red" />
+                        <DatePicker Grid.Row="1" Grid.Column="1" Name="cboCheckOut" >
+                            
+                            <DatePicker.SelectedDate>
+                                <Binding Path="CheckOut">
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                    </Binding.ValidationRules>
+
+                                </Binding>
+                            </DatePicker.SelectedDate>
+                            
+                        </DatePicker>
+                        <Label Grid.Row="1" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=cboCheckOut,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblCheckOutError" 
+                               Foreground="Red" />
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -180,6 +305,7 @@
             <Grid Margin="0 30 0 30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -194,7 +320,8 @@
                 <Button Grid.Column="1" Name="btnRegister" Content="REGISTER" Margin="0 0 10 0" Click="btnRegister_Click" />
                 <Button Grid.Column="2" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" />
                 <Button Grid.Column="3" Name="btnSave" Content="SAVE" Margin="10 0 10 0" />
-                <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 0 0" />
+                <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 10 0" />
+                <Button Grid.Column="5" Name="btnCancel" Content="CANCEL" Margin="10 0 0 0" Click="btnCancel_Click" />
             </Grid>
 
             <!-- Grid -->

@@ -12,7 +12,9 @@ namespace MM.Utilities
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value == null)
+            string valueToValidate = value as string;
+
+            if (value == null || value.ToString() == "")
             {
                 return new ValidationResult(false, "Field is required");
             }

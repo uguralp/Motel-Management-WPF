@@ -29,5 +29,19 @@
       <RoomType>Single</RoomType>
       <RoomNumber>202</RoomNumber>
     </Reservation>
+    <Reservation>
+      <NumberOfAdult>0</NumberOfAdult>
+      <NumberOfChild>0</NumberOfChild>
+      <CheckIn>2018-04-16T00:00:00</CheckIn>
+      <CheckOut>2018-04-16T00:00:00</CheckOut>
+      <Guest>
+        <FirstName>nghi</FirstName>
+        <LastName>pham</LastName>
+        <Address>89asdfad5f1</Address>
+        <PhoneNumber>564694654</PhoneNumber>
+      </Guest>
+      <RoomType>Double</RoomType>
+      <RoomNumber>304</RoomNumber>
+    </Reservation>
   </ListOfBookedRooms>
 </ReservationList>

@@ -58,17 +58,19 @@ namespace MM.View
             // Display XML data to grid
             DisplayXMLToGrid();
 
-            // Disable UPDATE, DELETE, SAVE buttons
-            CheckIfRegister(true);
+            // Enable/Disable UPDATE, DELETE, SAVE buttons
+            EnableButtonWhenRegister();
 
-            // Set data context as room types
-            //DataContext = roomTypes;
+            Clear();
+
+            // Set data context
             DataContext = this;
+
         }
 
         #endregion
 
-        #region INITIALIZE DATA
+        #region INITIALIZE DATA FOR SCREEN
 
         private void InitRoomType()
         {
@@ -142,12 +144,32 @@ namespace MM.View
 
         }
 
+        private void Clear()
+        {
+            txtFirstName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            txtAddress.Text = string.Empty;
+            txtPhoneNumber.Text = string.Empty;
+            txtNumOfAdult.Text = string.Empty;
+            txtNumOfChild.Text = string.Empty;
+            cboCheckIn.Text = DateTime.Now.ToShortDateString();
+            cboCheckOut.Text = DateTime.Now.ToShortDateString();
+            txtFirstName.Focus();
+        }
         #endregion
 
         #region VALIDATION
+
         private void ForceValidation()
         {
+            txtFirstName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtLastName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtAddress.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtPhoneNumber.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtNumOfAdult.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtNumOfChild.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             cboCheckIn.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+            cboCheckOut.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
         }
 
         #endregion
@@ -174,13 +196,24 @@ namespace MM.View
 
         #region ENABLE/DISABLE BUTTONS
 
-        private void CheckIfRegister(bool isRegister)
+        private void EnableButtonWhenRegister()
         {
-            btnRegister.IsEnabled = isRegister;
-            btnUpdate.IsEnabled = !isRegister;
-            btnDelete.IsEnabled = !isRegister;
-            btnSave.IsEnabled = !isRegister;
+            btnRegister.IsEnabled = true;
+            btnUpdate.IsEnabled = false;
+            btnDelete.IsEnabled = false;
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = false;
         }
+
+        private void EnableButtonWhenUpdate()
+        {
+            btnRegister.IsEnabled = false;
+            btnUpdate.IsEnabled = true;
+            btnDelete.IsEnabled = true;
+            btnSave.IsEnabled = true;
+            btnCancel.IsEnabled = true;            
+        }
+
 
         #endregion
 
@@ -197,9 +230,21 @@ namespace MM.View
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            bool isInvalid = false;
+
             ForceValidation();
 
-            if (!Validation.GetHasError(cboCheckIn))
+            isInvalid = Validation.GetHasError(txtFirstName)
+                        || Validation.GetHasError(txtLastName)
+                        || Validation.GetHasError(txtAddress)
+                        || Validation.GetHasError(txtPhoneNumber)
+                        || Validation.GetHasError(txtNumOfAdult)
+                        || Validation.GetHasError(txtNumOfChild)
+                        || Validation.GetHasError(cboCheckIn)
+                        || Validation.GetHasError(cboCheckOut)
+                ;
+
+            if (!isInvalid)
             {
                 Reservation reservation = new Reservation();
 
@@ -224,12 +269,16 @@ namespace MM.View
                 ReservationList.Add(reservation);
                 XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
                 grdReservation.ItemsSource = ReservationList.Reservations;
+
+                Clear();
             }
 
         }
 
         private void grdReservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            EnableButtonWhenUpdate();
+
             Reservation currentRow = grdReservation.SelectedItem as Reservation;
 
             RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(currentRow.RoomType));
@@ -248,6 +297,12 @@ namespace MM.View
 
         }
 
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            EnableButtonWhenRegister();
+            Clear();
+                
+        }
 
         #endregion
 
