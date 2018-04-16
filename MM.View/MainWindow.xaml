@@ -318,9 +318,9 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Column="1" Name="btnRegister" Content="REGISTER" Margin="0 0 10 0" Click="btnRegister_Click" />
-                <Button Grid.Column="2" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" />
+                <Button Grid.Column="2" Name="btnUpdate" Content="UPDATE" Margin="10 0 10 0" Click="updateClicked" />
                 <Button Grid.Column="3" Name="btnSave" Content="SAVE" Margin="10 0 10 0" />
-                <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 10 0" />
+                <Button Grid.Column="4" Name="btnDelete" Content="DELETE" Margin="10 0 10 0" Click="deleteClicked" />
                 <Button Grid.Column="5" Name="btnCancel" Content="CANCEL" Margin="10 0 0 0" Click="btnCancel_Click" />
             </Grid>
 

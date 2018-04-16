@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace MM.View
 
         private ReservationList reservationList;
         public ReservationList ReservationList { get => reservationList; set => reservationList = value; }
+        int rowIndex;
 
         #endregion
 
@@ -281,9 +283,12 @@ namespace MM.View
 
             Reservation currentRow = grdReservation.SelectedItem as Reservation;
 
+            var currentRowIndex = grdReservation.Items.IndexOf(grdReservation.CurrentItem);
+            rowIndex = currentRowIndex;
+
             RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(currentRow.RoomType));
             Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == currentRow.RoomNumber);
-
+            
             txtFirstName.Text = currentRow.Guest.FirstName;
             txtLastName.Text = currentRow.Guest.LastName;
             txtAddress.Text = currentRow.Guest.Address;
@@ -304,8 +309,72 @@ namespace MM.View
                 
         }
 
+
         #endregion
 
+        private void updateClicked(object sender, RoutedEventArgs e)
+        {
 
+            bool isInvalid = false;
+
+            ForceValidation();
+
+            isInvalid = Validation.GetHasError(txtFirstName)
+                        || Validation.GetHasError(txtLastName)
+                        || Validation.GetHasError(txtAddress)
+                        || Validation.GetHasError(txtPhoneNumber)
+                        || Validation.GetHasError(txtNumOfAdult)
+                        || Validation.GetHasError(txtNumOfChild)
+                        || Validation.GetHasError(cboCheckIn)
+                        || Validation.GetHasError(cboCheckOut)
+                ;
+
+            if (!isInvalid)
+            {
+                reservationList[rowIndex].Guest.FirstName = txtFirstName.Text;
+                reservationList[rowIndex].Guest.LastName = txtLastName.Text;
+                reservationList[rowIndex].Guest.Address = txtAddress.Text;
+                reservationList[rowIndex].Guest.PhoneNumber = txtPhoneNumber.Text;
+                reservationList[rowIndex].NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+                reservationList[rowIndex].NumberOfChild = int.Parse(txtNumOfChild.Text);
+                reservationList[rowIndex].RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
+                reservationList[rowIndex].RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
+                reservationList[rowIndex].CheckIn = DateTime.Parse(cboCheckIn.Text);
+                reservationList[rowIndex].CheckOut = DateTime.Parse(cboCheckOut.Text);
+
+                File.Delete("Reservation_List.xml");
+                XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
+                grdReservation.ItemsSource = ReservationList.Reservations;
+                grdReservation.Items.Refresh();
+                Clear();
+            }
+
+        }
+
+        private void deleteClicked(object sender, RoutedEventArgs e)
+        {
+            bool isInvalid = false;
+
+            ForceValidation();
+
+            isInvalid = Validation.GetHasError(txtFirstName)
+                        || Validation.GetHasError(txtLastName)
+                        || Validation.GetHasError(txtAddress)
+                        || Validation.GetHasError(txtPhoneNumber)
+                        || Validation.GetHasError(txtNumOfAdult)
+                        || Validation.GetHasError(txtNumOfChild)
+                        || Validation.GetHasError(cboCheckIn)
+                        || Validation.GetHasError(cboCheckOut)
+                ;
+
+            if (!isInvalid)
+            {
+                reservationList.RemoveAt(rowIndex);
+                File.Delete("Reservation_List.xml");
+                XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
+                grdReservation.ItemsSource = ReservationList.Reservations;
+                grdReservation.Items.Refresh();
+            }
+        }
     }
 }
