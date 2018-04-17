@@ -156,8 +156,8 @@ namespace MM.View
             txtNumOfAdult.Text = string.Empty;
             txtNumOfChild.Text = string.Empty;
             cboCheckIn.Text = DateTime.Now.ToShortDateString();
-            cboCheckOut.Text = DateTime.Now.ToShortDateString();
-            //txtFirstName.Focus();
+            cboCheckOut.Text = DateTime.Now.ToShortDateString();  // No need to validate
+            txtFirstName.Focus();
         }
         #endregion
 
@@ -335,9 +335,9 @@ namespace MM.View
         {
             try
             {
-                EnableButtonWhenRegister();
                 grdReservation.UnselectAll();
-                Clear();
+                EnableButtonWhenRegister();
+                Clear();                
             }
             catch (Exception ex)
             {

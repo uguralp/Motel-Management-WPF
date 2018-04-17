@@ -33,8 +33,8 @@
     </Reservation>
     <Reservation>
       <ReservationID>30929da6-4371-4607-9eaa-98d09c46ac9b</ReservationID>
-      <NumberOfAdult>3</NumberOfAdult>
-      <NumberOfChild>3</NumberOfChild>
+      <NumberOfAdult>4</NumberOfAdult>
+      <NumberOfChild>5</NumberOfChild>
       <CheckIn>2018-04-18T00:00:00</CheckIn>
       <CheckOut>2018-04-18T00:00:00</CheckOut>
       <Guest>
@@ -45,6 +45,21 @@
       </Guest>
       <RoomType>Double</RoomType>
       <RoomNumber>302</RoomNumber>
+    </Reservation>
+    <Reservation>
+      <ReservationID>7af58850-7542-4440-8ed0-67881fe82126</ReservationID>
+      <NumberOfAdult>2</NumberOfAdult>
+      <NumberOfChild>23</NumberOfChild>
+      <CheckIn>2018-04-16T00:00:00</CheckIn>
+      <CheckOut>2018-04-16T00:00:00</CheckOut>
+      <Guest>
+        <FirstName>asdf</FirstName>
+        <LastName>asdf</LastName>
+        <Address>asdf</Address>
+        <PhoneNumber>asdf</PhoneNumber>
+      </Guest>
+      <RoomType>Guest</RoomType>
+      <RoomNumber>101</RoomNumber>
     </Reservation>
   </ListOfBookedRooms>
 </ReservationList>
