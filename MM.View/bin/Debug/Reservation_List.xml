@@ -3,8 +3,8 @@
   <ListOfBookedRooms>
     <Reservation>
       <ReservationID>8cbe52c2-7e0e-47dd-a11c-bee387085c32</ReservationID>
-      <NumberOfAdult>1</NumberOfAdult>
-      <NumberOfChild>1</NumberOfChild>
+      <NumberOfAdult>3</NumberOfAdult>
+      <NumberOfChild>4</NumberOfChild>
       <CheckIn>2018-04-16T00:00:00</CheckIn>
       <CheckOut>2018-04-16T00:00:00</CheckOut>
       <Guest>
@@ -18,7 +18,7 @@
     </Reservation>
     <Reservation>
       <ReservationID>7501fe2b-2a5f-42b3-931a-91ee32d908d0</ReservationID>
-      <NumberOfAdult>2</NumberOfAdult>
+      <NumberOfAdult>3</NumberOfAdult>
       <NumberOfChild>2</NumberOfChild>
       <CheckIn>2018-04-16T00:00:00</CheckIn>
       <CheckOut>2018-04-16T00:00:00</CheckOut>
@@ -33,18 +33,18 @@
     </Reservation>
     <Reservation>
       <ReservationID>30929da6-4371-4607-9eaa-98d09c46ac9b</ReservationID>
-      <NumberOfAdult>2</NumberOfAdult>
-      <NumberOfChild>2</NumberOfChild>
-      <CheckIn>2018-04-16T00:00:00</CheckIn>
-      <CheckOut>2018-04-16T00:00:00</CheckOut>
+      <NumberOfAdult>3</NumberOfAdult>
+      <NumberOfChild>3</NumberOfChild>
+      <CheckIn>2018-04-18T00:00:00</CheckIn>
+      <CheckOut>2018-04-18T00:00:00</CheckOut>
       <Guest>
-        <FirstName>asdf</FirstName>
-        <LastName>asdf</LastName>
-        <Address>asdf</Address>
-        <PhoneNumber>asdf</PhoneNumber>
+        <FirstName>Phuong</FirstName>
+        <LastName>Nghi</LastName>
+        <Address>aaaaaaaaa</Address>
+        <PhoneNumber>bbbbb</PhoneNumber>
       </Guest>
-      <RoomType>Guest</RoomType>
-      <RoomNumber>101</RoomNumber>
+      <RoomType>Double</RoomType>
+      <RoomNumber>302</RoomNumber>
     </Reservation>
   </ListOfBookedRooms>
 </ReservationList>

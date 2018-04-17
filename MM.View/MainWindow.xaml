@@ -342,11 +342,10 @@
                               IsReadOnly="True" 
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
-                              SelectionChanged="grdReservation_SelectionChanged"
-                              
+                              SelectionChanged="grdReservation_SelectionChanged"                              
                               >
-                        
-                        
+
+
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="First name" Width="100" Binding="{Binding Path = Guest.FirstName}" />
                             <DataGridTextColumn Header="Last name" Width="100" Binding="{Binding Path = Guest.LastName}" />

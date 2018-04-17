@@ -157,7 +157,7 @@ namespace MM.View
             txtNumOfChild.Text = string.Empty;
             cboCheckIn.Text = DateTime.Now.ToShortDateString();
             cboCheckOut.Text = DateTime.Now.ToShortDateString();
-            txtFirstName.Focus();
+            //txtFirstName.Focus();
         }
         #endregion
 
@@ -336,6 +336,7 @@ namespace MM.View
             try
             {
                 EnableButtonWhenRegister();
+                grdReservation.UnselectAll();
                 Clear();
             }
             catch (Exception ex)
@@ -395,7 +396,7 @@ namespace MM.View
                     grdReservation.ItemsSource = ReservationList.Reservations;
                     grdReservation.Items.Refresh();
 
-                    btnCancel_Click(sender, e);
+                    //btnCancel_Click(sender, e);
                 }
             }
             catch (Exception ex)
@@ -428,8 +429,9 @@ namespace MM.View
             }
         }
 
+
         #endregion
 
-
+        
     }
 }
