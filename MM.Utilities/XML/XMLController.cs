@@ -8,21 +8,21 @@ namespace MM.Utilities
     public static class XMLController
     {
 
-        public static void ReadXML(string xmlFileName, ref ReservationList reservationList)
+        public static void ReadXML(ref ReservationList reservationList)
         {
             try
             {
-                if (File.Exists(xmlFileName))
+                if (File.Exists(Common.XML_FILE_NAME))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(ReservationList));
-                    StreamReader reader = new StreamReader(xmlFileName);
+                    StreamReader reader = new StreamReader(Common.XML_FILE_NAME);
                     reservationList = (ReservationList)serializer.Deserialize(reader);
                     reader.Close();
                 }
                 else
                 {
                     // Create xml file
-                    TextWriter writer = new StreamWriter(xmlFileName);
+                    TextWriter writer = new StreamWriter(Common.XML_FILE_NAME);
                     writer.Flush();
                     writer.Close();
                 }
@@ -33,7 +33,7 @@ namespace MM.Utilities
             }
         }
 
-        public static void WriteToXML(string xmlFileName, ReservationList reservationList)
+        public static void WriteToXML(ReservationList reservationList)
         {
             XmlSerializer serializer = null;
             TextWriter writer = null;
@@ -41,7 +41,7 @@ namespace MM.Utilities
             try
             {
                 serializer = new XmlSerializer(typeof(ReservationList));
-                writer = new StreamWriter(xmlFileName);
+                writer = new StreamWriter(Common.XML_FILE_NAME);
                 serializer.Serialize(writer, reservationList);
             }
             catch (Exception)
@@ -54,6 +54,8 @@ namespace MM.Utilities
                 writer.Close();
             }
         }
+
+
 
     }
 }

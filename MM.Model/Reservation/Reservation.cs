@@ -5,6 +5,7 @@ namespace MM.Model
     [Serializable]
     public class Reservation
     {
+        private Guid reservationID;
         private Guest guest;
         private int numberOfAdult;
         private int numberOfChild;
@@ -15,6 +16,7 @@ namespace MM.Model
         
         public Reservation()
         {
+            reservationID = Guid.NewGuid();
             Guest = new Guest();
         }
 
@@ -26,6 +28,7 @@ namespace MM.Model
             this.checkOut = checkOut;
         }
 
+        public Guid ReservationID { get => reservationID; set => reservationID = value; }
         public int NumberOfAdult { get => numberOfAdult; set => numberOfAdult = value; }
         public int NumberOfChild { get => numberOfChild; set => numberOfChild = value; }
         public DateTime? CheckIn { get => checkIn; set => checkIn = value; }

@@ -24,3 +24,12 @@ C:\Users\Uguralp\Desktop\FinalProjectC#\MM.Utilities\obj\Debug\MM.Utilities.cspr
 C:\Users\Uguralp\Desktop\FinalProjectC#\MM.Utilities\obj\Debug\MM.Utilities.csproj.CopyComplete
 C:\Users\Uguralp\Desktop\FinalProjectC#\MM.Utilities\obj\Debug\MM.Utilities.dll
 C:\Users\Uguralp\Desktop\FinalProjectC#\MM.Utilities\obj\Debug\MM.Utilities.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.csprojResolveAssemblyReference.cache
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.csproj.CoreCompileInputs.cache
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.dll
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\bin\Debug\MM.Utilities.dll
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\bin\Debug\MM.Utilities.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\bin\Debug\MM.Model.dll
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\bin\Debug\MM.Model.pdb
+D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180416 (2)\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.csproj.CopyComplete

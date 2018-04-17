@@ -32,6 +32,11 @@ namespace MM.Model
             reservations.Add(reservation);
         }
 
+        public void Remove(Reservation reservation)
+        {
+            reservations.Remove(reservation);
+        }
+
         public void RemoveAt(int index)
         {
             reservations.RemoveAt(index);

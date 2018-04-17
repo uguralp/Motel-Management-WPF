@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Xml.Linq;
 using MM.Model;
 using MM.Utilities;
 
@@ -23,14 +15,20 @@ namespace MM.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region VARIABLES
+
+        private Reservation currentReservation;
+
+        #endregion
+
         #region PROPERTIES
+
         private List<RoomType> roomTypes;
         public List<RoomType> RoomTypes { get => roomTypes; set => roomTypes = value; }
 
         private ReservationList reservationList;
         public ReservationList ReservationList { get => reservationList; set => reservationList = value; }
-        int rowIndex;
-
+       
         #endregion
 
         #region CONSTRUCTOR
@@ -48,6 +46,9 @@ namespace MM.View
 
         private void Init()
         {
+            // Initialize variable holding the current reservations
+            currentReservation = new Reservation();
+
             // Initialize list of reservations
             ReservationList = new ReservationList();
 
@@ -180,7 +181,7 @@ namespace MM.View
 
         private void ReadDataFromXML()
         {
-            Utilities.XMLController.ReadXML(Common.XML_FILE_NAME, ref this.reservationList);
+            Utilities.XMLController.ReadXML(ref this.reservationList);
         }
 
         private void DisplayXMLToGrid()
@@ -205,6 +206,7 @@ namespace MM.View
             btnDelete.IsEnabled = false;
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
+            ToggleInputControls(true);
         }
 
         private void EnableButtonWhenUpdate()
@@ -212,8 +214,14 @@ namespace MM.View
             btnRegister.IsEnabled = false;
             btnUpdate.IsEnabled = true;
             btnDelete.IsEnabled = true;
-            btnSave.IsEnabled = true;
-            btnCancel.IsEnabled = true;            
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = true;
+            ToggleInputControls(false);
+        }
+
+        private void ToggleInputControls(bool isTurnOn)
+        {
+            HeaderInput.IsEnabled = isTurnOn;
         }
 
 
@@ -225,156 +233,203 @@ namespace MM.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Init();
-
-            txtFirstName.Focus();
+            try
+            {
+                Init();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             bool isInvalid = false;
 
-            ForceValidation();
-
-            isInvalid = Validation.GetHasError(txtFirstName)
-                        || Validation.GetHasError(txtLastName)
-                        || Validation.GetHasError(txtAddress)
-                        || Validation.GetHasError(txtPhoneNumber)
-                        || Validation.GetHasError(txtNumOfAdult)
-                        || Validation.GetHasError(txtNumOfChild)
-                        || Validation.GetHasError(cboCheckIn)
-                        || Validation.GetHasError(cboCheckOut)
-                ;
-
-            if (!isInvalid)
+            try
             {
-                Reservation reservation = new Reservation();
+                ForceValidation();
 
-                reservation.Guest = new Guest()
+                isInvalid = Validation.GetHasError(txtFirstName)
+                            || Validation.GetHasError(txtLastName)
+                            || Validation.GetHasError(txtAddress)
+                            || Validation.GetHasError(txtPhoneNumber)
+                            || Validation.GetHasError(txtNumOfAdult)
+                            || Validation.GetHasError(txtNumOfChild)
+                            || Validation.GetHasError(cboCheckIn)
+                            || Validation.GetHasError(cboCheckOut)
+                    ;
+
+                if (!isInvalid)
                 {
-                    FirstName = txtFirstName.Text
-                                                    ,
-                    LastName = txtLastName.Text
-                                                    ,
-                    Address = txtAddress.Text
-                                                    ,
-                    PhoneNumber = txtPhoneNumber.Text
-                };
+                    Reservation reservation = new Reservation();
 
-                reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
-                reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
-                reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                reservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
-                reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
+                    reservation.Guest = new Guest()
+                    {
+                        FirstName = txtFirstName.Text
+                                                        ,
+                        LastName = txtLastName.Text
+                                                        ,
+                        Address = txtAddress.Text
+                                                        ,
+                        PhoneNumber = txtPhoneNumber.Text
+                    };
 
-                ReservationList.Add(reservation);
-                XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
-                grdReservation.ItemsSource = ReservationList.Reservations;
+                    reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+                    reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
+                    reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
+                    reservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
+                    reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
+                    reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
 
-                Clear();
+                    ReservationList.Reservations.Add(reservation);
+                    XMLController.WriteToXML(ReservationList);
+                    grdReservation.ItemsSource = ReservationList.Reservations;
+
+                    Clear();
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void grdReservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EnableButtonWhenUpdate();
+            try
+            {
+                EnableButtonWhenUpdate();
 
-            Reservation currentRow = grdReservation.SelectedItem as Reservation;
+                currentReservation = grdReservation.SelectedItem as Reservation;
 
-            var currentRowIndex = grdReservation.Items.IndexOf(grdReservation.CurrentItem);
-            rowIndex = currentRowIndex;
+                if (currentReservation != null)
+                {
+                    RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(currentReservation.RoomType));
+                    Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == currentReservation.RoomNumber);
 
-            RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(currentRow.RoomType));
-            Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == currentRow.RoomNumber);
+                    txtFirstName.Text = currentReservation.Guest.FirstName;
+                    txtLastName.Text = currentReservation.Guest.LastName;
+                    txtAddress.Text = currentReservation.Guest.Address;
+                    txtPhoneNumber.Text = currentReservation.Guest.PhoneNumber;
+                    txtNumOfAdult.Text = currentReservation.NumberOfAdult.ToString();
+                    txtNumOfChild.Text = currentReservation.NumberOfChild.ToString();
+                    lstRoomType.SelectedItem = reservedRoomType;
+                    cboRoomNumber.SelectedItem = reservedRoom;
+                    cboCheckIn.Text = currentReservation.CheckIn.ToString();
+                    cboCheckOut.Text = currentReservation.CheckOut.ToString();
+
+                    // Validate again to clear all previous errors
+                    ForceValidation();
+                }                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
             
-            txtFirstName.Text = currentRow.Guest.FirstName;
-            txtLastName.Text = currentRow.Guest.LastName;
-            txtAddress.Text = currentRow.Guest.Address;
-            txtPhoneNumber.Text = currentRow.Guest.PhoneNumber;
-            txtNumOfAdult.Text = currentRow.NumberOfAdult.ToString();
-            txtNumOfChild.Text = currentRow.NumberOfChild.ToString();
-            lstRoomType.SelectedItem = reservedRoomType;
-            cboRoomNumber.SelectedItem = reservedRoom;
-            cboCheckIn.Text = currentRow.CheckIn.ToString();
-            cboCheckOut.Text = currentRow.CheckOut.ToString();
-
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            EnableButtonWhenRegister();
-            Clear();
-                
+            try
+            {
+                EnableButtonWhenRegister();
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
-
-
-        #endregion
 
         private void updateClicked(object sender, RoutedEventArgs e)
         {
+            btnRegister.IsEnabled = false;
+            btnUpdate.IsEnabled = false;
+            btnDelete.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnCancel.IsEnabled = true;
+            ToggleInputControls(true);
+        }
 
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
             bool isInvalid = false;
 
-            ForceValidation();
-
-            isInvalid = Validation.GetHasError(txtFirstName)
-                        || Validation.GetHasError(txtLastName)
-                        || Validation.GetHasError(txtAddress)
-                        || Validation.GetHasError(txtPhoneNumber)
-                        || Validation.GetHasError(txtNumOfAdult)
-                        || Validation.GetHasError(txtNumOfChild)
-                        || Validation.GetHasError(cboCheckIn)
-                        || Validation.GetHasError(cboCheckOut)
-                ;
-
-            if (!isInvalid)
+            try
             {
-                reservationList[rowIndex].Guest.FirstName = txtFirstName.Text;
-                reservationList[rowIndex].Guest.LastName = txtLastName.Text;
-                reservationList[rowIndex].Guest.Address = txtAddress.Text;
-                reservationList[rowIndex].Guest.PhoneNumber = txtPhoneNumber.Text;
-                reservationList[rowIndex].NumberOfAdult = int.Parse(txtNumOfAdult.Text);
-                reservationList[rowIndex].NumberOfChild = int.Parse(txtNumOfChild.Text);
-                reservationList[rowIndex].RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                reservationList[rowIndex].RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                reservationList[rowIndex].CheckIn = DateTime.Parse(cboCheckIn.Text);
-                reservationList[rowIndex].CheckOut = DateTime.Parse(cboCheckOut.Text);
+                ForceValidation();
 
-                File.Delete("Reservation_List.xml");
-                XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
-                grdReservation.ItemsSource = ReservationList.Reservations;
-                grdReservation.Items.Refresh();
-                Clear();
+                isInvalid = Validation.GetHasError(txtFirstName)
+                            || Validation.GetHasError(txtLastName)
+                            || Validation.GetHasError(txtAddress)
+                            || Validation.GetHasError(txtPhoneNumber)
+                            || Validation.GetHasError(txtNumOfAdult)
+                            || Validation.GetHasError(txtNumOfChild)
+                            || Validation.GetHasError(cboCheckIn)
+                            || Validation.GetHasError(cboCheckOut)
+                    ;
+
+                if (!isInvalid)
+                {
+                    Reservation selectedReservation = ReservationList.Reservations.FirstOrDefault(i => i.ReservationID == currentReservation.ReservationID);
+                    if (selectedReservation != null)
+                    {
+                        selectedReservation.Guest.FirstName = txtFirstName.Text;
+                        selectedReservation.Guest.LastName = txtLastName.Text;
+                        selectedReservation.Guest.Address = txtAddress.Text;
+                        selectedReservation.Guest.PhoneNumber = txtPhoneNumber.Text;
+                        selectedReservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+                        selectedReservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
+
+                        selectedReservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
+                        selectedReservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
+                        selectedReservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
+                        selectedReservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
+                    }
+
+                    //ReservationList.Add(reservation);
+                    XMLController.WriteToXML(ReservationList);
+                    grdReservation.ItemsSource = ReservationList.Reservations;
+                    grdReservation.Items.Refresh();
+
+                    btnCancel_Click(sender, e);
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void deleteClicked(object sender, RoutedEventArgs e)
         {
-            bool isInvalid = false;
-
-            ForceValidation();
-
-            isInvalid = Validation.GetHasError(txtFirstName)
-                        || Validation.GetHasError(txtLastName)
-                        || Validation.GetHasError(txtAddress)
-                        || Validation.GetHasError(txtPhoneNumber)
-                        || Validation.GetHasError(txtNumOfAdult)
-                        || Validation.GetHasError(txtNumOfChild)
-                        || Validation.GetHasError(cboCheckIn)
-                        || Validation.GetHasError(cboCheckOut)
-                ;
-
-            if (!isInvalid)
+             try
             {
-                reservationList.RemoveAt(rowIndex);
-                File.Delete("Reservation_List.xml");
-                XMLController.WriteToXML(Common.XML_FILE_NAME, ReservationList);
-                grdReservation.ItemsSource = ReservationList.Reservations;
-                grdReservation.Items.Refresh();
+                if (MessageBox.Show("Do you really want to delete the selected reservation?"
+                    , this.Title
+                    , MessageBoxButton.YesNo
+                    , MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    
+                    ReservationList.Remove(currentReservation);
+                    XMLController.WriteToXML(ReservationList);
+                    grdReservation.ItemsSource = ReservationList.Reservations;
+                    grdReservation.Items.Refresh();
+
+                    btnCancel_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
+
+        #endregion
+
+
     }
 }

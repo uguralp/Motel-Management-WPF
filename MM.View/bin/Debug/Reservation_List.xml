@@ -2,43 +2,46 @@
 <ReservationList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ListOfBookedRooms>
     <Reservation>
+      <ReservationID>8cbe52c2-7e0e-47dd-a11c-bee387085c32</ReservationID>
+      <NumberOfAdult>1</NumberOfAdult>
+      <NumberOfChild>1</NumberOfChild>
+      <CheckIn>2018-04-16T00:00:00</CheckIn>
+      <CheckOut>2018-04-16T00:00:00</CheckOut>
+      <Guest>
+        <FirstName>Uguralp</FirstName>
+        <LastName>Onbasli</LastName>
+        <Address>asdfasdf</Address>
+        <PhoneNumber>2313213</PhoneNumber>
+      </Guest>
+      <RoomType>Guest</RoomType>
+      <RoomNumber>101</RoomNumber>
+    </Reservation>
+    <Reservation>
+      <ReservationID>7501fe2b-2a5f-42b3-931a-91ee32d908d0</ReservationID>
       <NumberOfAdult>2</NumberOfAdult>
       <NumberOfChild>2</NumberOfChild>
       <CheckIn>2018-04-16T00:00:00</CheckIn>
       <CheckOut>2018-04-16T00:00:00</CheckOut>
       <Guest>
         <FirstName>Tri</FirstName>
-        <LastName>Phamss</LastName>
-        <Address>296 wilson ave</Address>
-        <PhoneNumber>2268990595</PhoneNumber>
+        <LastName>Pham</LastName>
+        <Address>asdf</Address>
+        <PhoneNumber>asdf</PhoneNumber>
       </Guest>
       <RoomType>Single</RoomType>
       <RoomNumber>202</RoomNumber>
     </Reservation>
     <Reservation>
-      <NumberOfAdult>1</NumberOfAdult>
+      <ReservationID>30929da6-4371-4607-9eaa-98d09c46ac9b</ReservationID>
+      <NumberOfAdult>2</NumberOfAdult>
       <NumberOfChild>2</NumberOfChild>
       <CheckIn>2018-04-16T00:00:00</CheckIn>
       <CheckOut>2018-04-16T00:00:00</CheckOut>
       <Guest>
-        <FirstName>Uguralp</FirstName>
-        <LastName>Onbasli</LastName>
-        <Address>8 Highland Road Eeast</Address>
-        <PhoneNumber>564694654</PhoneNumber>
-      </Guest>
-      <RoomType>Suite</RoomType>
-      <RoomNumber>402</RoomNumber>
-    </Reservation>
-    <Reservation>
-      <NumberOfAdult>1</NumberOfAdult>
-      <NumberOfChild>2</NumberOfChild>
-      <CheckIn>2018-04-16T00:00:00</CheckIn>
-      <CheckOut>2018-04-16T00:00:00</CheckOut>
-      <Guest>
-        <FirstName>sss</FirstName>
-        <LastName>ssssss</LastName>
-        <Address>sdaasdasdasd</Address>
-        <PhoneNumber>23123123</PhoneNumber>
+        <FirstName>asdf</FirstName>
+        <LastName>asdf</LastName>
+        <Address>asdf</Address>
+        <PhoneNumber>asdf</PhoneNumber>
       </Guest>
       <RoomType>Guest</RoomType>
       <RoomNumber>101</RoomNumber>
