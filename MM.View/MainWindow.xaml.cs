@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
 using MM.Model;
 using MM.Utilities;
 
@@ -26,13 +24,23 @@ namespace MM.View
         private List<RoomType> roomTypes;
         public List<RoomType> RoomTypes { get => roomTypes; set => roomTypes = value; }
 
+        /// <summary>
+        /// reservationList
+        /// </summary>
         private ReservationList reservationList;
+
+        /// <summary>
+        /// ReservationList
+        /// </summary>
         public ReservationList ReservationList { get => reservationList; set => reservationList = value; }
-       
+
         #endregion
 
         #region CONSTRUCTOR
 
+        /// <summary>
+        /// MainWindow
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -44,6 +52,9 @@ namespace MM.View
 
         #region BINDING DATA FOR ALL CONTROLS 
 
+        /// <summary>
+        /// Init
+        /// </summary>
         private void Init()
         {
             // Initialize variable holding the current reservations
@@ -52,14 +63,14 @@ namespace MM.View
             // Initialize list of reservations
             ReservationList = new ReservationList();
 
-            // Init data for list of room types and room numbers
-            InitRoomType();            
-
             // Read data from XML
             ReadDataFromXML();
 
             // Display XML data to grid
-            DisplayXMLToGrid();
+            DisplayListToGrid();
+
+            // Init data for list of room types and room numbers
+            InitRoomType();                       
 
             // Enable/Disable UPDATE, DELETE, SAVE buttons
             EnableButtonWhenRegister();
@@ -75,6 +86,9 @@ namespace MM.View
 
         #region INITIALIZE DATA FOR SCREEN
 
+        /// <summary>
+        /// InitRoomType
+        /// </summary>
         private void InitRoomType()
         {
             roomTypes = new List<RoomType>();
@@ -147,6 +161,18 @@ namespace MM.View
 
         }
 
+        /// <summary>
+        /// FilterRoomType
+        /// </summary>
+        private void FilterRoomType()
+        {
+            //var result = roomTypes.Where(p => !ReservationList.Reservations.Any(p2 => p2.RoomType. == p.RoomTypeID));
+            //var result = roomTypes.Where(p => !ReservationList.Reservations.Contains(p));
+        }
+
+        /// <summary>
+        /// Clear
+        /// </summary>
         private void Clear()
         {
             txtFirstName.Text = string.Empty;
@@ -155,14 +181,18 @@ namespace MM.View
             txtPhoneNumber.Text = string.Empty;
             txtNumOfAdult.Text = string.Empty;
             txtNumOfChild.Text = string.Empty;
+            lblSearchResult.Content = string.Empty;
             cboCheckIn.Text = DateTime.Now.ToShortDateString();
-            cboCheckOut.Text = DateTime.Now.ToShortDateString();  // No need to validate
+            cboCheckOut.Text = DateTime.Now.ToShortDateString();
             txtFirstName.Focus();
         }
+
         #endregion
 
         #region VALIDATION
-
+        /// <summary>
+        /// ForceValidation
+        /// </summary>
         private void ForceValidation()
         {
             txtFirstName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -179,26 +209,78 @@ namespace MM.View
 
         #region READ/WRITE XML AND DISPLAY TO GRID
 
+        /// <summary>
+        /// ReadDataFromXML
+        /// </summary>
         private void ReadDataFromXML()
         {
             Utilities.XMLController.ReadXML(ref this.reservationList);
         }
 
-        private void DisplayXMLToGrid()
+        /// <summary>
+        /// DisplayXMLToGrid
+        /// </summary>
+        private void DisplayListToGrid(string textToFilter = "", bool isSearchAll = true)
         {
             if (reservationList != null)
             {
+                int searchFound = 0;
+
+                textToFilter = textToFilter.ToLower().Trim();
+
                 var query = from reservation in reservationList.Reservations
+                            where
+                            (
+                                (
+                                    textToFilter != ""
+                                    &&
+                                    (
+                                        reservation.Guest.FirstName.ToLower().Contains(textToFilter)
+                                            || reservation.Guest.LastName.ToLower().Contains(textToFilter)
+                                            || reservation.Guest.Address.ToLower().Contains(textToFilter)
+                                            || reservation.Guest.PhoneNumber.Contains(textToFilter)
+                                            || reservation.NumberOfAdult.Equals(textToFilter)
+                                            || reservation.NumberOfChild.Equals(textToFilter)
+                                            || reservation.RoomType.ToLower().Contains(textToFilter)
+                                            || reservation.RoomNumber.Equals(textToFilter)
+                                            || reservation.CheckIn.Equals(textToFilter)
+                                            || reservation.CheckOut.Equals(textToFilter)
+                                    )
+                                )
+                                ||
+                                (
+                                    isSearchAll == true
+                                )
+                            )
                             select reservation;
 
                 grdReservation.ItemsSource = query.ToList();
+                searchFound = query.ToList().Count;
+
+                if (!isSearchAll)
+                {
+                    if (searchFound > 0)
+                    {
+                        lblSearchResult.Content = "There are " + searchFound + " records has been found";
+                    }
+                    else
+                    {
+                        lblSearchResult.Content = "There are no records";
+                    }
+                }                
+            }
+            else
+            {
+                lblSearchResult.Content = "No data";
             }
         }
 
         #endregion
 
         #region ENABLE/DISABLE BUTTONS
-
+        /// <summary>
+        /// EnableButtonWhenRegister
+        /// </summary>
         private void EnableButtonWhenRegister()
         {
             btnRegister.IsEnabled = true;
@@ -209,6 +291,9 @@ namespace MM.View
             ToggleInputControls(true);
         }
 
+        /// <summary>
+        /// EnableButtonWhenUpdate
+        /// </summary>
         private void EnableButtonWhenUpdate()
         {
             btnRegister.IsEnabled = false;
@@ -219,11 +304,14 @@ namespace MM.View
             ToggleInputControls(false);
         }
 
+        /// <summary>
+        /// ToggleInputControls
+        /// </summary>
+        /// <param name="isTurnOn"></param>
         private void ToggleInputControls(bool isTurnOn)
         {
             HeaderInput.IsEnabled = isTurnOn;
         }
-
 
         #endregion
 
@@ -231,6 +319,11 @@ namespace MM.View
 
         #region EVENTS
 
+        /// <summary>
+        /// Window_Loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -239,10 +332,18 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Window_Loaded error \n" + ex.Message, 
+                                    this.Title, 
+                                    MessageBoxButton.OK, 
+                                    MessageBoxImage.Exclamation);
             }
         }
 
+        /// <summary>
+        /// btnRegister_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             bool isInvalid = false;
@@ -276,12 +377,12 @@ namespace MM.View
                         PhoneNumber = txtPhoneNumber.Text
                     };
 
+                    reservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
+                    reservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
                     reservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
                     reservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
                     reservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                    reservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                    reservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
-                    reservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
+                    reservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;                    
 
                     ReservationList.Reservations.Add(reservation);
                     XMLController.WriteToXML(ReservationList);
@@ -292,10 +393,18 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("btnRegister_Click Error \n" + ex.Message, 
+                    this.Title, 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Exclamation);
             }
         }
 
+        /// <summary>
+        /// grdReservation_SelectionChanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdReservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -326,11 +435,18 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("grdReservation_SelectionChanged Error \n" + ex.Message, 
+                    this.Title, 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Exclamation);
             }
-            
         }
 
+        /// <summary>
+        /// btnCancel_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -341,20 +457,37 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("btnCancel_Click Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
+        /// <summary>
+        /// updateClicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateClicked(object sender, RoutedEventArgs e)
         {
-            btnRegister.IsEnabled = false;
-            btnUpdate.IsEnabled = false;
-            btnDelete.IsEnabled = false;
-            btnSave.IsEnabled = true;
-            btnCancel.IsEnabled = true;
-            ToggleInputControls(true);
+            try
+            {
+                btnRegister.IsEnabled = false;
+                btnUpdate.IsEnabled = false;
+                btnDelete.IsEnabled = false;
+                btnSave.IsEnabled = true;
+                btnCancel.IsEnabled = true;
+                ToggleInputControls(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("updateClicked Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
+        /// <summary>
+        /// btnSave_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             bool isInvalid = false;
@@ -387,8 +520,8 @@ namespace MM.View
 
                         selectedReservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
                         selectedReservation.RoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                        selectedReservation.CheckIn = DateTime.Parse(cboCheckIn.Text);
-                        selectedReservation.CheckOut = DateTime.Parse(cboCheckOut.Text);
+                        selectedReservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
+                        selectedReservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
                     }
 
                     //ReservationList.Add(reservation);
@@ -401,10 +534,15 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("btnSave_Click Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
+        /// <summary>
+        /// deleteClicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteClicked(object sender, RoutedEventArgs e)
         {
              try
@@ -425,13 +563,38 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("deleteClicked Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DisplayListToGrid(txtSearch.Text, false);
+                DataContext = this;
+            }
+            catch (Exception ex)
+            {
+                switch (ex.Message)
+                {
+                    case "NonVehicleKind":
+                        MessageBox.Show("The vehicle kind does not exist"
+                                            , this.Title, MessageBoxButton.OK
+                                            , MessageBoxImage.Exclamation);
+                        break;
 
+                    default:
+                        MessageBox.Show(ex.Message
+                                            , this.Title
+                                            , MessageBoxButton.OK
+                                            , MessageBoxImage.Exclamation);
+                        break;
+                }
+            }
+        }
         #endregion
 
-        
+
     }
 }

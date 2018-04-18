@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace MM.Utilities
 {
     /// <summary>
-    /// RequiredRule
+    /// DateRule
     /// </summary>
-    public class RequiredRule : ValidationRule
+    public class DateRule : ValidationRule
     {
         /// <summary>
         /// ValidationResult
@@ -21,15 +17,16 @@ namespace MM.Utilities
         /// <returns></returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string valueToValidate = value as string;
+            DateTime dateToCheck = (DateTime)value;
+            dateToCheck = dateToCheck.Date;
+            DateTime currentDate = DateTime.Now.Date;
 
-            if (value == null || value.ToString() == "")
+            if (dateToCheck < currentDate)
             {
-                return new ValidationResult(false, "Field is required");
+                return new ValidationResult(false, "Please select today or after");
             }
             else
             {
-                //DateTime orderDate = (DateTime)value;
                 return ValidationResult.ValidResult;
             }
         }

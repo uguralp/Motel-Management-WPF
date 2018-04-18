@@ -2,64 +2,64 @@
 <ReservationList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ListOfBookedRooms>
     <Reservation>
-      <ReservationID>8cbe52c2-7e0e-47dd-a11c-bee387085c32</ReservationID>
-      <NumberOfAdult>3</NumberOfAdult>
-      <NumberOfChild>4</NumberOfChild>
-      <CheckIn>2018-04-16T00:00:00</CheckIn>
-      <CheckOut>2018-04-16T00:00:00</CheckOut>
-      <Guest>
-        <FirstName>Uguralp</FirstName>
-        <LastName>Onbasli</LastName>
-        <Address>asdfasdf</Address>
-        <PhoneNumber>2313213</PhoneNumber>
-      </Guest>
-      <RoomType>Guest</RoomType>
-      <RoomNumber>101</RoomNumber>
-    </Reservation>
-    <Reservation>
-      <ReservationID>7501fe2b-2a5f-42b3-931a-91ee32d908d0</ReservationID>
-      <NumberOfAdult>3</NumberOfAdult>
-      <NumberOfChild>2</NumberOfChild>
-      <CheckIn>2018-04-16T00:00:00</CheckIn>
-      <CheckOut>2018-04-16T00:00:00</CheckOut>
+      <ReservationID>70ea2bf0-1b67-4108-9e58-e79e5fbc9eaf</ReservationID>
+      <NumberOfAdult>1</NumberOfAdult>
+      <NumberOfChild>1</NumberOfChild>
+      <CheckIn>2018-04-17T00:00:00</CheckIn>
+      <CheckOut>2018-04-19T00:00:00</CheckOut>
       <Guest>
         <FirstName>Tri</FirstName>
         <LastName>Pham</LastName>
-        <Address>asdf</Address>
-        <PhoneNumber>asdf</PhoneNumber>
+        <Address>asdfasfasdf</Address>
+        <PhoneNumber>123 456-7890</PhoneNumber>
+      </Guest>
+      <RoomType>Suite</RoomType>
+      <RoomNumber>402</RoomNumber>
+    </Reservation>
+    <Reservation>
+      <ReservationID>6e59ed20-c586-435b-a677-eb0071422947</ReservationID>
+      <NumberOfAdult>10</NumberOfAdult>
+      <NumberOfChild>2</NumberOfChild>
+      <CheckIn>4/17/2018</CheckIn>
+      <CheckOut>4/19/2018</CheckOut>
+      <Guest>
+        <FirstName>Ugurlap</FirstName>
+        <LastName>Basoni</LastName>
+        <Address>asdfasf</Address>
+        <PhoneNumber>123 456-7890</PhoneNumber>
+      </Guest>
+      <RoomType>Guest</RoomType>
+      <RoomNumber>102</RoomNumber>
+    </Reservation>
+    <Reservation>
+      <ReservationID>35b127e6-1c3b-407e-b521-b248087fe260</ReservationID>
+      <NumberOfAdult>2</NumberOfAdult>
+      <NumberOfChild>3</NumberOfChild>
+      <CheckIn>4/17/2018</CheckIn>
+      <CheckOut>4/17/2018</CheckOut>
+      <Guest>
+        <FirstName>Thuy</FirstName>
+        <LastName>Nguyen</LastName>
+        <Address>asdfasdfasd</Address>
+        <PhoneNumber>456 789-1230</PhoneNumber>
       </Guest>
       <RoomType>Single</RoomType>
       <RoomNumber>202</RoomNumber>
     </Reservation>
     <Reservation>
-      <ReservationID>30929da6-4371-4607-9eaa-98d09c46ac9b</ReservationID>
-      <NumberOfAdult>4</NumberOfAdult>
-      <NumberOfChild>5</NumberOfChild>
-      <CheckIn>2018-04-18T00:00:00</CheckIn>
-      <CheckOut>2018-04-18T00:00:00</CheckOut>
+      <ReservationID>547f6fb4-4bdb-4204-9040-fb19982bacc5</ReservationID>
+      <NumberOfAdult>1</NumberOfAdult>
+      <NumberOfChild>2</NumberOfChild>
+      <CheckIn>4/17/2018</CheckIn>
+      <CheckOut>4/18/2018</CheckOut>
       <Guest>
-        <FirstName>Phuong</FirstName>
-        <LastName>Nghi</LastName>
-        <Address>aaaaaaaaa</Address>
-        <PhoneNumber>bbbbb</PhoneNumber>
+        <FirstName>Tri</FirstName>
+        <LastName>Pham</LastName>
+        <Address>asdfasfasdf</Address>
+        <PhoneNumber>123 456-7890</PhoneNumber>
       </Guest>
-      <RoomType>Double</RoomType>
-      <RoomNumber>302</RoomNumber>
-    </Reservation>
-    <Reservation>
-      <ReservationID>7af58850-7542-4440-8ed0-67881fe82126</ReservationID>
-      <NumberOfAdult>2</NumberOfAdult>
-      <NumberOfChild>23</NumberOfChild>
-      <CheckIn>2018-04-16T00:00:00</CheckIn>
-      <CheckOut>2018-04-16T00:00:00</CheckOut>
-      <Guest>
-        <FirstName>asdf</FirstName>
-        <LastName>asdf</LastName>
-        <Address>asdf</Address>
-        <PhoneNumber>asdf</PhoneNumber>
-      </Guest>
-      <RoomType>Guest</RoomType>
-      <RoomNumber>101</RoomNumber>
+      <RoomType>Suite</RoomType>
+      <RoomNumber>402</RoomNumber>
     </Reservation>
   </ListOfBookedRooms>
 </ReservationList>

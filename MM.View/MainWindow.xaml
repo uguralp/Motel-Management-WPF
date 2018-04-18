@@ -11,6 +11,8 @@
 
     <Window.Resources>
         <model:Reservation x:Key="CurrentReservation" />
+        <utilities:CheckOutTodayConverter x:Key="checkOutTodayConverter" />
+        <utilities:RoomTypeConverter x:Key="roomTypeConverter" />
     </Window.Resources>
 
     <Border Margin="30">
@@ -27,7 +29,6 @@
                     <!-- Guest name, address, phone number -->
                     <Grid DataContext="{StaticResource CurrentReservation}" >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -113,29 +114,7 @@
                                Margin="0 0 0 10" 
                                Foreground="Red" />
 
-                        <!-- Phone Number -->
-                        <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" Name="lblPhoneNumber" Margin="0 0 0 10"/>
-                        <TextBox Grid.Row="3" 
-                                 Grid.Column="1" 
-                                 Name="txtPhoneNumber" 
-                                 Margin="0 0 0 10" >
-
-                            <TextBox.Text>
-                                <Binding Path="Guest.PhoneNumber" >
-                                    <Binding.ValidationRules>
-                                        <utilities:RequiredRule/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                            
-                        </TextBox>
-                        <Label Grid.Row="3" 
-                               Grid.Column="2" 
-                               Content="{Binding ElementName=txtPhoneNumber,
-                                            Path=(Validation.Errors)[0].ErrorContent}" 
-                               Name="lblPhoneNumberError" 
-                               Margin="0 0 0 10" 
-                               Foreground="Red" />
+                        
 
                         
                     </Grid>
@@ -143,6 +122,7 @@
                     <!-- Number of adult, children -->
                     <Grid DataContext="{StaticResource CurrentReservation}">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -153,20 +133,46 @@
                             <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
 
+                        <!-- Phone Number -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Phone Number" Name="lblPhoneNumber" Margin="0 0 0 10"/>
+                        <TextBox Grid.Row="0" 
+                                 Grid.Column="1" 
+                                 Name="txtPhoneNumber" 
+                                 Margin="0 0 0 10" >
+
+                            <TextBox.Text>
+                                <Binding Path="Guest.PhoneNumber" >
+                                    <Binding.ValidationRules>
+                                        <utilities:RequiredRule/>
+                                        <utilities:PhoneNumberRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+
+                        </TextBox>
+                        <Label Grid.Row="0" 
+                               Grid.Column="2" 
+                               Content="{Binding ElementName=txtPhoneNumber,
+                                            Path=(Validation.Errors)[0].ErrorContent}" 
+                               Name="lblPhoneNumberError" 
+                               Margin="0 0 0 10" 
+                               Foreground="Red" />
+
                         <!-- Number of Adult -->
-                        <Label Grid.Row="0" Grid.Column="0" Content="Number of Adult" Name="lblNumOfAdult" Margin="0 0 0 10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtNumOfAdult" Margin="0 0 0 10" >
+                        <Label Grid.Row="1" Grid.Column="0" Content="Number of Adult" Name="lblNumOfAdult" Margin="0 0 0 10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtNumOfAdult" Margin="0 0 0 10" >
                             
                             <TextBox.Text>
                                 <Binding Path="NumberOfAdult" >
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
+                                        <utilities:NumberOfPeopleRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                             
                         </TextBox>
-                        <Label Grid.Row="0" 
+                        <Label Grid.Row="1" 
                                Grid.Column="2" 
                                Content="{Binding ElementName=txtNumOfAdult,
                                             Path=(Validation.Errors)[0].ErrorContent}" 
@@ -175,19 +181,20 @@
                                Foreground="Red" />
 
                         <!-- Number of Children -->
-                        <Label Grid.Row="1" Grid.Column="0" Content="Number of Child" Name="lblNumOfChild" Margin="0 0 0 10" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtNumOfChild" Margin="0 0 0 10">
+                        <Label Grid.Row="2" Grid.Column="0" Content="Number of Child" Name="lblNumOfChild" Margin="0 0 0 10" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="txtNumOfChild" Margin="0 0 0 10">
                             
                             <TextBox.Text>
                                 <Binding Path="NumberOfChild" >
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
+                                        <utilities:NumberOfPeopleRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                             
                         </TextBox>
-                        <Label Grid.Row="1" 
+                        <Label Grid.Row="2" 
                                Grid.Column="2" 
                                Content="{Binding ElementName=txtNumOfChild,
                                             Path=(Validation.Errors)[0].ErrorContent}" 
@@ -241,8 +248,8 @@
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Check in -->
@@ -251,19 +258,20 @@
                         <DatePicker Grid.Row="0" 
                                     Grid.Column="1" 
                                     Name="cboCheckIn" 
-                                    Margin="0 0 0 10" 
-                                    
+                                    Margin="0 0 0 10"                                     
+                                    Text="{Binding Path=CheckIn}"
                                     ToolTip="{Binding ElementName=cboCheckIn,
                                             Path=(Validation.Errors)[0].ErrorContent}"
+                                    
                                     >
 
                             <DatePicker.SelectedDate>
-                                <Binding Path="CheckIn">
-                                    
+                                <Binding Path="CheckIn" >
                                     <Binding.ValidationRules>
-                                        <utilities:RequiredRule/>
+                                        <utilities:RequiredRule />
+                                        <utilities:DateRule  />
+                                        <DataErrorValidationRule/>
                                     </Binding.ValidationRules>
-                                    
                                 </Binding>
                             </DatePicker.SelectedDate>
                             
@@ -284,7 +292,8 @@
                             <DatePicker.SelectedDate>
                                 <Binding Path="CheckOut">
                                     <Binding.ValidationRules>
-                                        <utilities:RequiredRule/>
+                                        <utilities:DateRule  />
+                                        <DataErrorValidationRule/>
                                     </Binding.ValidationRules>
 
                                 </Binding>
@@ -324,7 +333,30 @@
                 <Button Grid.Column="5" Name="btnCancel" Content="CANCEL" Margin="10 0 0 0" Click="btnCancel_Click" />
             </Grid>
 
-            <!-- Grid -->
+            <!-- Search textbox -->
+            <Grid Margin="0 0 0 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Name="txtSearch" />
+                <Button Grid.Column="1" 
+                                Name="btnSearch" 
+                                Content="Search" 
+                                FontWeight="Bold" 
+                                Margin="5 0 10 0" Click="btnSearch_Click" 
+                                
+                        />
+                <Label Grid.Column="2" Name="lblSearchResult" Foreground="Blue" />
+            </Grid>
+            
+            <!-- DataGrid -->
             <Border BorderThickness="2" BorderBrush="Black">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -344,6 +376,16 @@
                               CanUserDeleteRows="False"
                               SelectionChanged="grdReservation_SelectionChanged"                              
                               >
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <Binding Path="CheckOut" Converter="{StaticResource checkOutTodayConverter}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.RowStyle>
 
 
                         <DataGrid.Columns>

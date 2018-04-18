@@ -4,6 +4,9 @@ using System.Xml.Serialization;
 
 namespace MM.Model
 {
+    /// <summary>
+    /// RoomTypeName
+    /// </summary>
     public enum RoomTypeName
     {
         Guest,
@@ -16,6 +19,9 @@ namespace MM.Model
         Queen
     }
 
+    /// <summary>
+    /// RoomType
+    /// </summary>
     [Serializable]
     [XmlInclude(typeof(DoubleRoom))]
     [XmlInclude(typeof(GuestRoom))]
@@ -29,12 +35,34 @@ namespace MM.Model
         private string roomTypeName;
         private List<Room> rooms;
 
+        /// <summary>
+        /// RoomTypeID
+        /// </summary>
         public int RoomTypeID { get => roomTypeID; set => roomTypeID = value; }
+
+        /// <summary>
+        /// RoomTypeName
+        /// </summary>
         public string RoomTypeName { get => roomTypeName; set => roomTypeName = value; }
+
+        /// <summary>
+        /// Rooms
+        /// </summary>
         public List<Room> Rooms { get => rooms; set => rooms = value; }
 
+        /// <summary>
+        /// Laundry
+        /// </summary>
         public abstract void Laundry();
+
+        /// <summary>
+        /// DryCleaning
+        /// </summary>
         public abstract void DryCleaning();
+
+        /// <summary>
+        /// Fitness
+        /// </summary>
         public abstract void Fitness();
     }
 }

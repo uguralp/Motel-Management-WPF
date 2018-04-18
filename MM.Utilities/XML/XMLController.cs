@@ -5,9 +5,15 @@ using MM.Model;
 
 namespace MM.Utilities
 {
+    /// <summary>
+    /// XMLController
+    /// </summary>
     public static class XMLController
     {
-
+        /// <summary>
+        /// ReadXML
+        /// </summary>
+        /// <param name="reservationList"></param>
         public static void ReadXML(ref ReservationList reservationList)
         {
             try
@@ -33,6 +39,10 @@ namespace MM.Utilities
             }
         }
 
+        /// <summary>
+        /// WriteToXML
+        /// </summary>
+        /// <param name="reservationList"></param>
         public static void WriteToXML(ReservationList reservationList)
         {
             XmlSerializer serializer = null;
@@ -54,8 +64,6 @@ namespace MM.Utilities
                 writer.Close();
             }
         }
-
-
 
     }
 }
