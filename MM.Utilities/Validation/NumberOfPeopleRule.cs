@@ -22,9 +22,9 @@ namespace MM.Utilities
             {
                 return new ValidationResult(false, "This field should be a number");
             }
-            else if (numOfPeopleToCheck < 0)
+            else if (numOfPeopleToCheck < 1)
             {
-                return new ValidationResult(false, "Should be a positive number");
+                return new ValidationResult(false, "Should not be smaller than 1");
             }
             else if (numOfPeopleToCheck > 10)
             {

@@ -15,12 +15,12 @@ namespace MM.Model
         private Guest guest;
         private int numberOfAdult;
         private int numberOfChild;
-        //private string roomType;
-        //private Room room;
         private string checkIn;
         private string checkOut;
         private RoomType roomType;
         private decimal totalPrice;
+        private string service;
+        private int numberOfDay;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -37,6 +37,8 @@ namespace MM.Model
         /// </summary>
         public Reservation()
         {
+            NumberOfDay = 0;
+            TotalPrice = 0;
             reservationID = Guid.NewGuid();
             Guest = new Guest();
         }
@@ -64,7 +66,19 @@ namespace MM.Model
         /// <summary>
         /// NumberOfAdult
         /// </summary>
-        public int NumberOfAdult { get => numberOfAdult; set => numberOfAdult = value; }
+        public int NumberOfAdult
+        {
+            get
+            {
+                return numberOfAdult;
+            }
+            set
+            {
+                RaisePropertyChanged("NumberOfAdult");
+                numberOfAdult = value;
+                RaisePropertyChanged("NumberOfAdult");
+            }
+        }
 
         /// <summary>
         /// NumberOfChild
@@ -110,19 +124,19 @@ namespace MM.Model
         /// </summary>
         public Guest Guest { get => guest; set => guest = value; }
 
-        ///// <summary>
-        ///// RoomType
-        ///// </summary>
-        //public string RoomType { get => roomType; set => roomType = value; }
-
         /// <summary>
         /// Error
         /// </summary>
         public string Error => throw new NotImplementedException();
 
-        //public Room Room { get => room; set => room = value; }
-
+        /// <summary>
+        /// RoomType
+        /// </summary>
         public RoomType RoomType { get => roomType; set => roomType = value; }
+
+        /// <summary>
+        /// TotalPrice
+        /// </summary>
         public decimal TotalPrice
         {
             get
@@ -131,21 +145,19 @@ namespace MM.Model
             }
             set
             {
-                //if (roomType.Price != null)
-                //{
-                //    DateTime dateCheckIn = DateTime.Parse(CheckIn);
-                //    DateTime dateCheckOut = DateTime.Parse(CheckOut);
-
-                //    totalPrice = roomType.Price * (decimal)(dateCheckOut - dateCheckIn).TotalDays;
-                //}
-                //else
-                //{
-                //    totalPrice = 0;
-                //}
-
                 totalPrice = value;
             }
         }
+
+        /// <summary>
+        /// Service
+        /// </summary>
+        public string Service { get => service; set => service = value; }
+
+        /// <summary>
+        /// NumberOfDay
+        /// </summary>
+        public int NumberOfDay { get => numberOfDay; set => numberOfDay = value; }
 
         /// <summary>
         /// IsValidCheckInCheckOut
@@ -194,5 +206,22 @@ namespace MM.Model
                 return result;
             }
         }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        private void NotifyPropertyChanging(string propertyName)
+        {
+            if (PropertyChanging != null)
+            {
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+        }
+
+        void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        
     }
 }

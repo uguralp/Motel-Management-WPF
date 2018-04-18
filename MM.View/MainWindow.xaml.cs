@@ -302,9 +302,80 @@ namespace MM.View
 
         #region PROCESS INPUT DATA
 
-        private void GetDataInput()
+        /// <summary>
+        /// GetDataInput
+        /// </summary>
+        /// <param name="currentReservation"></param>
+        /// <returns></returns>
+        private Reservation GetDataInput(Reservation currentReservation)
         {
-            
+            int roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
+            string roomTypeName = string.Empty;
+            Guest tempGuest = null;
+            RoomType tempRoomType = null;
+            List<Room> tempListRooms = new List<Room>();
+            Room tempRoom = null;
+            DateTime dateCheckIn, dateCheckOut;
+
+            tempGuest = new Guest()
+            {
+                FirstName = txtFirstName.Text
+                                                ,
+                LastName = txtLastName.Text
+                                                ,
+                Address = txtAddress.Text
+                                                ,
+                PhoneNumber = txtPhoneNumber.Text
+            };
+            currentReservation.Guest = tempGuest;
+
+            currentReservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
+            currentReservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
+            currentReservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+            currentReservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
+
+            tempRoom = new Room()
+            {
+                IsCheckedOut = (bool)chkIsCheckedOut.IsChecked,
+                RoomNumber = roomNumber
+            };
+            tempListRooms.Add(tempRoom);
+
+            roomTypeName = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
+            if (roomTypeName == RoomTypeName.Guest.ToString())
+            {
+                tempRoomType = new GuestRoom(RoomTypeName.Guest.ToString(), tempListRooms);
+            }
+            else if (roomTypeName == RoomTypeName.Single.ToString())
+            {
+                tempRoomType = new SingleRoom(RoomTypeName.Single.ToString(), tempListRooms);
+            }
+            else if (roomTypeName == RoomTypeName.Double.ToString())
+            {
+                tempRoomType = new DoubleRoom(RoomTypeName.Double.ToString(), tempListRooms);
+            }
+            else if (roomTypeName == RoomTypeName.Suite.ToString())
+            {
+                tempRoomType = new SuiteRoom(RoomTypeName.Suite.ToString(), tempListRooms);
+            }
+            currentReservation.RoomType = tempRoomType;
+
+            dateCheckIn = DateTime.Parse(cboCheckIn.Text);
+            dateCheckOut = DateTime.Parse(cboCheckOut.Text);
+
+            if (dateCheckOut == dateCheckIn)
+            {
+                currentReservation.NumberOfDay = 1;
+            }
+            else if (dateCheckOut > dateCheckIn)
+            {
+                currentReservation.NumberOfDay = (int)(dateCheckOut - dateCheckIn).TotalDays;
+            }
+
+            currentReservation.TotalPrice = tempRoomType.Price * currentReservation.NumberOfDay;
+
+            currentReservation.Service = tempRoomType.Service() + ", " + tempRoomType.ExtraService();
+            return currentReservation;
         }
 
         #endregion
@@ -363,68 +434,11 @@ namespace MM.View
 
                     if (!IsRerservedRoom(roomNumber))
                     {
-                        using (Reservation newReservation = new Reservation())
-                        {
-                            string roomTypeName = string.Empty;
-                            Guest tempGuest = null;
-                            RoomType tempRoomType = null;
-                            List<Room> tempListRooms = new List<Room>();
-                            Room tempRoom = null;
-
-                            tempGuest = new Guest()
-                            {
-                                FirstName = txtFirstName.Text
-                                                                ,
-                                LastName = txtLastName.Text
-                                                                ,
-                                Address = txtAddress.Text
-                                                                ,
-                                PhoneNumber = txtPhoneNumber.Text
-                            };
-                            newReservation.Guest = tempGuest;
-
-                            newReservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
-                            newReservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
-                            newReservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
-                            newReservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
-
-                            tempRoom = new Room()
-                            {
-                                IsCheckedOut = (bool)chkIsCheckedOut.IsChecked,
-                                RoomNumber = roomNumber
-                            };
-                            tempListRooms.Add(tempRoom);
-
-                            roomTypeName = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                            if (roomTypeName == RoomTypeName.Guest.ToString())
-                            {
-                                tempRoomType = new GuestRoom(RoomTypeName.Guest.ToString(), tempListRooms);
-                            }
-                            else if (roomTypeName == RoomTypeName.Single.ToString())
-                            {
-                                tempRoomType = new SingleRoom(RoomTypeName.Single.ToString(), tempListRooms);
-                            }
-                            else if (roomTypeName == RoomTypeName.Double.ToString())
-                            {
-                                tempRoomType = new DoubleRoom(RoomTypeName.Double.ToString(), tempListRooms);
-                            }
-                            else if (roomTypeName == RoomTypeName.Suite.ToString())
-                            {
-                                tempRoomType = new SuiteRoom(RoomTypeName.Suite.ToString(), tempListRooms);
-                            }
-
-                            //newReservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                            newReservation.RoomType = tempRoomType;
-
-                            newReservation.TotalPrice = tempRoomType.Price * (decimal)(DateTime.Parse(cboCheckIn.Text) - DateTime.Parse(cboCheckOut.Text)).TotalDays;
-
-                            //newReservation.Room = tempRoom;
-
-                            ReservationList.Reservations.Add(newReservation);
-                            XMLController.WriteToXML(ReservationList);
-                            grdReservation.ItemsSource = ReservationList.Reservations;
-                        }
-
+                        Reservation newReservation = new Reservation();
+                        newReservation = GetDataInput(newReservation);
+                        ReservationList.Reservations.Add(newReservation);
+                        XMLController.WriteToXML(ReservationList);
+                        grdReservation.ItemsSource = ReservationList.Reservations;
                         Clear();
                     }
                     else
@@ -477,68 +491,13 @@ namespace MM.View
                     if (selectedReservation != null)
                     {
                         roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                        //oldRoomNumber = selectedReservation.Room.RoomNumber;
                         oldRoomNumber = selectedReservation.RoomType.Rooms.FirstOrDefault().RoomNumber;
 
                         isAlreadyReservedRoom = (roomNumber == oldRoomNumber) ? false : IsRerservedRoom(roomNumber);
 
                         if (!isAlreadyReservedRoom)
                         {
-                            string roomTypeName = string.Empty;
-                            Guest tempGuest = null;
-                            RoomType tempRoomType = null;
-                            List<Room> tempListRooms = new List<Room>();
-                            Room tempRoom = null;
-
-                            tempGuest = new Guest()
-                            {
-                                FirstName = txtFirstName.Text
-                                                                ,
-                                LastName = txtLastName.Text
-                                                                ,
-                                Address = txtAddress.Text
-                                                                ,
-                                PhoneNumber = txtPhoneNumber.Text
-                            };
-                            selectedReservation.Guest = tempGuest;
-
-                            selectedReservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
-                            selectedReservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
-                            selectedReservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
-                            selectedReservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
-
-                            tempRoom = new Room()
-                            {
-                                IsCheckedOut = (bool)chkIsCheckedOut.IsChecked,
-                                RoomNumber = roomNumber
-                            };
-                            tempListRooms.Add(tempRoom);
-
-                            roomTypeName = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                            if (roomTypeName == RoomTypeName.Guest.ToString())
-                            {
-                                tempRoomType = new GuestRoom(RoomTypeName.Guest.ToString(), tempListRooms);
-                            }
-                            else if (roomTypeName == RoomTypeName.Single.ToString())
-                            {
-                                tempRoomType = new SingleRoom(RoomTypeName.Single.ToString(), tempListRooms);
-                            }
-                            else if (roomTypeName == RoomTypeName.Double.ToString())
-                            {
-                                tempRoomType = new DoubleRoom(RoomTypeName.Double.ToString(), tempListRooms);
-                            }
-                            else if (roomTypeName == RoomTypeName.Suite.ToString())
-                            {
-                                tempRoomType = new SuiteRoom(RoomTypeName.Suite.ToString(), tempListRooms);
-                            }
-
-                            //selectedReservation.RoomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-                            selectedReservation.RoomType = tempRoomType;
-
-                            selectedReservation.TotalPrice = tempRoomType.Price * (decimal)(DateTime.Parse(cboCheckIn.Text) - DateTime.Parse(cboCheckOut.Text)).TotalDays;
-
-                            //selectedReservation.Room = tempRoom;
-
+                            selectedReservation = GetDataInput(selectedReservation);
                             XMLController.WriteToXML(ReservationList);
                             grdReservation.ItemsSource = ReservationList.Reservations;
                             grdReservation.Items.Refresh();
@@ -574,9 +533,7 @@ namespace MM.View
 
                     if (CurrentReservation != null)
                     {
-                        //RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(CurrentReservation.RoomType));
                         RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(CurrentReservation.RoomType.RoomTypeName));
-                        //Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == CurrentReservation.Room.RoomNumber);
                         Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == CurrentReservation.RoomType.Rooms.FirstOrDefault().RoomNumber);
 
                         txtFirstName.Text = CurrentReservation.Guest.FirstName;
@@ -589,7 +546,6 @@ namespace MM.View
                         cboRoomNumber.SelectedItem = reservedRoom;
                         cboCheckIn.Text = CurrentReservation.CheckIn.ToString();
                         cboCheckOut.Text = CurrentReservation.CheckOut.ToString();
-                        //chkIsCheckedOut.IsChecked = CurrentReservation.Room.IsCheckedOut;
                         chkIsCheckedOut.IsChecked = CurrentReservation.RoomType.Rooms.FirstOrDefault().IsCheckedOut;
 
                         // Validate again to clear all previous errors

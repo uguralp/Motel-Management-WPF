@@ -12,7 +12,7 @@ namespace MM.Utilities
         {
             int numOfPeopleToCheck = int.Parse(value.ToString());
 
-            if (numOfPeopleToCheck < 0 || numOfPeopleToCheck > 10)
+            if (numOfPeopleToCheck < 1 || numOfPeopleToCheck > 10)
             {
                 return Brushes.Red;
             }
