@@ -83,7 +83,19 @@ namespace MM.Model
         /// <summary>
         /// NumberOfChild
         /// </summary>
-        public int NumberOfChild { get => numberOfChild; set => numberOfChild = value; }
+        public int NumberOfChild
+        {
+            get
+            {
+                return numberOfChild;
+            }
+            set
+            {
+                RaisePropertyChanged("NumberOfChild");
+                numberOfChild = value;
+                RaisePropertyChanged("NumberOfChild");
+            }
+        }
 
         /// <summary>
         /// CheckIn

@@ -210,7 +210,7 @@ namespace MM.View
                                             || reservation.NumberOfAdult.Equals(textToFilter)
                                             || reservation.NumberOfChild.Equals(textToFilter)
                                             || reservation.RoomType.RoomTypeName.ToLower().Contains(textToFilter)
-                                            || reservation.RoomType.Rooms.FirstOrDefault().RoomNumber.Equals(textToFilter)
+                                            || reservation.RoomType.Rooms.First().RoomNumber.ToString() == textToFilter
                                             || reservation.CheckIn.Equals(textToFilter)
                                             || reservation.CheckOut.Equals(textToFilter)
                                     )
