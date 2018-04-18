@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MM.Model
 {
@@ -16,28 +15,24 @@ namespace MM.Model
             this.Rooms = new List<Room>();
         }
 
-        /// <summary>
-        /// DryCleaning
-        /// </summary>
-        public override void DryCleaning()
+        public GuestRoom(string roomTypeName, List<Room> listRoom)
         {
-            throw new NotImplementedException();
+            this.RoomTypeName = roomTypeName;
+            this.Rooms = listRoom;
+            this.Price = 35.0m;
         }
 
         /// <summary>
-        /// Fitness
+        /// ExtraService
         /// </summary>
-        public override void Fitness()
+        public override string ExtraService()
         {
-            throw new NotImplementedException();
+            return "ExtraService for Double Room";
         }
 
-        /// <summary>
-        /// Laundry
-        /// </summary>
-        public override void Laundry()
+        public override decimal GetPrice()
         {
-            throw new NotImplementedException();
+            return 35.0m;
         }
     }
 }

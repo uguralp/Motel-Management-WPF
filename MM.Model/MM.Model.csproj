@@ -47,8 +47,6 @@
     <Compile Include="RoomType\Base\RoomType.cs" />
     <Compile Include="RoomType\Derived\DoubleRoom.cs" />
     <Compile Include="RoomType\Derived\GuestRoom.cs" />
-    <Compile Include="RoomType\Derived\KingRoom.cs" />
-    <Compile Include="RoomType\Derived\QueenRoom.cs" />
     <Compile Include="RoomType\Derived\SingleRoom.cs" />
     <Compile Include="RoomType\Derived\SuiteRoom.cs" />
     <Compile Include="Room\Room.cs" />

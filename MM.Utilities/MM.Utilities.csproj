@@ -43,10 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Common.cs" />
-    <Compile Include="Conversion\CheckOutTodayConverter.cs" />
-    <Compile Include="Conversion\RoomTypeConverter.cs" />
+    <Compile Include="Conversion\CheckedOutRoomConverter.cs" />
+    <Compile Include="Conversion\NumberConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validation\DateRule.cs" />
     <Compile Include="Validation\NumberOfPeopleRule.cs" />
     <Compile Include="Validation\PhoneNumberRule.cs" />
     <Compile Include="Validation\RequiredRule.cs" />

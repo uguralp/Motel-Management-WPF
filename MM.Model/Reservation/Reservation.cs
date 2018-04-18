@@ -9,16 +9,18 @@ namespace MM.Model
     /// Reservation
     /// </summary>
     [Serializable]
-    public class Reservation : IDataErrorInfo, INotifyPropertyChanged
+    public class Reservation : IDisposable, IDataErrorInfo, INotifyPropertyChanged
     {
         private Guid reservationID;
         private Guest guest;
         private int numberOfAdult;
         private int numberOfChild;
-        private string roomType;
-        private int roomNumber;
+        //private string roomType;
+        //private Room room;
         private string checkIn;
         private string checkOut;
+        private RoomType roomType;
+        private decimal totalPrice;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,7 +37,6 @@ namespace MM.Model
         /// </summary>
         public Reservation()
         {
-
             reservationID = Guid.NewGuid();
             Guest = new Guest();
         }
@@ -109,20 +110,42 @@ namespace MM.Model
         /// </summary>
         public Guest Guest { get => guest; set => guest = value; }
 
-        /// <summary>
-        /// RoomType
-        /// </summary>
-        public string RoomType { get => roomType; set => roomType = value; }
-
-        /// <summary>
-        /// RoomNumber
-        /// </summary>
-        public int RoomNumber { get => roomNumber; set => roomNumber = value; }
+        ///// <summary>
+        ///// RoomType
+        ///// </summary>
+        //public string RoomType { get => roomType; set => roomType = value; }
 
         /// <summary>
         /// Error
         /// </summary>
         public string Error => throw new NotImplementedException();
+
+        //public Room Room { get => room; set => room = value; }
+
+        public RoomType RoomType { get => roomType; set => roomType = value; }
+        public decimal TotalPrice
+        {
+            get
+            {
+                return totalPrice;
+            }
+            set
+            {
+                //if (roomType.Price != null)
+                //{
+                //    DateTime dateCheckIn = DateTime.Parse(CheckIn);
+                //    DateTime dateCheckOut = DateTime.Parse(CheckOut);
+
+                //    totalPrice = roomType.Price * (decimal)(dateCheckOut - dateCheckIn).TotalDays;
+                //}
+                //else
+                //{
+                //    totalPrice = 0;
+                //}
+
+                totalPrice = value;
+            }
+        }
 
         /// <summary>
         /// IsValidCheckInCheckOut
@@ -146,6 +169,11 @@ namespace MM.Model
             return compareResult;
         }
 
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
         /// <summary>
         /// this
         /// </summary>
@@ -160,6 +188,9 @@ namespace MM.Model
                     result = "Check in must be before Check out";
                 else if (columnName == "CheckOut" && !IsValidCheckInCheckOut())
                     result = "Check out must be after Check in";
+
+
+
                 return result;
             }
         }

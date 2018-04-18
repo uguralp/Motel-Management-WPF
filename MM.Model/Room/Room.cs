@@ -6,13 +6,8 @@ namespace MM.Model
     /// </summary>
     public class Room
     {
-        private int roomID;
         private int roomNumber;
-
-        /// <summary>
-        /// RoomID
-        /// </summary>
-        public int RoomID { get => roomID; set => roomID = value; }
+        private bool isCheckedOut;
 
         /// <summary>
         /// RoomNumber
@@ -20,18 +15,26 @@ namespace MM.Model
         public int RoomNumber { get => roomNumber; set => roomNumber = value; }
 
         /// <summary>
+        /// IsReserved
+        /// </summary>
+        public bool IsCheckedOut { get => isCheckedOut; set => isCheckedOut = value; }
+
+        /// <summary>
         /// Room
         /// </summary>
-        public Room() { }
+        public Room()
+        {
+            this.isCheckedOut = false;
+        }
 
         /// <summary>
         /// Room
         /// </summary>
         /// <param name="RoomID"></param>
         /// <param name="RoomNumber"></param>
-        public Room(int RoomID, int RoomNumber)
+        public Room(int RoomNumber)
         {
-            this.RoomID = RoomID;
+            this.IsCheckedOut = false;
             this.RoomNumber = RoomNumber;
         }
     }

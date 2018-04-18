@@ -12,11 +12,7 @@ namespace MM.Model
         Guest,
         Single,
         Double,
-        Twin,
-        Adjoining,
-        Suite,
-        King,
-        Queen
+        Suite
     }
 
     /// <summary>
@@ -25,20 +21,13 @@ namespace MM.Model
     [Serializable]
     [XmlInclude(typeof(DoubleRoom))]
     [XmlInclude(typeof(GuestRoom))]
-    [XmlInclude(typeof(KingRoom))]
-    [XmlInclude(typeof(QueenRoom))]
     [XmlInclude(typeof(SingleRoom))]
     [XmlInclude(typeof(SuiteRoom))]
     public abstract class RoomType
     {
-        private int roomTypeID;
         private string roomTypeName;
+        private decimal price;
         private List<Room> rooms;
-
-        /// <summary>
-        /// RoomTypeID
-        /// </summary>
-        public int RoomTypeID { get => roomTypeID; set => roomTypeID = value; }
 
         /// <summary>
         /// RoomTypeName
@@ -51,18 +40,24 @@ namespace MM.Model
         public List<Room> Rooms { get => rooms; set => rooms = value; }
 
         /// <summary>
-        /// Laundry
+        /// Price
         /// </summary>
-        public abstract void Laundry();
+        public decimal Price { get => price; set => price = value; }
+
+        public abstract decimal GetPrice();
 
         /// <summary>
-        /// DryCleaning
+        /// Service
         /// </summary>
-        public abstract void DryCleaning();
+        public string Service()
+        {
+            return "Laundry";
+        }
 
         /// <summary>
-        /// Fitness
+        /// ExtraService
         /// </summary>
-        public abstract void Fitness();
+        public abstract string ExtraService();
+
     }
 }

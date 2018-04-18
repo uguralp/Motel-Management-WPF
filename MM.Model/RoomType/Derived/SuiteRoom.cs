@@ -1,28 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MM.Model
 {
+    /// <summary>
+    /// SuiteRoom
+    /// </summary>
     public class SuiteRoom : RoomType
     {
+        /// <summary>
+        /// SuiteRoom
+        /// </summary>
         public SuiteRoom()
         {
             this.Rooms = new List<Room>();
         }
 
-        public override void DryCleaning()
+        public SuiteRoom(string roomTypeName, List<Room> listRoom)
         {
-            throw new NotImplementedException();
+            this.RoomTypeName = roomTypeName;
+            this.Rooms = listRoom;
+            this.Price = 70.0m;
         }
 
-        public override void Fitness()
+        /// <summary>
+        /// ExtraService
+        /// </summary>
+        public override string ExtraService()
         {
-            throw new NotImplementedException();
+            return "ExtraService for Double Room";
         }
 
-        public override void Laundry()
+        public override decimal GetPrice()
         {
-            throw new NotImplementedException();
+            return 70.0m;
         }
     }
 }

@@ -54,9 +54,9 @@ namespace MM.Utilities
                 writer = new StreamWriter(Common.XML_FILE_NAME);
                 serializer.Serialize(writer, reservationList);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {

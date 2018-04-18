@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
-using MM.Model;
 
 namespace MM.Utilities
 {
     [ValueConversion(typeof(int), typeof(Brush))]
-    public class RoomTypeConverter : IValueConverter
+    public class CheckedOutRoomConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string roomType = value.ToString();
+            bool isCheckedOut = (bool)value;
 
-            if (roomType == RoomTypeName.Suite.ToString())
+            if (isCheckedOut)
             {
-                return Brushes.Yellow;
+                return Brushes.Red;
             }
             else
             {

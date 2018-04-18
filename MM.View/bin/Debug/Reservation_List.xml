@@ -2,64 +2,52 @@
 <ReservationList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ListOfBookedRooms>
     <Reservation>
-      <ReservationID>70ea2bf0-1b67-4108-9e58-e79e5fbc9eaf</ReservationID>
+      <ReservationID>663b1934-7772-4669-8a62-4795b46796b6</ReservationID>
       <NumberOfAdult>1</NumberOfAdult>
       <NumberOfChild>1</NumberOfChild>
-      <CheckIn>2018-04-17T00:00:00</CheckIn>
-      <CheckOut>2018-04-19T00:00:00</CheckOut>
+      <CheckIn>4/18/2018</CheckIn>
+      <CheckOut>4/28/2018</CheckOut>
       <Guest>
-        <FirstName>Tri</FirstName>
-        <LastName>Pham</LastName>
-        <Address>asdfasfasdf</Address>
-        <PhoneNumber>123 456-7890</PhoneNumber>
+        <FirstName>asdfasd</FirstName>
+        <LastName>fasd</LastName>
+        <Address>fasdfasdf</Address>
+        <PhoneNumber>1234567890</PhoneNumber>
       </Guest>
-      <RoomType>Suite</RoomType>
-      <RoomNumber>402</RoomNumber>
+      <RoomType xsi:type="GuestRoom">
+        <RoomTypeName>Guest</RoomTypeName>
+        <Rooms>
+          <Room>
+            <RoomNumber>101</RoomNumber>
+            <IsCheckedOut>false</IsCheckedOut>
+          </Room>
+        </Rooms>
+        <Price>35.0</Price>
+      </RoomType>
+      <TotalPrice>-350.0</TotalPrice>
     </Reservation>
     <Reservation>
-      <ReservationID>6e59ed20-c586-435b-a677-eb0071422947</ReservationID>
-      <NumberOfAdult>10</NumberOfAdult>
-      <NumberOfChild>2</NumberOfChild>
-      <CheckIn>4/17/2018</CheckIn>
-      <CheckOut>4/19/2018</CheckOut>
-      <Guest>
-        <FirstName>Ugurlap</FirstName>
-        <LastName>Basoni</LastName>
-        <Address>asdfasf</Address>
-        <PhoneNumber>123 456-7890</PhoneNumber>
-      </Guest>
-      <RoomType>Guest</RoomType>
-      <RoomNumber>102</RoomNumber>
-    </Reservation>
-    <Reservation>
-      <ReservationID>35b127e6-1c3b-407e-b521-b248087fe260</ReservationID>
+      <ReservationID>2285d562-21ff-489f-b5b4-e2ad66887cd3</ReservationID>
       <NumberOfAdult>2</NumberOfAdult>
-      <NumberOfChild>3</NumberOfChild>
-      <CheckIn>4/17/2018</CheckIn>
-      <CheckOut>4/17/2018</CheckOut>
-      <Guest>
-        <FirstName>Thuy</FirstName>
-        <LastName>Nguyen</LastName>
-        <Address>asdfasdfasd</Address>
-        <PhoneNumber>456 789-1230</PhoneNumber>
-      </Guest>
-      <RoomType>Single</RoomType>
-      <RoomNumber>202</RoomNumber>
-    </Reservation>
-    <Reservation>
-      <ReservationID>547f6fb4-4bdb-4204-9040-fb19982bacc5</ReservationID>
-      <NumberOfAdult>1</NumberOfAdult>
       <NumberOfChild>2</NumberOfChild>
-      <CheckIn>4/17/2018</CheckIn>
-      <CheckOut>4/18/2018</CheckOut>
+      <CheckIn>4/18/2018</CheckIn>
+      <CheckOut>4/21/2018</CheckOut>
       <Guest>
-        <FirstName>Tri</FirstName>
-        <LastName>Pham</LastName>
-        <Address>asdfasfasdf</Address>
-        <PhoneNumber>123 456-7890</PhoneNumber>
+        <FirstName>asdagfasdf</FirstName>
+        <LastName>asasdfasd</LastName>
+        <Address>fasdfas</Address>
+        <PhoneNumber>1234567890</PhoneNumber>
       </Guest>
-      <RoomType>Suite</RoomType>
-      <RoomNumber>402</RoomNumber>
+      <RoomType xsi:type="SuiteRoom">
+        <RoomTypeName>Suite</RoomTypeName>
+        <Rooms>
+          <Room>
+            <RoomNumber>402</RoomNumber>
+            <IsCheckedOut>false</IsCheckedOut>
+          </Room>
+        </Rooms>
+        <Price>70.0</Price>
+      </RoomType>
+      <TotalPrice>-210.0</TotalPrice>
     </Reservation>
   </ListOfBookedRooms>
 </ReservationList>
