@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -16,11 +17,15 @@ namespace MM.Model
         private int numberOfAdult;
         private int numberOfChild;
         private string checkIn;
-        private string checkOut;
-        private RoomType roomType;
+        private string checkOut;        
         private decimal totalPrice;
         private string service;
         private int numberOfDay;
+
+        private RoomType roomType;
+        //private string roomType;
+        //private Room room;
+        //private bool isCheckedOut;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -37,10 +42,22 @@ namespace MM.Model
         /// </summary>
         public Reservation()
         {
+            CheckIn = DateTime.Today.ToLongDateString();
+            CheckOut = DateTime.Today.ToLongDateString();
             NumberOfDay = 0;
             TotalPrice = 0;
             reservationID = Guid.NewGuid();
             Guest = new Guest();
+
+            Room firstGuestRoom = new Room() { IsCheckedOut = false, RoomNumber = 101 };
+            List<Room> listGuestRoom = new List<Room>();
+            listGuestRoom.Add(firstGuestRoom);
+
+            RoomType = new GuestRoom() { RoomTypeName = RoomTypeName.Guest.ToString(),  Rooms = listGuestRoom };
+            //RoomType = RoomTypeName.Guest.ToString();
+            //Room = new Room() {  IsCheckedOut = false, RoomNumber = 101};
+            //isCheckedOut = false;
+
         }
 
         /// <summary>
@@ -111,6 +128,8 @@ namespace MM.Model
                 checkIn = value;
                 NotifyPropertyChanged("CheckIn");
                 NotifyPropertyChanged("CheckOut");
+                NotifyPropertyChanged("NumberOfDay");
+                NotifyPropertyChanged("TotalPrice");
             }            
         }
 
@@ -128,6 +147,8 @@ namespace MM.Model
                 checkOut = value;
                 NotifyPropertyChanged("CheckIn");
                 NotifyPropertyChanged("CheckOut");
+                NotifyPropertyChanged("NumberOfDay");
+                NotifyPropertyChanged("TotalPrice");
             }
         }
 
@@ -144,7 +165,43 @@ namespace MM.Model
         /// <summary>
         /// RoomType
         /// </summary>
-        public RoomType RoomType { get => roomType; set => roomType = value; }
+        //public RoomType RoomType { get => roomType; set => roomType = value; }
+        public RoomType RoomType
+        {
+            get
+            {
+                return roomType;
+            }
+            set
+            {
+                roomType = value;
+                NotifyPropertyChanged("RoomType");
+            }
+        }
+
+        //public string RoomType
+        //{
+        //    get
+        //    {
+        //        return roomType;
+        //    }
+        //    set
+        //    {
+        //        roomType = value;
+        //    }
+        //}
+        //public Room Room
+        //{
+        //    get
+        //    {
+        //        return room;
+        //    }
+        //    set
+        //    {
+        //        room = value;
+        //    }
+        //}
+        //public bool IsCheckedOut { get => isCheckedOut; set => isCheckedOut = value; }
 
         /// <summary>
         /// TotalPrice
@@ -169,7 +226,17 @@ namespace MM.Model
         /// <summary>
         /// NumberOfDay
         /// </summary>
-        public int NumberOfDay { get => numberOfDay; set => numberOfDay = value; }
+        public int NumberOfDay
+        {
+            get
+            {
+                return numberOfDay;                
+            }
+            set
+            {
+                numberOfDay = value;                
+            }
+        }
 
         /// <summary>
         /// IsValidCheckInCheckOut
@@ -212,8 +279,6 @@ namespace MM.Model
                     result = "Check in must be before Check out";
                 else if (columnName == "CheckOut" && !IsValidCheckInCheckOut())
                     result = "Check out must be after Check in";
-
-
 
                 return result;
             }

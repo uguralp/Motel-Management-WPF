@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MM.View"
         xmlns:utilities="clr-namespace:MM.Utilities;assembly=MM.Utilities"
         xmlns:model="clr-namespace:MM.Model;assembly=MM.Model"
+        xmlns:local="clr-namespace:MM.View"
         mc:Ignorable="d"
         Title="Motel Management" Height="750" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" WindowState="Maximized">
 
@@ -26,14 +26,13 @@
 
                 <!-- Header Left -->
                 <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <!-- Guest name, address, phone number -->
-                    <Grid DataContext="{StaticResource currentReservation}" >
+                    <!-- Guest first name, last name, address, phone number -->                    
+                    <Grid DataContext="{Binding CurrentReservation}" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
@@ -75,7 +74,7 @@
                                  Margin="0 0 0 10" >
                             
                             <TextBox.Text>
-                                <Binding Path="Guest.LastName" >
+                                <Binding Path="Guest.LastName">
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
                                     </Binding.ValidationRules>
@@ -100,7 +99,7 @@
                                  Margin="0 0 0 10" >
                             
                             <TextBox.Text>
-                                <Binding Path="Guest.Address" >
+                                <Binding Path="Guest.Address">
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
                                     </Binding.ValidationRules>
@@ -116,19 +115,15 @@
                                Margin="0 0 0 10" 
                                Foreground="Red" />
 
-                        
-
-                        
                     </Grid>
 
-                    <!-- Number of adult, children -->
-                    <Grid DataContext="{StaticResource currentReservation}">
+                    <!-- Phone number, number of adult, children -->
+                    <Grid DataContext="{Binding CurrentReservation}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="2*"/>
@@ -141,10 +136,10 @@
                                  Grid.Column="1" 
                                  Name="txtPhoneNumber" 
                                  ToolTip="{Binding ElementName=txtPhoneNumber, Path=(Validation.Errors)[0].ErrorContent}"
-                                 Margin="0 0 0 10" >
+                                 Margin="0.4,0,0.2,0" Height="25" VerticalAlignment="Top" >
 
                             <TextBox.Text>
-                                <Binding Path="Guest.PhoneNumber" >
+                                <Binding Path="Guest.PhoneNumber">
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
                                         <utilities:PhoneNumberRule/>
@@ -167,7 +162,6 @@
                                  Grid.Column="1" 
                                  TextWrapping="Wrap"
                                  Name="txtNumOfAdult" 
-                                 DataContext="{StaticResource currentReservation}"
                                  Foreground="{Binding Path=NumberOfAdult, 
                                     Converter={StaticResource numberConverter},
                                     UpdateSourceTrigger=PropertyChanged
@@ -206,7 +200,7 @@
                                  Margin="0 0 0 10">
                             
                             <TextBox.Text>
-                                <Binding Path="NumberOfChild" >
+                                <Binding Path="NumberOfChild">
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
                                         <utilities:NumberOfPeopleRule/>
@@ -228,7 +222,7 @@
 
                 <!-- Header Right -->
                 <StackPanel Grid.Column="1" Orientation="Vertical"  Margin="30 0 0 0">
-                    <Grid >
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -244,7 +238,7 @@
                         <ListBox Grid.Row="0" Grid.Column="1" 
                                 Name="lstRoomType" Margin="0 0 0 5" 
                                 Height="85"
-                                ItemsSource="{Binding Path = RoomTypes}"
+                                ItemsSource="{Binding Path=RoomTypes}"
                                 DisplayMemberPath = "RoomTypeName"
                                 IsSynchronizedWithCurrentItem="true"
                                  />
@@ -253,20 +247,18 @@
                         <Label Grid.Row="1" Grid.Column="0" Content="Room Number" Name="lblRoomNumber" Margin="0 0 0 5" />
                         <ComboBox Grid.Row="1" Grid.Column="1" Name="cboRoomNumber" 
                                 Margin="0 0 0 5" 
-                                ItemsSource="{Binding Path = RoomTypes/Rooms}"
+                                ItemsSource="{Binding Path=RoomTypes/Rooms}"
                                 DisplayMemberPath = "RoomNumber"
                                 IsSynchronizedWithCurrentItem="true"
                                   />
                     </Grid>
 
-
-                    <Grid DataContext="{StaticResource currentReservation}">
+                    <Grid DataContext="{Binding CurrentReservation}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="2*"/>
@@ -281,13 +273,13 @@
                                     Grid.Column="1" 
                                     Name="cboCheckIn" 
                                     Margin="0 0 0 5"                                     
-                                    Text="{Binding Path=CheckIn}"
+                                    Text="{Binding Path=CheckIn}"                                    
                                     ToolTip="{Binding ElementName=cboCheckIn,
                                             Path=(Validation.Errors)[0].ErrorContent}"                                    
                                     >
 
                             <DatePicker.SelectedDate>
-                                <Binding Path="CheckIn" >
+                                <Binding Path="CheckIn"  >
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule />
                                         <DataErrorValidationRule/>
@@ -316,7 +308,7 @@
                                     >
                             
                             <DatePicker.SelectedDate>
-                                <Binding Path="CheckOut">
+                                <Binding Path="CheckOut" >
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule />
                                         <DataErrorValidationRule/>
@@ -335,14 +327,17 @@
                         
                         <!-- IsReserved Checkbox-->
                         <Label Grid.Row="2" Grid.Column="0" Content="Is Checked Out" Name="lblsChecedkOut"  />
-                        <CheckBox Grid.Row="2" Grid.Column="1" Name="chkIsCheckedOut" Margin="0 5 0 0"/>
+                        <CheckBox Grid.Row="2" Grid.Column="1" 
+                                  Name="chkIsCheckedOut" 
+                                  Margin="0 5 0 0"
+                                  IsChecked="{Binding Path=RoomType.Rooms[0].IsCheckedOut }"
+                                  />
+                        <!--<CheckBox Grid.Row="2" Grid.Column="1" 
+                                  Name="chkIsCheckedOut" 
+                                  Margin="0 5 0 0"
+                                  IsChecked="{Binding Path=Room.IsCheckedOut }"
+                                  />-->
 
-                        <!-- Price -->
-                        <!--<Label Grid.Row="2" Grid.Column="2" Content="Price: " Name="lblPrice" HorizontalAlignment="Right"  />
-                        <Label Grid.Row="2" 
-                               Grid.Column="3" 
-                               Content="{Binding Path = TotalPrice }"
-                               Name="lblPriceDisplay"  />-->
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -389,8 +384,7 @@
                                 Name="btnSearch" 
                                 Content="Search" 
                                 FontWeight="Bold" 
-                                Margin="5 0 10 0" Click="btnSearch_Click" 
-                                
+                                Margin="5 0 10 0" Click="btnSearch_Click"                                 
                         />
                 <Label Grid.Column="2" Name="lblSearchResult" Foreground="Blue" />
             </Grid>
@@ -408,7 +402,7 @@
 
                     <DataGrid Name="grdReservation" 
                               Height="300"
-                              ItemsSource="{Binding Path = ReservationList.Reservations, Mode=OneWay}"
+                              ItemsSource="{Binding Path = ReservationList.Reservations}"
                               AutoGenerateColumns="False"
                               IsReadOnly="True" 
                               CanUserAddRows="False"
@@ -425,7 +419,6 @@
                                 </Setter>
                             </Style>
                         </DataGrid.RowStyle>
-
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="First name" Width="100" Binding="{Binding Path = Guest.FirstName}" />
@@ -444,7 +437,7 @@
                             <DataGridTemplateColumn Header="Is Checked Out" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding RoomType.Rooms[0].IsCheckedOut}"/>
+                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding Path = RoomType.Rooms[0].IsCheckedOut}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

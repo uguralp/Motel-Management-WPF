@@ -12,6 +12,11 @@ namespace MM.Model
         private string phoneNumber;
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public Guest() { }
+
+        /// <summary>
         /// FirstName
         /// </summary>
         public string FirstName { get => firstName; set => firstName = value; }

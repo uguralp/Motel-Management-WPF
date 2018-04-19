@@ -62,14 +62,5 @@ namespace MM.Model
             reservations.Remove(reservation);
         }
 
-        /// <summary>
-        /// RemoveAt
-        /// </summary>
-        /// <param name="index"></param>
-        public void RemoveAt(int index)
-        {
-            reservations.RemoveAt(index);
-        }
-
     }
 }

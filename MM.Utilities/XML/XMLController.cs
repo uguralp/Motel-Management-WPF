@@ -8,7 +8,7 @@ namespace MM.Utilities
     /// <summary>
     /// XMLController
     /// </summary>
-    public static class XMLController
+    public class XMLController
     {
         /// <summary>
         /// ReadXML
