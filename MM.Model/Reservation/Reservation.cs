@@ -21,12 +21,8 @@ namespace MM.Model
         private decimal totalPrice;
         private string service;
         private int numberOfDay;
-
         private RoomType roomType;
-        //private string roomType;
-        //private Room room;
-        //private bool isCheckedOut;
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -54,10 +50,6 @@ namespace MM.Model
             listGuestRoom.Add(firstGuestRoom);
 
             RoomType = new GuestRoom() { RoomTypeName = RoomTypeName.Guest.ToString(),  Rooms = listGuestRoom };
-            //RoomType = RoomTypeName.Guest.ToString();
-            //Room = new Room() {  IsCheckedOut = false, RoomNumber = 101};
-            //isCheckedOut = false;
-
         }
 
         /// <summary>
@@ -91,7 +83,6 @@ namespace MM.Model
             }
             set
             {
-                RaisePropertyChanged("NumberOfAdult");
                 numberOfAdult = value;
                 RaisePropertyChanged("NumberOfAdult");
             }
@@ -108,7 +99,6 @@ namespace MM.Model
             }
             set
             {
-                RaisePropertyChanged("NumberOfChild");
                 numberOfChild = value;
                 RaisePropertyChanged("NumberOfChild");
             }
@@ -128,8 +118,6 @@ namespace MM.Model
                 checkIn = value;
                 NotifyPropertyChanged("CheckIn");
                 NotifyPropertyChanged("CheckOut");
-                NotifyPropertyChanged("NumberOfDay");
-                NotifyPropertyChanged("TotalPrice");
             }            
         }
 
@@ -147,8 +135,6 @@ namespace MM.Model
                 checkOut = value;
                 NotifyPropertyChanged("CheckIn");
                 NotifyPropertyChanged("CheckOut");
-                NotifyPropertyChanged("NumberOfDay");
-                NotifyPropertyChanged("TotalPrice");
             }
         }
 
@@ -165,7 +151,6 @@ namespace MM.Model
         /// <summary>
         /// RoomType
         /// </summary>
-        //public RoomType RoomType { get => roomType; set => roomType = value; }
         public RoomType RoomType
         {
             get
@@ -175,34 +160,9 @@ namespace MM.Model
             set
             {
                 roomType = value;
-                NotifyPropertyChanged("RoomType");
             }
         }
-
-        //public string RoomType
-        //{
-        //    get
-        //    {
-        //        return roomType;
-        //    }
-        //    set
-        //    {
-        //        roomType = value;
-        //    }
-        //}
-        //public Room Room
-        //{
-        //    get
-        //    {
-        //        return room;
-        //    }
-        //    set
-        //    {
-        //        room = value;
-        //    }
-        //}
-        //public bool IsCheckedOut { get => isCheckedOut; set => isCheckedOut = value; }
-
+        
         /// <summary>
         /// TotalPrice
         /// </summary>

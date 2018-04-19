@@ -26,6 +26,5 @@ namespace MM.Model
         {
             this.isCheckedOut = false;
         }
-
     }
 }

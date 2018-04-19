@@ -414,7 +414,7 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show("btnRegister_Click Error \n" + ex.Message, 
+                MessageBox.Show("Error register \n" + ex.Message, 
                     this.Title, 
                     MessageBoxButton.OK, 
                     MessageBoxImage.Exclamation);
@@ -476,7 +476,7 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show("btnSave_Click Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Error save \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 

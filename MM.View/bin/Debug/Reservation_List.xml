@@ -105,5 +105,31 @@
       <Service>Laundry,ExtraService for Double Room</Service>
       <NumberOfDay>1</NumberOfDay>
     </Reservation>
+    <Reservation>
+      <ReservationID>f058a7a5-30bb-42fb-b2a5-d8313ba3242c</ReservationID>
+      <NumberOfAdult>2</NumberOfAdult>
+      <NumberOfChild>3</NumberOfChild>
+      <CheckIn>4/19/2018 12:00:00 AM</CheckIn>
+      <CheckOut>4/19/2018 12:00:00 AM</CheckOut>
+      <Guest>
+        <FirstName>sdfaasd</FirstName>
+        <LastName>fasdf</LastName>
+        <Address>asasdf</Address>
+        <PhoneNumber>1234567890</PhoneNumber>
+      </Guest>
+      <RoomType xsi:type="GuestRoom">
+        <RoomTypeName>Guest</RoomTypeName>
+        <Rooms>
+          <Room>
+            <RoomNumber>102</RoomNumber>
+            <IsCheckedOut>false</IsCheckedOut>
+          </Room>
+        </Rooms>
+        <Price>35.0</Price>
+      </RoomType>
+      <TotalPrice>35.0</TotalPrice>
+      <Service>Laundry,ExtraService for Double Room</Service>
+      <NumberOfDay>1</NumberOfDay>
+    </Reservation>
   </ListOfBookedRooms>
 </ReservationList>
