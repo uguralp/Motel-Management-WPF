@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -17,12 +16,12 @@ namespace MM.Model
         private int numberOfAdult;
         private int numberOfChild;
         private string checkIn;
-        private string checkOut;        
+        private string checkOut;
+        private RoomType roomType;
         private decimal totalPrice;
         private string service;
         private int numberOfDay;
-        private RoomType roomType;
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -38,18 +37,10 @@ namespace MM.Model
         /// </summary>
         public Reservation()
         {
-            CheckIn = DateTime.Today.ToLongDateString();
-            CheckOut = DateTime.Today.ToLongDateString();
             NumberOfDay = 0;
             TotalPrice = 0;
             reservationID = Guid.NewGuid();
             Guest = new Guest();
-
-            Room firstGuestRoom = new Room() { IsCheckedOut = false, RoomNumber = 101 };
-            List<Room> listGuestRoom = new List<Room>();
-            listGuestRoom.Add(firstGuestRoom);
-
-            RoomType = new GuestRoom() { RoomTypeName = RoomTypeName.Guest.ToString(),  Rooms = listGuestRoom };
         }
 
         /// <summary>
@@ -83,6 +74,7 @@ namespace MM.Model
             }
             set
             {
+                RaisePropertyChanged("NumberOfAdult");
                 numberOfAdult = value;
                 RaisePropertyChanged("NumberOfAdult");
             }
@@ -99,6 +91,7 @@ namespace MM.Model
             }
             set
             {
+                RaisePropertyChanged("NumberOfChild");
                 numberOfChild = value;
                 RaisePropertyChanged("NumberOfChild");
             }
@@ -151,18 +144,8 @@ namespace MM.Model
         /// <summary>
         /// RoomType
         /// </summary>
-        public RoomType RoomType
-        {
-            get
-            {
-                return roomType;
-            }
-            set
-            {
-                roomType = value;
-            }
-        }
-        
+        public RoomType RoomType { get => roomType; set => roomType = value; }
+
         /// <summary>
         /// TotalPrice
         /// </summary>
@@ -186,17 +169,7 @@ namespace MM.Model
         /// <summary>
         /// NumberOfDay
         /// </summary>
-        public int NumberOfDay
-        {
-            get
-            {
-                return numberOfDay;                
-            }
-            set
-            {
-                numberOfDay = value;                
-            }
-        }
+        public int NumberOfDay { get => numberOfDay; set => numberOfDay = value; }
 
         /// <summary>
         /// IsValidCheckInCheckOut
@@ -239,6 +212,8 @@ namespace MM.Model
                     result = "Check in must be before Check out";
                 else if (columnName == "CheckOut" && !IsValidCheckInCheckOut())
                     result = "Check out must be after Check in";
+
+
 
                 return result;
             }

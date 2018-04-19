@@ -26,5 +26,16 @@ namespace MM.Model
         {
             this.isCheckedOut = false;
         }
+
+        /// <summary>
+        /// Room
+        /// </summary>
+        /// <param name="RoomID"></param>
+        /// <param name="RoomNumber"></param>
+        public Room(int RoomNumber)
+        {
+            this.IsCheckedOut = false;
+            this.RoomNumber = RoomNumber;
+        }
     }
 }

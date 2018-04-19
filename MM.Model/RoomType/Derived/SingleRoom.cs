@@ -13,7 +13,6 @@ namespace MM.Model
         public SingleRoom()
         {
             this.Rooms = new List<Room>();
-            this.Price = 50.0m;
         }
 
         public SingleRoom(string roomTypeName, List<Room> listRoom)
@@ -31,9 +30,9 @@ namespace MM.Model
             return "ExtraService for Single Room";
         }
 
-        public override string ToString()
+        public override decimal GetPrice()
         {
-            return this.Service() + "," + ExtraService();
+            return 50.0m;
         }
     }
 }

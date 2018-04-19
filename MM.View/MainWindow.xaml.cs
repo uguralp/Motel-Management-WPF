@@ -79,6 +79,7 @@ namespace MM.View
 
             // Set data context
             DataContext = this;
+
         }
 
         #endregion
@@ -290,55 +291,89 @@ namespace MM.View
         /// <returns></returns>
         private bool IsRerservedRoom(int roomNumberToCheck)
         {
-            var query = ReservationList
-                        .Reservations
-                        .Where(p =>
-                            p.RoomType.Rooms.FirstOrDefault().RoomNumber == roomNumberToCheck
-                            && (p.RoomType.Rooms.FirstOrDefault().IsCheckedOut == false));
-
+            //var query = ReservationList.Reservations.Where(p => p.Room.RoomNumber == roomNumberToCheck && (p.Room.IsCheckedOut == false));
+            var query = ReservationList.Reservations.Where(p => p.RoomType.Rooms.FirstOrDefault().RoomNumber == roomNumberToCheck && (p.RoomType.Rooms.FirstOrDefault().IsCheckedOut == false));
             return (query.Count() > 0);
         }
 
         #endregion
 
-        #region UPDATE CURRENT RESERVATION
+        #region PROCESS INPUT DATA
 
         /// <summary>
-        /// UpdateCurrentReservation
+        /// GetDataInput
         /// </summary>
-        private void UpdateCurrentReservation()
+        /// <param name="currentReservation"></param>
+        /// <returns></returns>
+        private Reservation GetDataInput(Reservation currentReservation)
         {
-            Room selectedRoom = null;
-            RoomType selectedRoomType = null;
-            List<Room> tempListRooms = new List<Room>();
-
             int roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-            string roomType = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
-            selectedRoom = new Room() { RoomNumber = roomNumber, IsCheckedOut = (bool)chkIsCheckedOut.IsChecked };
-            tempListRooms.Add(selectedRoom);
+            string roomTypeName = string.Empty;
+            Guest tempGuest = null;
+            RoomType tempRoomType = null;
+            List<Room> tempListRooms = new List<Room>();
+            Room tempRoom = null;
+            DateTime dateCheckIn, dateCheckOut;
 
-            switch (EnumHelper.Parse<RoomTypeName>(roomType))
+            tempGuest = new Guest()
             {
-                case RoomTypeName.Guest:
-                    selectedRoomType = new GuestRoom() { RoomTypeName = RoomTypeName.Guest.ToString(), Rooms = tempListRooms };
-                    break;
-                case RoomTypeName.Single:
-                    selectedRoomType = new SingleRoom() { RoomTypeName = RoomTypeName.Single.ToString(), Rooms = tempListRooms };
-                    break;
-                case RoomTypeName.Double:
-                    selectedRoomType = new DoubleRoom() { RoomTypeName = RoomTypeName.Double.ToString(), Rooms = tempListRooms };
-                    break;
-                case RoomTypeName.Suite:
-                    selectedRoomType = new SuiteRoom() { RoomTypeName = RoomTypeName.Suite.ToString(), Rooms = tempListRooms };
-                    break;
+                FirstName = txtFirstName.Text
+                                                ,
+                LastName = txtLastName.Text
+                                                ,
+                Address = txtAddress.Text
+                                                ,
+                PhoneNumber = txtPhoneNumber.Text
+            };
+            currentReservation.Guest = tempGuest;
+
+            currentReservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
+            currentReservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
+            currentReservation.NumberOfAdult = int.Parse(txtNumOfAdult.Text);
+            currentReservation.NumberOfChild = int.Parse(txtNumOfChild.Text);
+
+            tempRoom = new Room()
+            {
+                IsCheckedOut = (bool)chkIsCheckedOut.IsChecked,
+                RoomNumber = roomNumber
+            };
+            tempListRooms.Add(tempRoom);
+
+            roomTypeName = ((RoomType)lstRoomType.SelectedValue).RoomTypeName;
+            if (roomTypeName == RoomTypeName.Guest.ToString())
+            {
+                tempRoomType = new GuestRoom(RoomTypeName.Guest.ToString(), tempListRooms);
+            }
+            else if (roomTypeName == RoomTypeName.Single.ToString())
+            {
+                tempRoomType = new SingleRoom(RoomTypeName.Single.ToString(), tempListRooms);
+            }
+            else if (roomTypeName == RoomTypeName.Double.ToString())
+            {
+                tempRoomType = new DoubleRoom(RoomTypeName.Double.ToString(), tempListRooms);
+            }
+            else if (roomTypeName == RoomTypeName.Suite.ToString())
+            {
+                tempRoomType = new SuiteRoom(RoomTypeName.Suite.ToString(), tempListRooms);
+            }
+            currentReservation.RoomType = tempRoomType;
+
+            dateCheckIn = DateTime.Parse(cboCheckIn.Text);
+            dateCheckOut = DateTime.Parse(cboCheckOut.Text);
+
+            if (dateCheckOut == dateCheckIn)
+            {
+                currentReservation.NumberOfDay = 1;
+            }
+            else if (dateCheckOut > dateCheckIn)
+            {
+                currentReservation.NumberOfDay = (int)(dateCheckOut - dateCheckIn).TotalDays;
             }
 
-            CurrentReservation.RoomType = selectedRoomType;
-            CurrentReservation.Service = selectedRoomType.ToString();
-            DateTime dateCheckIn = DateTime.Parse(cboCheckIn.Text);
-            DateTime dateCheckOut = DateTime.Parse(cboCheckOut.Text);
-            CurrentReservation.NumberOfDay = (int)(dateCheckOut - dateCheckIn).TotalDays + 1;
-            CurrentReservation.TotalPrice = CurrentReservation.NumberOfDay * selectedRoomType.Price;
+            currentReservation.TotalPrice = tempRoomType.Price * currentReservation.NumberOfDay;
+
+            currentReservation.Service = tempRoomType.Service() + ", " + tempRoomType.ExtraService();
+            return currentReservation;
         }
 
         #endregion
@@ -397,8 +432,9 @@ namespace MM.View
 
                     if (!IsRerservedRoom(roomNumber))
                     {
-                        UpdateCurrentReservation();
-                        ReservationList.Add(CurrentReservation);
+                        Reservation newReservation = new Reservation();
+                        newReservation = GetDataInput(newReservation);
+                        ReservationList.Reservations.Add(newReservation);
                         XMLController.WriteToXML(ReservationList);
                         grdReservation.ItemsSource = ReservationList.Reservations;
                         Clear();
@@ -414,7 +450,7 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error register \n" + ex.Message, 
+                MessageBox.Show("btnRegister_Click Error \n" + ex.Message, 
                     this.Title, 
                     MessageBoxButton.OK, 
                     MessageBoxImage.Exclamation);
@@ -459,7 +495,7 @@ namespace MM.View
 
                         if (!isAlreadyReservedRoom)
                         {
-                            UpdateCurrentReservation();
+                            selectedReservation = GetDataInput(selectedReservation);
                             XMLController.WriteToXML(ReservationList);
                             grdReservation.ItemsSource = ReservationList.Reservations;
                             grdReservation.Items.Refresh();
@@ -476,7 +512,7 @@ namespace MM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error save \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("btnSave_Click Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -486,13 +522,11 @@ namespace MM.View
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void grdReservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
             {
-                EnableButtonWhenUpdate();
-
-                if (ReservationList.Count > 0)
+                try
                 {
+                    EnableButtonWhenUpdate();
+
                     CurrentReservation = grdReservation.SelectedItem as Reservation;
 
                     if (CurrentReservation != null)
@@ -514,45 +548,16 @@ namespace MM.View
 
                         // Validate again to clear all previous errors
                         ForceValidation();
-                    }
-                }    
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("grdReservation_SelectionChanged Error \n" + ex.Message, 
-                    this.Title, 
-                    MessageBoxButton.OK, 
-                    MessageBoxImage.Exclamation);
-            }
-        }
-
-        /// <summary>
-        /// deleteClicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void deleteClicked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (MessageBox.Show("Do you really want to delete the selected reservation?"
-                    , this.Title
-                    , MessageBoxButton.YesNo
-                    , MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    }                
+                }
+                catch (Exception ex)
                 {
-
-                    ReservationList.Remove(CurrentReservation);
-                    XMLController.WriteToXML(ReservationList);
-                    grdReservation.ItemsSource = ReservationList.Reservations;
-                    grdReservation.Items.Refresh();
-                    btnCancel_Click(sender, e);
+                    MessageBox.Show("grdReservation_SelectionChanged Error \n" + ex.Message, 
+                        this.Title, 
+                        MessageBoxButton.OK, 
+                        MessageBoxImage.Exclamation);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("deleteClicked Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-        }
 
         /// <summary>
         /// btnCancel_Click
@@ -593,7 +598,36 @@ namespace MM.View
             {
                 MessageBox.Show("updateClicked Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-        }        
+        }
+
+        /// <summary>
+        /// deleteClicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteClicked(object sender, RoutedEventArgs e)
+        {
+                try
+            {
+                if (MessageBox.Show("Do you really want to delete the selected reservation?"
+                    , this.Title
+                    , MessageBoxButton.YesNo
+                    , MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    
+                    ReservationList.Remove(CurrentReservation);
+                    XMLController.WriteToXML(ReservationList);
+                    grdReservation.ItemsSource = ReservationList.Reservations;
+                    grdReservation.Items.Refresh();
+
+                    btnCancel_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("deleteClicked Error \n" + ex.Message, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
 
         /// <summary>
         /// btnSearch_Click

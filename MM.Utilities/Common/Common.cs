@@ -4,7 +4,7 @@ namespace MM.Utilities
     /// <summary>
     /// Common
     /// </summary>
-    public class Common
+    public static class Common
     {
         /// <summary>
         /// XML_FILE_NAME

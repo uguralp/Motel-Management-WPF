@@ -44,6 +44,8 @@ namespace MM.Model
         /// </summary>
         public decimal Price { get => price; set => price = value; }
 
+        public abstract decimal GetPrice();
+
         /// <summary>
         /// Service
         /// </summary>
