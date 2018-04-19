@@ -44,21 +44,6 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// Reservation
-        /// </summary>
-        /// <param name="numberOfAdult"></param>
-        /// <param name="numberOfChild"></param>
-        /// <param name="checkIn"></param>
-        /// <param name="checkOut"></param>
-        public Reservation(int numberOfAdult, int numberOfChild, string checkIn, string checkOut)
-        {
-            this.numberOfAdult = numberOfAdult;
-            this.numberOfChild = numberOfChild;
-            this.checkIn = checkIn;
-            this.checkOut = checkOut;
-        }
-
-        /// <summary>
         /// ReservationID
         /// </summary>
         public Guid ReservationID { get => reservationID; set => reservationID = value; }
@@ -74,7 +59,6 @@ namespace MM.Model
             }
             set
             {
-                RaisePropertyChanged("NumberOfAdult");
                 numberOfAdult = value;
                 RaisePropertyChanged("NumberOfAdult");
             }
@@ -91,7 +75,6 @@ namespace MM.Model
             }
             set
             {
-                RaisePropertyChanged("NumberOfChild");
                 numberOfChild = value;
                 RaisePropertyChanged("NumberOfChild");
             }
@@ -172,6 +155,24 @@ namespace MM.Model
         public int NumberOfDay { get => numberOfDay; set => numberOfDay = value; }
 
         /// <summary>
+        /// CalculateNumberOfDay
+        /// </summary>
+        public void CalculateNumberOfDay()
+        {
+            DateTime dateCheckIn = DateTime.Parse(CheckIn);
+            DateTime dateCheckOut = DateTime.Parse(CheckOut);
+            this.NumberOfDay = (int)(dateCheckOut - dateCheckIn).TotalDays + 1;
+        }
+
+        /// <summary>
+        /// CalculateTotalPrice
+        /// </summary>
+        public void CalculateTotalPrice()
+        {
+            this.TotalPrice = this.NumberOfDay * this.RoomType.Price;
+        }
+
+        /// <summary>
         /// IsValidCheckInCheckOut
         /// </summary>
         /// <returns></returns>
@@ -193,6 +194,9 @@ namespace MM.Model
             return compareResult;
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -219,8 +223,15 @@ namespace MM.Model
             }
         }
 
+        /// <summary>
+        /// PropertyChanging
+        /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
 
+        /// <summary>
+        /// NotifyPropertyChanging
+        /// </summary>
+        /// <param name="propertyName"></param>
         private void NotifyPropertyChanging(string propertyName)
         {
             if (PropertyChanging != null)
@@ -229,6 +240,10 @@ namespace MM.Model
             }
         }
 
+        /// <summary>
+        /// RaisePropertyChanged
+        /// </summary>
+        /// <param name="prop"></param>
         void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null)

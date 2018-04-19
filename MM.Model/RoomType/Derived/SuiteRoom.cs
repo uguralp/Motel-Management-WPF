@@ -13,12 +13,6 @@ namespace MM.Model
         public SuiteRoom()
         {
             this.Rooms = new List<Room>();
-        }
-
-        public SuiteRoom(string roomTypeName, List<Room> listRoom)
-        {
-            this.RoomTypeName = roomTypeName;
-            this.Rooms = listRoom;
             this.Price = 70.0m;
         }
 
@@ -27,12 +21,16 @@ namespace MM.Model
         /// </summary>
         public override string ExtraService()
         {
-            return "ExtraService for Double Room";
+            return "ExtraService for Suite Room";
         }
 
-        public override decimal GetPrice()
+        /// <summary>
+        /// ToString
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
         {
-            return 70.0m;
+            return this.Service() + "," + ExtraService();
         }
     }
 }
