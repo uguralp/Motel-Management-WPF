@@ -506,7 +506,7 @@ namespace MM.View
                             }
                             else
                             {
-                                // if before checkedout (true) = after checkedout (true)
+                                // if before checkedout (false) = after checkedout (false)
                                 if (newCheckedOut == oldCheckedOut)
                                 {
                                     // if before roomnumber = after room number
@@ -521,7 +521,7 @@ namespace MM.View
                                         isBooked = CheckIfRoomIsAlreadyBooked(newRoomNumber, newCheckedOut);
                                     }
                                 }
-                                // if before checkedout (false) != after checkedout (true)
+                                // if before checkedout (true) != after checkedout (false)
                                 else
                                 {
                                     isBooked = CheckIfRoomIsAlreadyBooked(newRoomNumber, newCheckedOut);
@@ -658,7 +658,7 @@ namespace MM.View
         /// <param name="e"></param>
         private void deleteClicked(object sender, RoutedEventArgs e)
         {
-                try
+            try
             {
                 if (MessageBox.Show("Do you really want to delete the selected reservation?"
                     , this.Title

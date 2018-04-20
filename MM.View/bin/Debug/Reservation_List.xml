@@ -4,7 +4,7 @@
     <Reservation>
       <ReservationID>b4459fe0-5f3a-44b5-80ac-0afd7c9f8b17</ReservationID>
       <NumberOfAdult>6</NumberOfAdult>
-      <NumberOfChild>2</NumberOfChild>
+      <NumberOfChild>9</NumberOfChild>
       <CheckIn>4/19/2018</CheckIn>
       <CheckOut>4/19/2018</CheckOut>
       <Guest>
@@ -18,7 +18,7 @@
         <Rooms>
           <Room>
             <RoomNumber>103</RoomNumber>
-            <IsCheckedOut>true</IsCheckedOut>
+            <IsCheckedOut>false</IsCheckedOut>
           </Room>
         </Rooms>
         <Price>35.0</Price>
@@ -44,7 +44,7 @@
         <Rooms>
           <Room>
             <RoomNumber>103</RoomNumber>
-            <IsCheckedOut>false</IsCheckedOut>
+            <IsCheckedOut>true</IsCheckedOut>
           </Room>
         </Rooms>
         <Price>35.0</Price>
@@ -52,6 +52,32 @@
       <TotalPrice>35.0</TotalPrice>
       <Service>Laundry,ExtraService for Guest Room</Service>
       <NumberOfDay>1</NumberOfDay>
+    </Reservation>
+    <Reservation>
+      <ReservationID>e9811542-93e5-448f-83e2-5f83ac4a92ce</ReservationID>
+      <NumberOfAdult>4</NumberOfAdult>
+      <NumberOfChild>3</NumberOfChild>
+      <CheckIn>4/20/2018</CheckIn>
+      <CheckOut>4/21/2018</CheckOut>
+      <Guest>
+        <FirstName>XXXXXXXXXXXXX</FirstName>
+        <LastName>XXXXXXXXXXXXXXX</LastName>
+        <Address>XXXXXXXXXXXXXXXXXXXXXX</Address>
+        <PhoneNumber>3453453453</PhoneNumber>
+      </Guest>
+      <RoomType xsi:type="GuestRoom">
+        <RoomTypeName>Guest</RoomTypeName>
+        <Rooms>
+          <Room>
+            <RoomNumber>103</RoomNumber>
+            <IsCheckedOut>true</IsCheckedOut>
+          </Room>
+        </Rooms>
+        <Price>35.0</Price>
+      </RoomType>
+      <TotalPrice>70.0</TotalPrice>
+      <Service>Laundry,ExtraService for Guest Room</Service>
+      <NumberOfDay>2</NumberOfDay>
     </Reservation>
   </ListOfBookedRooms>
 </ReservationList>
