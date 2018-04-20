@@ -6,11 +6,13 @@ using System.Runtime.CompilerServices;
 namespace MM.Model
 {
     /// <summary>
-    /// Reservation
+    /// Store information of a reservation
     /// </summary>
     [Serializable]
     public class Reservation : IDisposable, IDataErrorInfo, INotifyPropertyChanged
     {
+        #region FIELDS
+
         private Guid reservationID;
         private Guest guest;
         private int numberOfAdult;
@@ -22,21 +24,12 @@ namespace MM.Model
         private string service;
         private int numberOfDay;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        /// <summary>
-        /// RaisePropertyChanged
-        /// </summary>
-        /// <param name="prop"></param>
-        private void RaisePropertyChanged([CallerMemberName] string caller = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(caller));
-            }
-        }
+        #endregion
+        
+        #region CONSTRUCTOR
 
         /// <summary>
-        /// Reservation
+        /// Constructor
         /// </summary>
         public Reservation()
         {
@@ -47,8 +40,12 @@ namespace MM.Model
             NumberOfChild = -1;
         }
 
+        #endregion
+
+        #region PROPERTIES
+
         /// <summary>
-        /// ReservationID
+        /// Using Guid to generate an unique ReservationID
         /// </summary>
         public Guid ReservationID { get => reservationID; set => reservationID = value; }
 
@@ -86,7 +83,7 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// CheckIn
+        /// Date of CheckIn 
         /// </summary>
         public string CheckIn
         {
@@ -103,7 +100,7 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// CheckOut
+        /// Date of CheckOut
         /// </summary>
         public string CheckOut
         {
@@ -120,22 +117,17 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// Guest
+        /// Each reservation has a Guest
         /// </summary>
         public Guest Guest { get => guest; set => guest = value; }
 
         /// <summary>
-        /// Error
-        /// </summary>
-        public string Error => throw new NotImplementedException();
-
-        /// <summary>
-        /// RoomType
+        /// Each reservation has a Room Type
         /// </summary>
         public RoomType RoomType { get => roomType; set => roomType = value; }
 
         /// <summary>
-        /// TotalPrice
+        /// Store Total price
         /// </summary>
         public decimal TotalPrice
         {
@@ -150,17 +142,21 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// Service
+        /// Store service depends on each type of Room.
         /// </summary>
         public string Service { get => service; set => service = value; }
 
         /// <summary>
-        /// NumberOfDay
+        /// Number of days between CheckOut and CheckIn
         /// </summary>
         public int NumberOfDay { get => numberOfDay; set => numberOfDay = value; }
 
+        #endregion
+
+        #region METHODS
+
         /// <summary>
-        /// CalculateNumberOfDay
+        /// Calculate Number Of Day = CheckOut - CheckIn
         /// </summary>
         public void CalculateNumberOfDay()
         {
@@ -170,7 +166,7 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// CalculateTotalPrice
+        /// CalculateTotalPrice: [Price of each type of room] * [Days between CheckOut and CheckIn]
         /// </summary>
         public void CalculateTotalPrice()
         {
@@ -178,7 +174,7 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// IsValidCheckInCheckOut
+        /// Check if CheckOut is after CheckIn
         /// </summary>
         /// <returns></returns>
         private bool IsValidCheckInCheckOut()
@@ -226,7 +222,29 @@ namespace MM.Model
             }
         }
         
-        
+        /// <summary>
+        /// Error
+        /// </summary>
+        public string Error => throw new NotImplementedException();
 
+        /// <summary>
+        /// This is used to raise an event to call setter in both CheckIn or CheckOut 
+        /// everytime CheckIn or CheckOut is changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// RaisePropertyChanged
+        /// </summary>
+        /// <param name="prop"></param>
+        private void RaisePropertyChanged([CallerMemberName] string caller = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(caller));
+            }
+        }
+
+        #endregion
     }
 }

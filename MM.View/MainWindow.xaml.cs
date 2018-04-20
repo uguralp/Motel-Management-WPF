@@ -88,7 +88,7 @@ namespace MM.View
         #region INITIALIZE DATA FOR SCREEN
 
         /// <summary>
-        /// InitRoomType
+        /// Initialize data of RoomType and Rooms
         /// </summary>
         private void InitRoomData()
         {
@@ -136,7 +136,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// Clear
+        /// Clear all textboxes and reset CheckIn, CheckOut to the current date
         /// </summary>
         private void Clear()
         {
@@ -158,7 +158,7 @@ namespace MM.View
         #region VALIDATION
 
         /// <summary>
-        /// ForceValidation
+        /// Force Validation
         /// </summary>
         private void ForceValidation()
         {
@@ -177,7 +177,7 @@ namespace MM.View
         #region READ/WRITE XML AND DISPLAY TO GRID
 
         /// <summary>
-        /// ReadDataFromXML
+        /// Read Data From XML
         /// </summary>
         private void ReadDataFromXML()
         {
@@ -185,8 +185,10 @@ namespace MM.View
         }
 
         /// <summary>
-        /// DisplayXMLToGrid
+        /// Search and display result to grid
         /// </summary>
+        /// <param name="textToFilter"></param>
+        /// <param name="isSearchAll"></param>
         private void DisplayListToGrid(string textToFilter = "", bool isSearchAll = true)
         {
             if (reservationList != null)
@@ -247,7 +249,7 @@ namespace MM.View
         #region ENABLE/DISABLE BUTTONS
 
         /// <summary>
-        /// EnableButtonWhenRegister
+        /// Enable Button When Register
         /// </summary>
         private void EnableButtonWhenRegister()
         {
@@ -260,7 +262,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// EnableButtonWhenUpdate
+        /// Enable Button When Update
         /// </summary>
         private void EnableButtonWhenUpdate()
         {
@@ -273,7 +275,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// ToggleInputControls
+        /// Toggle top area of input controls (ENABLED / DISABLED)
         /// </summary>
         /// <param name="isTurnOn"></param>
         private void ToggleInputControls(bool isTurnOn)
@@ -286,9 +288,10 @@ namespace MM.View
         #region CHECK RESERVED ROOM
 
         /// <summary>
-        /// IsRerservedRoom
+        /// Search for a room in the list and check if it's booked or not
         /// </summary>
         /// <param name="roomNumberToCheck"></param>
+        /// <param name="currentCheckedOut"></param>
         /// <returns></returns>
         private bool CheckIfRoomIsAlreadyBooked(int roomNumberToCheck, bool currentCheckedOut)
         {
@@ -313,7 +316,7 @@ namespace MM.View
         #region PROCESS INPUT DATA
 
         /// <summary>
-        /// UpdateReservation
+        /// Update entered data from controls to a variable called CurrentConservation
         /// </summary>
         /// <param name="currentReservation"></param>
         /// <returns></returns>
@@ -340,7 +343,9 @@ namespace MM.View
             selectedRoom = new Room() { RoomNumber = roomNumber, IsCheckedOut = (bool)chkIsCheckedOut.IsChecked };
             tempListRooms.Add(selectedRoom);
 
-            switch (EnumHelper.Parse<RoomTypeName>(roomType))
+            RoomTypeName currentRoomType = (RoomTypeName)Enum.Parse(typeof(RoomTypeName), roomType);
+
+            switch (currentRoomType)
             {
                 case RoomTypeName.Guest:
                     selectedRoomType = new GuestRoom() { RoomTypeName = RoomTypeName.Guest.ToString(), Rooms = tempListRooms };
@@ -360,7 +365,11 @@ namespace MM.View
             currentReservation.Service = selectedRoomType.ToString();
             currentReservation.CheckIn = DateTime.Parse(cboCheckIn.Text).ToShortDateString();
             currentReservation.CheckOut = DateTime.Parse(cboCheckOut.Text).ToShortDateString();
+
+            // Calculate number of days between CheckOut and CheckIn
             currentReservation.CalculateNumberOfDay();
+
+            // Calculate the total price = [Price of each type room] x [Number of days between CheckOut and CheckIn]
             currentReservation.CalculateTotalPrice();
 
             return currentReservation;
@@ -393,7 +402,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// btnRegister_Click
+        /// Handle click event of REGISTER button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -402,10 +411,10 @@ namespace MM.View
             bool isInvalid = false;
             bool currentCheckedOut = false;
             int roomNumber = 0;          
-            
 
             try
             {
+                // Call validation on the required fields
                 ForceValidation();
 
                 isInvalid = Validation.GetHasError(txtFirstName)
@@ -418,13 +427,16 @@ namespace MM.View
                             || Validation.GetHasError(cboCheckOut)
                     ;
 
+                // If all data is valid
                 if (!isInvalid)
                 {
                     roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
                     currentCheckedOut = (bool)chkIsCheckedOut.IsChecked;
 
+                    // If the selected room is not booked
                     if (!CheckIfRoomIsAlreadyBooked(roomNumber, currentCheckedOut))
                     {
+                        // Register it
                         Reservation newReservation = new Reservation();
                         newReservation = UpdateReservation(newReservation);
                         ReservationList.Add(newReservation);
@@ -434,6 +446,7 @@ namespace MM.View
                     }
                     else
                     {
+                        // If the selected room is booked then raise a message
                         MessageBox.Show(string.Format("Room {0} is already booked!\nPlease select another one.", roomNumber),
                                     this.Title,
                                     MessageBoxButton.OK,
@@ -453,7 +466,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// btnSave_Click
+        /// Handle click event of SAVE button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -468,6 +481,7 @@ namespace MM.View
 
             try
             {
+                // Call validation on the required fields
                 ForceValidation();
 
                 isInvalid = Validation.GetHasError(txtFirstName)
@@ -480,6 +494,7 @@ namespace MM.View
                             || Validation.GetHasError(cboCheckOut)
                     ;
 
+                // If all data is valid
                 if (!isInvalid)
                 {                    
                     Reservation selectedReservation = ReservationList.Reservations.FirstOrDefault(i => i.ReservationID == CurrentReservation.ReservationID);
@@ -490,12 +505,14 @@ namespace MM.View
                         newCheckedOut = (bool)chkIsCheckedOut.IsChecked;
                         oldCheckedOut = selectedReservation.RoomType.Rooms[0].IsCheckedOut;
 
-                        // Grid contains one row only
+                        // Check if the selected room is booked or not
+                        // Case grid contains one row only
                         if (ReservationList.Count == 1)
                         {
                             // skip checking
                             isBooked = false;
                         }
+                        // Case grid contains multiple rows
                         else
                         {
                             // if after ischeckout = true
@@ -529,15 +546,19 @@ namespace MM.View
                             }
                         }
 
+                        // If the selected room is not booked
                         if (!isBooked)
                         {
+                            // Save it
                             selectedReservation = UpdateReservation(selectedReservation);
                             XMLController.WriteToXML(ReservationList);
                             grdReservation.ItemsSource = ReservationList.Reservations;
                             grdReservation.Items.Refresh();
                         }
+                        // If the selected room is booked
                         else
                         {
+                            // Raise a message
                             MessageBox.Show(string.Format("Room {0} is already booked!\nPlease select another one.",
                                     newRoomNumber),
                                     this.Title,
@@ -558,52 +579,54 @@ namespace MM.View
         }
 
         /// <summary>
-        /// grdReservation_SelectionChanged
+        /// Handle click event on the grid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void grdReservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
             {
-                try
+                // Toggle buttons in the top area
+                EnableButtonWhenUpdate();
+
+                CurrentReservation = grdReservation.SelectedItem as Reservation;
+
+                if (CurrentReservation != null)
                 {
-                    EnableButtonWhenUpdate();
+                    // Display data from the selected row to the top area
+                    RoomType reservedRoomType = RoomTypes.First(r => r.RoomTypeName.ToString().Equals(CurrentReservation.RoomType.RoomTypeName));
+                    Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == CurrentReservation.RoomType.Rooms.FirstOrDefault().RoomNumber);
 
-                    CurrentReservation = grdReservation.SelectedItem as Reservation;
+                    txtFirstName.Text = CurrentReservation.Guest.FirstName;
+                    txtLastName.Text = CurrentReservation.Guest.LastName;
+                    txtAddress.Text = CurrentReservation.Guest.Address;
+                    txtPhoneNumber.Text = CurrentReservation.Guest.PhoneNumber;
+                    txtNumOfAdult.Text = CurrentReservation.NumberOfAdult.ToString();
+                    txtNumOfChild.Text = CurrentReservation.NumberOfChild.ToString();
+                    lstRoomType.SelectedItem = reservedRoomType;
+                    cboRoomNumber.SelectedItem = reservedRoom;
+                    cboCheckIn.Text = CurrentReservation.CheckIn.ToString();
+                    cboCheckOut.Text = CurrentReservation.CheckOut.ToString();
+                    chkIsCheckedOut.IsChecked = CurrentReservation.RoomType.Rooms.FirstOrDefault().IsCheckedOut;
 
-                    if (CurrentReservation != null)
-                    {
-                        RoomType reservedRoomType = RoomTypes.First(r => r.RoomTypeName.ToString().Equals(CurrentReservation.RoomType.RoomTypeName));
-                        Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == CurrentReservation.RoomType.Rooms.FirstOrDefault().RoomNumber);
-
-                        txtFirstName.Text = CurrentReservation.Guest.FirstName;
-                        txtLastName.Text = CurrentReservation.Guest.LastName;
-                        txtAddress.Text = CurrentReservation.Guest.Address;
-                        txtPhoneNumber.Text = CurrentReservation.Guest.PhoneNumber;
-                        txtNumOfAdult.Text = CurrentReservation.NumberOfAdult.ToString();
-                        txtNumOfChild.Text = CurrentReservation.NumberOfChild.ToString();
-                        lstRoomType.SelectedItem = reservedRoomType;
-                        cboRoomNumber.SelectedItem = reservedRoom;
-                        cboCheckIn.Text = CurrentReservation.CheckIn.ToString();
-                        cboCheckOut.Text = CurrentReservation.CheckOut.ToString();
-                        chkIsCheckedOut.IsChecked = CurrentReservation.RoomType.Rooms.FirstOrDefault().IsCheckedOut;
-
-                        // Validate again to clear all previous errors
-                        ForceValidation();
-                    }                
-                }
-                catch (Exception ex)
-                {
-                MessageBox.Show("Error occurs while changing selection.\n"
-                        + ex.Message + "\n"
-                        + ex.InnerException,
-                        this.Title,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Exclamation);
+                    // Validate again to clear all previous errors
+                    ForceValidation();
+                }                
             }
+            catch (Exception ex)
+            {
+            MessageBox.Show("Error occurs while changing selection.\n"
+                    + ex.Message + "\n"
+                    + ex.InnerException,
+                    this.Title,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
             }
+        }
 
         /// <summary>
-        /// btnCancel_Click
+        /// Handle click event of CANCEL button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -626,7 +649,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// updateClicked
+        /// Handle click event of UPDATE button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -652,7 +675,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// deleteClicked
+        /// Handle click event of DELETE button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -684,7 +707,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// btnSearch_Click
+        /// Handle click event of SEARCH button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -706,7 +729,7 @@ namespace MM.View
         }
 
         /// <summary>
-        /// btnDisplay_Click
+        /// Handle click event of DISPLAY button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

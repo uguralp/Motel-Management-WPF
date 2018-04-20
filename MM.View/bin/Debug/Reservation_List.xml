@@ -2,55 +2,55 @@
 <ReservationList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ListOfBookedRooms>
     <Reservation>
-      <ReservationID>ffaa28be-e912-445d-80c3-c217e410f32c</ReservationID>
-      <NumberOfAdult>2</NumberOfAdult>
-      <NumberOfChild>1</NumberOfChild>
-      <CheckIn>4/20/2018</CheckIn>
-      <CheckOut>4/23/2018</CheckOut>
-      <Guest>
-        <FirstName>Tri</FirstName>
-        <LastName>Pham</LastName>
-        <Address>430 Wilson Ave</Address>
-        <PhoneNumber>0909353173</PhoneNumber>
-      </Guest>
-      <RoomType xsi:type="DoubleRoom">
-        <RoomTypeName>Double</RoomTypeName>
-        <Rooms>
-          <Room>
-            <RoomNumber>301</RoomNumber>
-            <IsCheckedOut>true</IsCheckedOut>
-          </Room>
-        </Rooms>
-        <Price>60.0</Price>
-      </RoomType>
-      <TotalPrice>240.0</TotalPrice>
-      <Service>Breakfast, Dinner, Lunch, Laundry</Service>
-      <NumberOfDay>4</NumberOfDay>
-    </Reservation>
-    <Reservation>
-      <ReservationID>892a3c52-26af-4a5b-aeab-169621cbace3</ReservationID>
-      <NumberOfAdult>1</NumberOfAdult>
-      <NumberOfChild>0</NumberOfChild>
+      <ReservationID>748b2dd1-3ce9-4133-9e1b-d6a03f800df8</ReservationID>
+      <NumberOfAdult>3</NumberOfAdult>
+      <NumberOfChild>3</NumberOfChild>
       <CheckIn>4/20/2018</CheckIn>
       <CheckOut>4/20/2018</CheckOut>
       <Guest>
-        <FirstName>Uguralp</FirstName>
-        <LastName>Onbasli</LastName>
-        <Address>Turkey</Address>
-        <PhoneNumber>0909090990</PhoneNumber>
+        <FirstName>asdfasdfasdf</FirstName>
+        <LastName>asfasdf</LastName>
+        <Address>adfasdfasdf</Address>
+        <PhoneNumber>3453453535</PhoneNumber>
       </Guest>
-      <RoomType xsi:type="DoubleRoom">
-        <RoomTypeName>Double</RoomTypeName>
+      <RoomType xsi:type="SingleRoom">
+        <RoomTypeName>Single</RoomTypeName>
         <Rooms>
           <Room>
-            <RoomNumber>301</RoomNumber>
+            <RoomNumber>201</RoomNumber>
+            <IsCheckedOut>true</IsCheckedOut>
+          </Room>
+        </Rooms>
+        <Price>50.0</Price>
+      </RoomType>
+      <TotalPrice>50.0</TotalPrice>
+      <Service>Breakfast, Dinner, Lunch</Service>
+      <NumberOfDay>1</NumberOfDay>
+    </Reservation>
+    <Reservation>
+      <ReservationID>d8d76de7-720e-4805-af7a-a526e2ddf066</ReservationID>
+      <NumberOfAdult>2</NumberOfAdult>
+      <NumberOfChild>2</NumberOfChild>
+      <CheckIn>4/20/2018</CheckIn>
+      <CheckOut>4/20/2018</CheckOut>
+      <Guest>
+        <FirstName>asdfasd</FirstName>
+        <LastName>fasdf</LastName>
+        <Address>asdfasd</Address>
+        <PhoneNumber>2352323523</PhoneNumber>
+      </Guest>
+      <RoomType xsi:type="SingleRoom">
+        <RoomTypeName>Single</RoomTypeName>
+        <Rooms>
+          <Room>
+            <RoomNumber>201</RoomNumber>
             <IsCheckedOut>false</IsCheckedOut>
           </Room>
         </Rooms>
-        <Price>60.0</Price>
+        <Price>50.0</Price>
       </RoomType>
-      <TotalPrice>60.0</TotalPrice>
-      <Service>Breakfast, Dinner, Lunch, Laundry</Service>
+      <TotalPrice>50.0</TotalPrice>
+      <Service>Breakfast, Dinner, Lunch</Service>
       <NumberOfDay>1</NumberOfDay>
     </Reservation>
   </ListOfBookedRooms>

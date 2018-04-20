@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace MM.Model
 {
     /// <summary>
-    /// RoomTypeName
+    /// Store name of a Room Type
     /// </summary>
     public enum RoomTypeName
     {
@@ -16,7 +16,7 @@ namespace MM.Model
     }
 
     /// <summary>
-    /// RoomType
+    /// Store information of a Room Type
     /// </summary>
     [Serializable]
     [XmlInclude(typeof(DoubleRoom))]
@@ -25,9 +25,15 @@ namespace MM.Model
     [XmlInclude(typeof(SuiteRoom))]
     public abstract class RoomType
     {
+        #region FIELDS
+
         private string roomTypeName;
         private decimal price;
         private List<Room> rooms;
+
+        #endregion
+
+        #region PROPERTIES
 
         /// <summary>
         /// RoomTypeName
@@ -44,8 +50,12 @@ namespace MM.Model
         /// </summary>
         public decimal Price { get => price; set => price = value; }
 
+        #endregion
+
+        #region METHODS
+
         /// <summary>
-        /// Service
+        /// Service of a room type
         /// </summary>
         public string Service()
         {
@@ -53,8 +63,10 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// ExtraService
+        /// Extra service of a room type
         /// </summary>
         public abstract string ExtraService();
+
+        #endregion
     }
 }

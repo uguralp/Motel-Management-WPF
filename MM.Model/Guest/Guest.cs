@@ -2,14 +2,20 @@
 namespace MM.Model
 {
     /// <summary>
-    /// Guest
+    /// Store information of a guest
     /// </summary>
     public class Guest
     {
+        #region FIELDS
+
         private string firstName;
         private string lastName;
         private string address;
         private string phoneNumber;
+
+        #endregion
+
+        #region PROPERTIES
 
         /// <summary>
         /// FirstName
@@ -30,5 +36,7 @@ namespace MM.Model
         /// PhoneNumber
         /// </summary>
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
+
+        #endregion
     }
 }

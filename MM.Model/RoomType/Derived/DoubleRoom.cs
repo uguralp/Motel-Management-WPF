@@ -3,10 +3,12 @@
 namespace MM.Model
 {
     /// <summary>
-    /// DoubleRoom
+    /// Store information of Double Room
     /// </summary>
     public class DoubleRoom : RoomType
     {
+        #region CONSTRUCTOR
+
         /// <summary>
         /// DoubleRoom
         /// </summary>
@@ -16,8 +18,12 @@ namespace MM.Model
             this.Price = 60.0m;
         }
 
+        #endregion
+
+        #region METHODS
+
         /// <summary>
-        /// ExtraService
+        /// Extra service of Double room
         /// </summary>
         public override string ExtraService()
         {
@@ -25,12 +31,14 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// ToString
+        /// Display all services of Double room
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
             return this.Service() + ExtraService();
         }
+
+        #endregion
     }
 }

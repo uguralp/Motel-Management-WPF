@@ -4,12 +4,18 @@ using System.Xml.Serialization;
 namespace MM.Model
 {
     /// <summary>
-    /// ReservationList
+    /// Store a list of reserved rooms
     /// </summary>
     [XmlRoot("ReservationList")]
     public class ReservationList
     {
+        #region FIELDS
+
         private ObservableCollection<Reservation> reservations = null;
+
+        #endregion
+
+        #region PROPERTIES
 
         /// <summary>
         /// Reservations
@@ -17,6 +23,10 @@ namespace MM.Model
         [XmlArray("ListOfBookedRooms")]
         [XmlArrayItem("Reservation")]
         public ObservableCollection<Reservation> Reservations { get => reservations; set => reservations = value; }
+
+        #endregion
+
+        #region CONSTRUCTOR
 
         /// <summary>
         /// ReservationList
@@ -26,8 +36,12 @@ namespace MM.Model
             reservations = new ObservableCollection<Reservation>();
         }
 
+        #endregion
+
+        #region METHODS
+
         /// <summary>
-        /// this
+        /// Indexer
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -62,5 +76,6 @@ namespace MM.Model
             reservations.Remove(reservation);
         }
 
+        #endregion
     }
 }

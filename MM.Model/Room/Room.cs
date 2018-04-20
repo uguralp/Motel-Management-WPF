@@ -2,12 +2,18 @@
 namespace MM.Model
 {
     /// <summary>
-    /// Room
+    /// Store information of a Room
     /// </summary>
     public class Room
     {
+        #region FIELDS
+        
         private int roomNumber;
         private bool isCheckedOut;
+
+        #endregion
+
+        #region PROPERTIES
 
         /// <summary>
         /// RoomNumber
@@ -19,8 +25,12 @@ namespace MM.Model
         /// </summary>
         public bool IsCheckedOut { get => isCheckedOut; set => isCheckedOut = value; }
 
+        #endregion
+
+        #region CONSTRUCTORS
+
         /// <summary>
-        /// Room
+        /// Default constructor
         /// </summary>
         public Room()
         {
@@ -28,7 +38,7 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// Room
+        /// Constructor
         /// </summary>
         /// <param name="RoomID"></param>
         /// <param name="RoomNumber"></param>
@@ -37,5 +47,8 @@ namespace MM.Model
             this.IsCheckedOut = false;
             this.RoomNumber = RoomNumber;
         }
+
+        #endregion
+
     }
 }

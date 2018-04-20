@@ -3,10 +3,12 @@
 namespace MM.Model
 {
     /// <summary>
-    /// SingleRoom
+    /// Store information of Single Room
     /// </summary>
     public class SingleRoom : RoomType
     {
+        #region CONSTRUCTOR
+
         /// <summary>
         /// SingleRoom
         /// </summary>
@@ -16,8 +18,12 @@ namespace MM.Model
             this.Price = 50.0m;
         }
 
+        #endregion
+
+        #region METHODS
+
         /// <summary>
-        /// ExtraService
+        /// Extra Service of Single room
         /// </summary>
         public override string ExtraService()
         {
@@ -25,12 +31,14 @@ namespace MM.Model
         }
 
         /// <summary>
-        /// ToString
+        /// Display all services of Single room
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
             return this.Service() + ExtraService();
         }
+
+        #endregion
     }
 }

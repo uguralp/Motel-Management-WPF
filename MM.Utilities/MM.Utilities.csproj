@@ -46,7 +46,6 @@
     <Compile Include="Conversion\CheckedOutRoomConverter.cs" />
     <Compile Include="Conversion\NumberChildrenConverter.cs" />
     <Compile Include="Conversion\NumberConverter.cs" />
-    <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\NumberOfChildrenRule.cs" />
     <Compile Include="Validation\NumberOfPeopleRule.cs" />
