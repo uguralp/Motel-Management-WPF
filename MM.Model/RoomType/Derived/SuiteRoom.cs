@@ -21,7 +21,7 @@ namespace MM.Model
         /// </summary>
         public override string ExtraService()
         {
-            return "ExtraService for Suite Room";
+            return ", Lunch, Laundry, Pool, Gym";
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace MM.Model
         /// <returns></returns>
         public override string ToString()
         {
-            return this.Service() + "," + ExtraService();
+            return this.Service() + ExtraService();
         }
     }
 }

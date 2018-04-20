@@ -49,7 +49,7 @@ namespace MM.Model
         /// </summary>
         public string Service()
         {
-            return "Laundry";
+            return "Breakfast, Dinner";
         }
 
         /// <summary>
