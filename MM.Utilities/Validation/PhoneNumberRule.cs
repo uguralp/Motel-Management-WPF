@@ -17,7 +17,6 @@ namespace MM.Utilities
         /// <returns></returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            //Regex regexPhoneRule = new Regex(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}");
             Regex regexPhoneRule = new Regex(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}");
 
             if (regexPhoneRule.IsMatch(value.ToString()))

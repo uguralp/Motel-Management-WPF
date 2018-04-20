@@ -233,7 +233,10 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Room Type -->
-                        <Label Grid.Row="0" Grid.Column="0" Content="Room Type" Name="lblRoomType" Margin="0 0 0 5" />
+                        <Label Grid.Row="0" Grid.Column="0" 
+                               Content="Room Type" 
+                               Name="lblRoomType" 
+                               Margin="0 0 0 5" />
                         <ListBox Grid.Row="0" Grid.Column="1" 
                                 Name="lstRoomType" Margin="0 0 0 5" 
                                 Height="85"
@@ -261,8 +264,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Check in -->
@@ -329,7 +331,7 @@
                         <CheckBox Grid.Row="2" Grid.Column="1" 
                                   Name="chkIsCheckedOut" 
                                   Margin="0 5 0 0"
-                                  IsChecked="{Binding Path=IsCheckedOut}"
+                                  IsChecked="{Binding Path=RoomType.Rooms[0].IsCheckedOut}"
                                   />
 
                     </Grid>
@@ -398,11 +400,8 @@
                               Height="300"
                               ItemsSource="{Binding Path = ReservationList.Reservations, Mode=OneWay}"
                               AutoGenerateColumns="False"
-                              IsReadOnly="True" 
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              SelectionChanged="grdReservation_SelectionChanged"                              
-                              >
+                              IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                              SelectionChanged="grdReservation_SelectionChanged" >
 
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">

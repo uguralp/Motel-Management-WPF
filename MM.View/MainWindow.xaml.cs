@@ -92,7 +92,7 @@ namespace MM.View
         /// </summary>
         private void InitRoomData()
         {
-            roomTypes = new List<RoomType>();
+            RoomTypes = new List<RoomType>();
 
             // Create rooms type Guest
             RoomType roomTypeGuest = new GuestRoom();
@@ -102,7 +102,7 @@ namespace MM.View
             roomTypeGuest.Rooms.Add(new Room() { RoomNumber = 102 });
             roomTypeGuest.Rooms.Add(new Room() { RoomNumber = 103 });
             roomTypeGuest.Rooms.Add(new Room() { RoomNumber = 104 });
-            roomTypes.Add(roomTypeGuest);
+            RoomTypes.Add(roomTypeGuest);
 
             // Create rooms type Single
             RoomType roomTypeSingle = new SingleRoom();
@@ -112,7 +112,7 @@ namespace MM.View
             roomTypeSingle.Rooms.Add(new Room() { RoomNumber = 202 });
             roomTypeSingle.Rooms.Add(new Room() { RoomNumber = 203 });
             roomTypeSingle.Rooms.Add(new Room() { RoomNumber = 204 });
-            roomTypes.Add(roomTypeSingle);
+            RoomTypes.Add(roomTypeSingle);
 
             // Create rooms type Double
             RoomType roomTypeDouble = new DoubleRoom();
@@ -122,7 +122,7 @@ namespace MM.View
             roomTypeDouble.Rooms.Add(new Room() { RoomNumber = 302 });
             roomTypeDouble.Rooms.Add(new Room() { RoomNumber = 303 });
             roomTypeDouble.Rooms.Add(new Room() { RoomNumber = 304 });
-            roomTypes.Add(roomTypeDouble);
+            RoomTypes.Add(roomTypeDouble);
 
             // Create rooms type Suite
             RoomType roomTypeSuite = new SuiteRoom();
@@ -132,7 +132,7 @@ namespace MM.View
             roomTypeSuite.Rooms.Add(new Room() { RoomNumber = 402 });
             roomTypeSuite.Rooms.Add(new Room() { RoomNumber = 403 });
             roomTypeSuite.Rooms.Add(new Room() { RoomNumber = 404 });
-            roomTypes.Add(roomTypeSuite);
+            RoomTypes.Add(roomTypeSuite);
         }
 
         /// <summary>
@@ -290,10 +290,25 @@ namespace MM.View
         /// </summary>
         /// <param name="roomNumberToCheck"></param>
         /// <returns></returns>
-        private bool IsRerservedRoom(int roomNumberToCheck)
+        private bool CheckIfRoomIsAlreadyBooked(int roomNumberToCheck, bool currentCheckedOut)
         {
-            var query = ReservationList.Reservations.Where(p => p.RoomType.Rooms.FirstOrDefault().RoomNumber == roomNumberToCheck && (p.RoomType.Rooms.FirstOrDefault().IsCheckedOut == false));
-            return (query.Count() > 0);
+            bool isReservedRoom = false;
+
+            if (!currentCheckedOut)
+            {
+                var query = ReservationList
+                        .Reservations
+                        .Where(p => p.RoomType.Rooms.FirstOrDefault().RoomNumber
+                                == roomNumberToCheck && (p.RoomType.Rooms.FirstOrDefault().IsCheckedOut == false));
+
+                isReservedRoom = (query.Count() > 0);
+            }
+            else
+            {
+                isReservedRoom = false;
+            }
+
+            return isReservedRoom;
         }
 
         #endregion
@@ -388,7 +403,8 @@ namespace MM.View
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             bool isInvalid = false;
-            int roomNumber = 0;
+            bool currentCheckedOut = false;
+            int roomNumber = 0;            
 
             try
             {
@@ -407,8 +423,9 @@ namespace MM.View
                 if (!isInvalid)
                 {
                     roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
+                    currentCheckedOut = (bool)chkIsCheckedOut.IsChecked;
 
-                    if (!IsRerservedRoom(roomNumber))
+                    if (!CheckIfRoomIsAlreadyBooked(roomNumber, currentCheckedOut))
                     {
                         Reservation newReservation = new Reservation();
                         newReservation = UpdateReservation(newReservation);
@@ -445,9 +462,8 @@ namespace MM.View
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             bool isInvalid = false;
-            int roomNumber = 0;
-            int oldRoomNumber = 0;
-            bool isAlreadyReservedRoom = false;
+            int roomNumber = 0;            
+            bool currentCheckedOut = false;
 
             try
             {
@@ -469,11 +485,9 @@ namespace MM.View
                     if (selectedReservation != null)
                     {
                         roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                        oldRoomNumber = selectedReservation.RoomType.Rooms.FirstOrDefault().RoomNumber;
+                        currentCheckedOut = (bool)chkIsCheckedOut.IsChecked;
 
-                        isAlreadyReservedRoom = (roomNumber == oldRoomNumber) ? false : IsRerservedRoom(roomNumber);
-
-                        if (!isAlreadyReservedRoom)
+                        if (!CheckIfRoomIsAlreadyBooked(roomNumber, currentCheckedOut))
                         {
                             selectedReservation = UpdateReservation(selectedReservation);
                             XMLController.WriteToXML(ReservationList);
@@ -516,7 +530,7 @@ namespace MM.View
 
                     if (CurrentReservation != null)
                     {
-                        RoomType reservedRoomType = roomTypes.First(r => r.RoomTypeName.ToString().Equals(CurrentReservation.RoomType.RoomTypeName));
+                        RoomType reservedRoomType = RoomTypes.First(r => r.RoomTypeName.ToString().Equals(CurrentReservation.RoomType.RoomTypeName));
                         Room reservedRoom = reservedRoomType.Rooms.First(r => r.RoomNumber == CurrentReservation.RoomType.Rooms.FirstOrDefault().RoomNumber);
 
                         txtFirstName.Text = CurrentReservation.Guest.FirstName;

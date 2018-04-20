@@ -56,6 +56,5 @@ namespace MM.Model
         /// ExtraService
         /// </summary>
         public abstract string ExtraService();
-
     }
 }
