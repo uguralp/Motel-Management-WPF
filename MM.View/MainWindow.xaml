@@ -12,6 +12,7 @@
         <model:Reservation x:Key="currentReservation" />
         <utilities:CheckedOutRoomConverter x:Key="checkedOutRoomConverter" />
         <utilities:NumberConverter x:Key="numberConverter" />
+        <utilities:NumberChildrenConverter x:Key="numberChildrenConverter" />
     </Window.Resources>
 
     <Border Margin="30">
@@ -193,7 +194,7 @@
                                  Name="txtNumOfChild" 
                                  ToolTip="{Binding ElementName=txtNumOfChild, Path=(Validation.Errors)[0].ErrorContent}"
                                  Foreground="{Binding Path=NumberOfChild, 
-                                    Converter={StaticResource numberConverter},
+                                    Converter={StaticResource numberChildrenConverter},
                                     UpdateSourceTrigger=PropertyChanged
                                     }"
                                  Margin="0 0 0 10">
@@ -202,7 +203,7 @@
                                 <Binding Path="NumberOfChild" >
                                     <Binding.ValidationRules>
                                         <utilities:RequiredRule/>
-                                        <utilities:NumberOfPeopleRule/>
+                                        <utilities:NumberOfChildrenRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -430,7 +431,7 @@
                             <DataGridTemplateColumn Header="Is Checked Out" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding RoomType.Rooms[0].IsCheckedOut}"/>
+                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding RoomType.Rooms[0].IsCheckedOut}" IsHitTestVisible="False" Focusable="False"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

@@ -42,3 +42,12 @@ D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180418\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.csproj.CopyComplete
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180418\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.dll
 D:\WORKING\CONESTOGA\SEMESTER1\PROG8145 - Software Development Techniques - IGOR\Final_Project\Source_capma - 20180418\motelmanagement\MM.Utilities\obj\Debug\MM.Utilities.pdb
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\bin\Debug\MM.Utilities.dll
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\bin\Debug\MM.Utilities.pdb
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\bin\Debug\MM.Model.dll
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\bin\Debug\MM.Model.pdb
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\obj\Debug\MM.Utilities.csprojResolveAssemblyReference.cache
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\obj\Debug\MM.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\obj\Debug\MM.Utilities.csproj.CopyComplete
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\obj\Debug\MM.Utilities.dll
+C:\Users\Uguralp\Desktop\FinalProjectLastV\MM.Utilities\obj\Debug\MM.Utilities.pdb
