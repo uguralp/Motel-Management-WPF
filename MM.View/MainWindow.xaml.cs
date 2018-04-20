@@ -460,8 +460,10 @@ namespace MM.View
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             bool isInvalid = false;
-            int roomNumber = 0;            
-            bool currentCheckedOut = false;
+            int newRoomNumber = 0;
+            int oldRoomNumber = 0;
+            bool newCheckedOut = false;
+            bool oldCheckedOut = false;
             bool isBooked = false;
 
             try
@@ -483,10 +485,49 @@ namespace MM.View
                     Reservation selectedReservation = ReservationList.Reservations.FirstOrDefault(i => i.ReservationID == CurrentReservation.ReservationID);
                     if (selectedReservation != null)
                     {
-                        roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
-                        currentCheckedOut = (bool)chkIsCheckedOut.IsChecked;
+                        newRoomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
+                        oldRoomNumber = selectedReservation.RoomType.Rooms[0].RoomNumber;
+                        newCheckedOut = (bool)chkIsCheckedOut.IsChecked;
+                        oldCheckedOut = selectedReservation.RoomType.Rooms[0].IsCheckedOut;
 
-                        isBooked = (ReservationList.Count == 1) ? false : CheckIfRoomIsAlreadyBooked(roomNumber, currentCheckedOut);
+                        // Grid contains one row only
+                        if (ReservationList.Count == 1)
+                        {
+                            // skip checking
+                            isBooked = false;
+                        }
+                        else
+                        {
+                            // if after ischeckout = true
+                            if (newCheckedOut)
+                            {
+                                // skip checking
+                                isBooked = false;
+                            }
+                            else
+                            {
+                                // if before checkedout (true) = after checkedout (true)
+                                if (newCheckedOut == oldCheckedOut)
+                                {
+                                    // if before roomnumber = after room number
+                                    if (newRoomNumber == oldRoomNumber)
+                                    {
+                                        // skip checking
+                                        isBooked = false;
+                                    }
+                                    else
+                                    {
+                                        //if before roomnumber <> after room number ==> check
+                                        isBooked = CheckIfRoomIsAlreadyBooked(newRoomNumber, newCheckedOut);
+                                    }
+                                }
+                                // if before checkedout (false) != after checkedout (true)
+                                else
+                                {
+                                    isBooked = CheckIfRoomIsAlreadyBooked(newRoomNumber, newCheckedOut);
+                                }
+                            }
+                        }
 
                         if (!isBooked)
                         {
@@ -498,7 +539,7 @@ namespace MM.View
                         else
                         {
                             MessageBox.Show(string.Format("Room {0} is already booked!\nPlease select another one.",
-                                    roomNumber),
+                                    newRoomNumber),
                                     this.Title,
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Information);
