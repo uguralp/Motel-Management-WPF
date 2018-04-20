@@ -192,11 +192,12 @@
                         <TextBox Grid.Row="2" 
                                  Grid.Column="1" 
                                  Name="txtNumOfChild" 
-                                 ToolTip="{Binding ElementName=txtNumOfChild, Path=(Validation.Errors)[0].ErrorContent}"
-                                 Foreground="{Binding Path=NumberOfChild, 
-                                    Converter={StaticResource numberChildrenConverter},
-                                    UpdateSourceTrigger=PropertyChanged
+                                 
+                                 Foreground="{Binding Path=NumberOfChild,
+                                    Converter={StaticResource numberChildrenConverter}
+                                    ,UpdateSourceTrigger=PropertyChanged
                                     }"
+                                 ToolTip="{Binding ElementName=txtNumOfChild, Path=(Validation.Errors)[0].ErrorContent}"
                                  Margin="0 0 0 10">
                             
                             <TextBox.Text>

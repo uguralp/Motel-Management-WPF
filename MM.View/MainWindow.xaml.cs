@@ -303,10 +303,7 @@ namespace MM.View
 
                 isReservedRoom = (query.Count() > 0);
             }
-            else
-            {
-                isReservedRoom = false;
-            }
+            
 
             return isReservedRoom;
         }
@@ -404,7 +401,8 @@ namespace MM.View
         {
             bool isInvalid = false;
             bool currentCheckedOut = false;
-            int roomNumber = 0;            
+            int roomNumber = 0;          
+            
 
             try
             {
@@ -464,6 +462,7 @@ namespace MM.View
             bool isInvalid = false;
             int roomNumber = 0;            
             bool currentCheckedOut = false;
+            bool isBooked = false;
 
             try
             {
@@ -487,7 +486,9 @@ namespace MM.View
                         roomNumber = ((Room)cboRoomNumber.SelectedValue).RoomNumber;
                         currentCheckedOut = (bool)chkIsCheckedOut.IsChecked;
 
-                        if (!CheckIfRoomIsAlreadyBooked(roomNumber, currentCheckedOut))
+                        isBooked = (ReservationList.Count == 1) ? false : CheckIfRoomIsAlreadyBooked(roomNumber, currentCheckedOut);
+
+                        if (!isBooked)
                         {
                             selectedReservation = UpdateReservation(selectedReservation);
                             XMLController.WriteToXML(ReservationList);

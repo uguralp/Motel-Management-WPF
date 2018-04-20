@@ -23,12 +23,15 @@ namespace MM.Model
         private int numberOfDay;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        /// <summary>
+        /// RaisePropertyChanged
+        /// </summary>
+        /// <param name="prop"></param>
+        private void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(caller));
             }
         }
 
@@ -41,6 +44,7 @@ namespace MM.Model
             TotalPrice = 0;
             reservationID = Guid.NewGuid();
             Guest = new Guest();
+            NumberOfChild = -1;
         }
 
         /// <summary>
@@ -77,6 +81,7 @@ namespace MM.Model
             {
                 numberOfChild = value;
                 RaisePropertyChanged("NumberOfChild");
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(numberOfChild)));
             }
         }
 
@@ -92,8 +97,8 @@ namespace MM.Model
             set
             {
                 checkIn = value;
-                NotifyPropertyChanged("CheckIn");
-                NotifyPropertyChanged("CheckOut");
+                RaisePropertyChanged("CheckIn");
+                RaisePropertyChanged("CheckOut");
             }            
         }
 
@@ -109,8 +114,8 @@ namespace MM.Model
             set
             {
                 checkOut = value;
-                NotifyPropertyChanged("CheckIn");
-                NotifyPropertyChanged("CheckOut");
+                RaisePropertyChanged("CheckIn");
+                RaisePropertyChanged("CheckOut");
             }
         }
 
@@ -217,38 +222,11 @@ namespace MM.Model
                 else if (columnName == "CheckOut" && !IsValidCheckInCheckOut())
                     result = "Check out must be after Check in";
 
-
-
                 return result;
             }
         }
-
-        /// <summary>
-        /// PropertyChanging
-        /// </summary>
-        public event PropertyChangingEventHandler PropertyChanging;
-
-        /// <summary>
-        /// NotifyPropertyChanging
-        /// </summary>
-        /// <param name="propertyName"></param>
-        private void NotifyPropertyChanging(string propertyName)
-        {
-            if (PropertyChanging != null)
-            {
-                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
-            }
-        }
-
-        /// <summary>
-        /// RaisePropertyChanged
-        /// </summary>
-        /// <param name="prop"></param>
-        void RaisePropertyChanged(string prop)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
         
+        
+
     }
 }
