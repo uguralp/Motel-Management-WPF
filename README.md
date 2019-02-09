@@ -1,45 +1,77 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Guideline for the Motel Management
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+This guideline was prepared by following the rules on the rubric.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+**Class Diagram:**
 
----
+![Image of Class Diagram](https://i.imgur.com/yGhZ2MY.png)
 
-## Edit a file
+*Figure 1: Class Diagram for the Motel Management*
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+The class diagram shows the fields, properties, methods and events of the classes in the Motel Management application. The classes were implemented and associated properly in the application.
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+**Overview:**
 
----
+The purpose of the Motel Management System is to allow booking rooms for the customers and list them all. The system allows the user to register, update and delete the all information of the bookings. Operations were designed well for the Motel Management System.
 
-## Create a file
+**Main Page:**
 
-Next, you’ll add a new file to this repository.
+![Image of the main page](https://i.imgur.com/RwANwwb.png)
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+*Figure 2: Main Page of the Application*
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+This is the main page of the application. It has two sections. The section on the top is for adding new customers. The other section on the bottom shows the information list for the customers in the datagrid.
 
----
+**Adding Data:**
 
-## Clone a repository
+After giving the right inputs, the user clicks "register" to save the data. If the data is wrong, the user can't save the data and get an error.
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+**Selecting Data:**
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+Firstly, the user needs to select the existing data from the datagrid. After selecting one of the rows, information appears on the top section of the app.
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+![Image of the main page](https://i.imgur.com/C6WHTxe.png)
+
+*Figure 3: Select the row to edit, update and delete.*
+
+**Updating Data:**
+
+After selecting the data, the user clicks the update button and then they can edit and update the data.
+
+**Deleting Data:**
+
+After selecting the data, the user clicks the delete button and then they can delete the data.
+
+**Saving Data:**
+
+After selecting the data, the user clicks the update button and then they can save the data. The data saves in an XML file properly by using the serialization.
+
+**Searching Data:**
+
+LINQ was implemented for the search feature. The user can search for the following values: First Name, Last Name, Address, Phone Number, Room Type, Room Number, check in date and check out date.
+
+
+![Image of the main page](https://i.imgur.com/He4NzEG.png)
+
+*Figure 4: Example for the search.*
+
+**Error Handlings:**
+
+Error handlings were implemented based on the rubric. Converters and validation rules work properly in the input fields. Additionally, the user can't book the room if it has already booked.
+
+![Image of the main page](https://i.imgur.com/J7GRamd.png)
+
+*Figure 5: Application gets error when there is no value in the fields.*
+
+![Image of the main page](https://i.imgur.com/T2xXZqT.png)
+
+*Figure 6: Application gets an error when the fields are filled wrong.*
+
+![Image of the main page](https://i.imgur.com/aUFIvt1.png)
+
+*Figure 7: IsCheckedOut feature on the datagrid.*
+
+Each record (reservation) has its IsCheckedOut Boolean value. If the record's IsCheckedOut value on the row is true, the background of the row of the record changes to the red color.
+
+## NOTE: 
+This project was made for the C# Software Development class as a final project.
