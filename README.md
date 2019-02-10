@@ -1,7 +1,5 @@
 ## Guideline for the Motel Management
 
-This guideline was prepared by following the rules on the rubric.
-
 **Class Diagram:**
 
 ![Image of Class Diagram](https://i.imgur.com/yGhZ2MY.png)
